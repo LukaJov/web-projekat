@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Trainer Requests</title>
+    <style>
+        *{
+            margin:0;
+            padding:0;
+            box-sizing: border-box;
+        }
+
+        body{
+            background-image: url("images/backg.jpg");
+            display:flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .container{
+            width: 100vw;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
+            grid-gap:20px;
+            padding: 20px;
+        }
+
+        .container .box
+        {
+           
+            background: gray;
+            position: relative;
+            height: 400px;
+            box-shadow : 12px 12px 20px black;
+            overflow: hidden;
+            border-radius: 20px;
+
+        }
+
+       table{
+           padding-top:25px;
+           font-size:25px;
+       }
+
+       .request
+       {
+        position: absolute;
+        bottom: 30px;
+        right: 50px;
+       }
+       .request .green{
+            height: 50px;
+            width: 85px;
+            background-color: #519151;
+            color: black;
+            border-radius: 7px;
+            font-weight: bold;
+
+        }
+
+        .request .red{
+          
+            height: 50px;
+            width: 85px;
+            background-color: #f65454;
+            color: black;
+            border-radius: 7px;
+            font-weight: bold;
+
+        }
+
+  
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="box">
+            <table style="width:100%" >
+                <tr>
+                    <th>Username:</th>
+                    <th>Trainer1</th>
+                </tr>
+                <tr>
+                    <th>Password:</th>
+                    <th>Trainer1pass</th>
+                </tr>
+                <tr>
+                    <th>Name:</th>
+                    <th>Milos</th>
+                </tr>
+                <tr>
+                    <th>Surname:</th>
+                    <th>Aleksic</th>
+                </tr>
+                <tr>
+                    <th>Phone number:</th>
+                    <th>063456789</th>
+                </tr>
+                <tr>
+                    <th>Email address:</th>
+                    <th>aleksicmilos@gmail.com</th>
+                </tr>
+                <tr>
+                    <th>Birthday:</th>
+                    <th>03.03.2000.</th>
+                </tr>
+            </table>
+            <div class="request">
+                <button class="green">Accept</button>
+                <button class="red">Decline</button>
+            </div>
+        </div>
+        <div class="box">
+            <table style="width:100%" >
+                <tr>
+                    <th>Username:</th>
+                    <th>Trainer2</th>
+                </tr>
+                <tr>
+                    <th>Password:</th>
+                    <th>Trainer2pass</th>
+                </tr>
+                <tr>
+                    <th>Name:</th>
+                    <th>Jovan</th>
+                </tr>
+                <tr>
+                    <th>Surname:</th>
+                    <th>Rajcevic</th>
+                </tr>
+                <tr>
+                    <th>Phone number:</th>
+                    <th>062987654</th>
+                </tr>
+                <tr>
+                    <th>Email address:</th>
+                    <th>rajcevicjovan@gmail.com</th>
+                </tr>
+                <tr>
+                    <th>Birthday:</th>
+                    <th>28.03.1974.</th>
+                </tr>
+                </table>
+                <div class="request">
+                    <button class="green">Accept</button>
+                    <button class="red">Decline</button>
+                </div>
+        </div>
+        <div class="box">
+            <table style="width:100%">
+                <tr>
+                    <th>Username:</th>
+                    <th>Trainer3</th>
+                </tr>
+                <tr>
+                    <th>Password:</th>
+                    <th>Trainer3pass</th>
+                </tr>
+                <tr>
+                    <th>Name:</th>
+                    <th>Petar</th>
+                </tr>
+                <tr>
+                    <th>Surname:</th>
+                    <th>Petrovic</th>
+                </tr>
+                <tr>
+                    <th>Phone number:</th>
+                    <th>060754456</th>
+                </tr>
+                <tr>
+                    <th>Email address:</th>
+                    <th>petrovicpetar@gmail.com</th>
+                </tr>
+                <tr>
+                    <th>Birthday:</th>
+                    <th>5.5.1988.</th>
+                </tr>
+                </table>
+                <div class="request">
+                    <button class="green">Accept</button>
+                    <button class="red">Decline</button>
+                </div>
+        </div>
+    </div>
+
+</body>
+</html>
