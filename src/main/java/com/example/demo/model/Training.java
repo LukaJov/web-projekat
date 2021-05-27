@@ -33,4 +33,16 @@ public class Training implements Serializable {
 
     @OneToMany(mappedBy="training", fetch=FetchType.LAZY,cascade=CascadeType.ALL)
     private Set<Term> terms = new HashSet<>();
+
+    @Override
+    public String toString() {
+        return "Training{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", desc='" + desc + '\'' +
+                ", trainingType=" + trainingType +
+                ", duration=" + duration +
+                ", terms=" + terms +
+                '}';
+    }
 }

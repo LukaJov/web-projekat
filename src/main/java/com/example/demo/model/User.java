@@ -52,4 +52,23 @@ public class User implements Serializable
    //dodaj listu ocena
     @OneToMany(mappedBy = "givenBy", fetch =FetchType.LAZY, cascade = CascadeType.ALL)
     private Set<Grade> grades = new HashSet<>();
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                ", name='" + name + '\'' +
+                ", surname='" + surname + '\'' +
+                ", phoneNumber='" + phoneNumber + '\'' +
+                ", emailAddress='" + emailAddress + '\'' +
+                ", birthday=" + birthday +
+                ", userType=" + userType +
+                ", active=" + active +
+                ", toDo=" + toDo +
+                ", done=" + done +
+                ", grades=" + grades +
+                '}';
+    }
 }

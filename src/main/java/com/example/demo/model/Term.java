@@ -16,6 +16,23 @@ public class Term implements Serializable
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Override
+    public String toString() {
+        return "Term{" +
+                "id=" + id +
+                ", date=" + date +
+                ", price=" + price +
+                ", numberOfUsers=" + numberOfUsers +
+                ", fitCenter=" + fitCenter +
+                ", rooms=" + rooms +
+                ", training=" + training +
+                ", userToDo=" + userToDo +
+                ", userDone=" + userDone +
+                ", grades=" + grades +
+                ", trainer=" + trainer +
+                '}';
+    }
+
     @Column
     private Date date;
 

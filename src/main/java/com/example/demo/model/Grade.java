@@ -18,6 +18,16 @@ public class Grade implements Serializable{
     @ManyToOne(fetch =FetchType.EAGER, cascade = CascadeType.ALL)
     private Term term;
 
+    @Override
+    public String toString() {
+        return "Grade{" +
+                "id=" + id +
+                ", grd=" + grd +
+                ", term=" + term +
+                ", givenBy=" + givenBy +
+                '}';
+    }
+
     @ManyToOne(fetch =FetchType.EAGER, cascade = CascadeType.ALL)
     private User givenBy;
 }

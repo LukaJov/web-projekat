@@ -41,4 +41,19 @@ public class Admin implements Serializable {
     @Column
     private boolean active;
 
+    @Override
+    public String toString() {
+        return "Admin{" +
+                "id=" + id +
+                ", username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                ", name='" + name + '\'' +
+                ", surname='" + surname + '\'' +
+                ", phoneNumber='" + phoneNumber + '\'' +
+                ", emailAddress='" + emailAddress + '\'' +
+                ", birthday=" + birthday +
+                ", userType=" + userType +
+                ", active=" + active +
+                '}';
+    }
 }

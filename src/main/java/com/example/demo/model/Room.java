@@ -20,6 +20,17 @@ public class Room implements Serializable {
     @Column
     private String label;
 
+    @Override
+    public String toString() {
+        return "Room{" +
+                "id=" + id +
+                ", capacity=" + capacity +
+                ", label='" + label + '\'' +
+                ", fitCenter=" + fitCenter +
+                ", terms=" + terms +
+                '}';
+    }
+
     @ManyToOne(fetch =FetchType.EAGER, cascade = CascadeType.ALL)
     private FitnessCenter fitCenter;
 

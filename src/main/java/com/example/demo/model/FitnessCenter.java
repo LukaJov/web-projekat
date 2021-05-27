@@ -16,6 +16,20 @@ public class FitnessCenter implements Serializable {
     @Column
     private String name;
 
+    @Override
+    public String toString() {
+        return "FitnessCenter{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", address='" + address + '\'' +
+                ", phoneNumber='" + phoneNumber + '\'' +
+                ", emailAddress='" + emailAddress + '\'' +
+                ", trainers=" + trainers +
+                ", rooms=" + rooms +
+                ", terms=" + terms +
+                '}';
+    }
+
     @Column
     private String address;
 
