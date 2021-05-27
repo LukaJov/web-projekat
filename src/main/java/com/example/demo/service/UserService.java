@@ -1,4 +1,4 @@
-package service;
+package com.example.demo.service;
 
 import java.util.Date;
 import java.util.List;
@@ -16,4 +16,6 @@ public class UserService {
     {
         return this.userRepository.save(user);
     }
+    //dodaj login pitaj
+    //dodaj zahtev, pregled zahteva i odobravanje
 }
