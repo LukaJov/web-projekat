@@ -20,6 +20,18 @@ public class Room implements Serializable {
     @Column
     private String label;
 
+
+    @ManyToOne(fetch =FetchType.EAGER, cascade = CascadeType.ALL)
+    private FitnessCenter fitCenter;
+
+    //@ManyToMany
+    //@JoinTable(name="Schedule",
+          //  joinColumns = @JoinColumn(name="room_id", referencedColumnName = "id"),
+           // inverseJoinColumns = @JoinColumn(name ="term_id", referencedColumnName = "id")
+   // )
+    @OneToMany(mappedBy = "room", fetch =FetchType.LAZY, cascade = CascadeType.ALL)
+    private Set<Term> terms = new HashSet<>();
+
     @Override
     public String toString() {
         return "Room{" +
@@ -31,13 +43,4 @@ public class Room implements Serializable {
                 '}';
     }
 
-    @ManyToOne(fetch =FetchType.EAGER, cascade = CascadeType.ALL)
-    private FitnessCenter fitCenter;
-
-    @ManyToMany
-    @JoinTable(name="Schedule",
-            joinColumns = @JoinColumn(name="room_id", referencedColumnName = "id"),
-            inverseJoinColumns = @JoinColumn(name ="term_id", referencedColumnName = "id")
-    )
-    private Set<Term> terms = new HashSet<>();
 }

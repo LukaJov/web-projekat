@@ -39,7 +39,20 @@ public class TermService {
         return this.termRepository.findByPrice(price);
     }
 
-    //pitaj za sortiranje
+    public List<Term> findAllByOrderByPriceAsc(){return this.termRepository.findAllByOrderByPriceAsc();};
 
+    public List<Term> findAllByOrderByPriceDesc(){return this.termRepository.findAllByOrderByPriceDesc();};
+
+    public List<Term> findAllByOrderByDateAsc(){return this.termRepository.findAllByOrderByDateAsc();};
+
+    public List<Term> findAllByOrderByDateDesc(){return this.termRepository.findAllByOrderByDateDesc();};
+
+
+    //pitaj za sortiranje
+    //kako logovanje omoguciti
+    //dodaj zahtev, pregled zahteva i odobravanje
+    //nova html stranica za dodavanje fitnes centra
+    //prikazi sve fitnes centre
+    //registracija svih
 
 }

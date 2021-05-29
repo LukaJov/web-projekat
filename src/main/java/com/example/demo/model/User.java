@@ -5,7 +5,7 @@ import java.io.Serializable;
 import java.util.*;
 import javax.persistence.*;
 
-enum userType{Member, Trainer, Admin}
+
 @Entity
 @Setter
 @Getter
@@ -37,8 +37,7 @@ public class User implements Serializable
     private Date birthday;
 
     @Column
-    @Enumerated(EnumType.STRING)
-    private userType userType;
+    private String userType;
 
     @Column
     private boolean active;

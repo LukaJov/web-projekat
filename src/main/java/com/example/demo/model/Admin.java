@@ -35,8 +35,7 @@ public class Admin implements Serializable {
     private Date birthday;
 
     @Column
-    @Enumerated(EnumType.STRING)
-    private userType userType;
+    private String userType;
 
     @Column
     private boolean active;

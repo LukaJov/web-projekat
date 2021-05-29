@@ -28,7 +28,7 @@ public class TermController {
         return "terms";
     }
 
-    @GetMapping("/terms")
+   /* @GetMapping("/terms")
     public String getTermsByTrainingName(String trName)
     {
         List<Term> terms = this.termService.findByTrainingName(trName);
@@ -62,7 +62,7 @@ public class TermController {
 
         //promeni da vraca konkretne
         return "terms";
-    }
+    }*/
 
 
 

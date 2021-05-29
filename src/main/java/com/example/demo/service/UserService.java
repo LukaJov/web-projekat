@@ -17,6 +17,6 @@ public class UserService {
     {
         return this.userRepository.save(user);
     }
-    //dodaj login pitaj
-    //dodaj zahtev, pregled zahteva i odobravanje
+
+
 }

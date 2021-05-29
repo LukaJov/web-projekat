@@ -21,6 +21,14 @@ public interface TermRepository extends JpaRepository<Term, Long> {
 
     List<Term> findByPrice(Double price);
 
+    List<Term> findAllByOrderByPriceAsc();
+
+    List<Term> findAllByOrderByPriceDesc();
+
+    List<Term> findAllByOrderByDateAsc();
+
+    List<Term> findAllByOrderByDateDesc();
+
 
 }
 

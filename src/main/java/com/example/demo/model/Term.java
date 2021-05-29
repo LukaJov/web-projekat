@@ -16,23 +16,6 @@ public class Term implements Serializable
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Override
-    public String toString() {
-        return "Term{" +
-                "id=" + id +
-                ", date=" + date +
-                ", price=" + price +
-                ", numberOfUsers=" + numberOfUsers +
-                ", fitCenter=" + fitCenter +
-                ", rooms=" + rooms +
-                ", training=" + training +
-                ", userToDo=" + userToDo +
-                ", userDone=" + userDone +
-                ", grades=" + grades +
-                ", trainer=" + trainer +
-                '}';
-    }
-
     @Column
     private Date date;
 
@@ -45,8 +28,8 @@ public class Term implements Serializable
     @ManyToOne(fetch=FetchType.EAGER, cascade = CascadeType.ALL)
     private FitnessCenter fitCenter;
 
-    @ManyToMany(mappedBy = "terms")
-    private Set <Room> rooms = new HashSet<>();
+    @ManyToOne(fetch=FetchType.EAGER, cascade = CascadeType.ALL)
+    private Room room;
 
     @ManyToOne(fetch=FetchType.EAGER, cascade = CascadeType.ALL)
     private Training training;
@@ -62,4 +45,22 @@ public class Term implements Serializable
 
     @ManyToOne(fetch=FetchType.EAGER, cascade = CascadeType.ALL)
     private Trainer trainer;
+
+    @Override
+    public String toString() {
+        return "Term{" +
+                "id=" + id +
+                ", date=" + date +
+                ", price=" + price +
+                ", numberOfUsers=" + numberOfUsers +
+                ", fitCenter=" + fitCenter +
+                ", room=" + room +
+                ", training=" + training +
+                ", userToDo=" + userToDo +
+                ", userDone=" + userDone +
+                ", grades=" + grades +
+                ", trainer=" + trainer +
+                '}';
+    }
+
 }

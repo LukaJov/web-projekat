@@ -35,12 +35,20 @@ public class Trainer implements Serializable
     @Column
     private Date birthday;
 
-    @Enumerated(EnumType.STRING)
     @Column
-    private userType userType;
+    private String userType;
 
     @Column
     private boolean active;
+
+    @Column
+    private Double avgGrade;
+
+    @ManyToOne(fetch =FetchType.EAGER, cascade = CascadeType.ALL)
+    private FitnessCenter fitCenter;
+
+    @OneToMany(mappedBy = "trainer", fetch=FetchType.LAZY, cascade=CascadeType.ALL)
+    private Set<Term> terms = new HashSet<>();
 
     @Override
     public String toString() {
@@ -60,15 +68,6 @@ public class Trainer implements Serializable
                 ", terms=" + terms +
                 '}';
     }
-
-    @Column
-    private Double avgGrade;
-
-    @ManyToOne(fetch =FetchType.EAGER, cascade = CascadeType.ALL)
-    private FitnessCenter fitCenter;
-
-    @OneToMany(mappedBy = "trainer", fetch=FetchType.LAZY, cascade=CascadeType.ALL)
-    private Set<Term> terms = new HashSet<>();
 
 
 }

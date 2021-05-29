@@ -7,7 +7,6 @@ import java.util.*;
 import javax.persistence.*;
 
 
-enum tType{Cardio, Bodybuilding, CrossFit}
 
 @Entity
 @Setter
@@ -25,8 +24,7 @@ public class Training implements Serializable {
     private String desc;
 
     @Column
-    @Enumerated(EnumType.STRING)
-    private tType trainingType;
+    private String trainingType;
 
     @Column
     private Long duration;
