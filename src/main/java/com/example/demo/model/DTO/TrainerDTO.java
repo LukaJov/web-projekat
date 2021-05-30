@@ -19,4 +19,22 @@ public class TrainerDTO {
     private Date birthday;
     private String userType;
 
+    TrainerDTO()
+    {
+
+    }
+
+    TrainerDTO(Long id, String username, String password, String name, String surname,
+               String phoneNumber, String emailAddress, Date birthday, String userType)
+    {
+        this.id = id;
+        this.username = username;
+        this.password = password;
+        this.name = name;
+        this.surname = surname;
+        this.phoneNumber = phoneNumber;
+        this.emailAddress = emailAddress;
+        this.birthday = birthday;
+        this.userType = userType;
+    }
 }

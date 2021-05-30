@@ -12,4 +12,17 @@ public class TermDTO {
     private Training training;
     private Date date;
     private Double price;
+
+    public TermDTO()
+    {
+
+    }
+
+    public TermDTO(Long id, Training training, Date date, Double price)
+    {
+        this.id = id;
+        this.training = training;
+        this.date = date;
+        this.price = price;
+    }
 }

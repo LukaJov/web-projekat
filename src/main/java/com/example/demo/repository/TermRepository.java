@@ -15,7 +15,7 @@ public interface TermRepository extends JpaRepository<Term, Long> {
 
     List<Term> findByTrainingDesc(String desc);
 
-    //List<Term> findByTrainingTrainingType(tType trainingType);
+    List<Term> findByTrainingTrainingType(String trainingType);
 
     List<Term> findByDate(Date date);
 
