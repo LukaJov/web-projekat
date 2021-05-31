@@ -9,7 +9,7 @@ import java.util.Date;
 public class TermDTO {
 
     private Long id;
-    private Training training;
+    private TrainingDTO trainingDTO;
     private Date date;
     private Double price;
 
@@ -18,10 +18,14 @@ public class TermDTO {
 
     }
 
-    public TermDTO(Long id, Training training, Date date, Double price)
+    public TermDTO(Long id, TrainingDTO trainingDTO, Date date, Double price)
     {
         this.id = id;
-        this.training = training;
+       /* this.trainingDTO.setName(trainingDTO.getName());
+        this.trainingDTO.setDesc(trainingDTO.getDesc());
+        this.trainingDTO.setTrainingType(trainingDTO.getTrainingType());
+        this.trainingDTO.setDuration(trainingDTO.getDuration());*/
+        this.trainingDTO = trainingDTO;
         this.date = date;
         this.price = price;
     }

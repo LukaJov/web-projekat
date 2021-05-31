@@ -1,6 +1,7 @@
 package com.example.demo.controller;
 
 import com.example.demo.model.DTO.TermDTO;
+import com.example.demo.model.DTO.TrainingDTO;
 import com.example.demo.service.TermService;
 import com.example.demo.model.Term;
 import org.springframework.http.HttpStatus;
@@ -19,26 +20,55 @@ public class TermController {
 
     @Autowired
     private TermService termService;
-
-    //dodaj request params!!!!!!!
-
-    @GetMapping()
-    public String getTerms(@RequestParam(required = false, defaultValue = "all") String getBy)
+    //dodaj pageable
+    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<List<TermDTO>> getTerms(@RequestParam(required = false) String trainingName,  @RequestParam(required = false) String trainingDesc,
+                           @RequestParam(required = false) String trainingType, @RequestParam(required = false) Double price,
+                           @RequestParam(required = false) Date date
+    )
     {
-        if(getBy.equals("all")) {
-            List<Term> terms = this.termService.findAll();
-        }
-       /* else if(getBy.equals("trainingName"))
-        {
-            List<Term> terms = this.termService.findByTrainingName();
-        }
-        else if(getBy.equals("trainingDesc"))
-        {
-            List<Term> terms = this.termService.findByTrainingDesc();
-        }*/
+        List<Term> terms = new ArrayList<>();
 
-        //promeni da vraca konkretne
-        return "terms";
+        if(!(trainingName==null))
+        {
+            terms = this.termService.findByTrainingName(trainingName);
+        }
+        else if(!(trainingDesc==null))
+        {
+           terms = this.termService.findByTrainingDesc(trainingDesc);
+        }
+        //else if(!(trainingType==null))
+        else if(!(price==null))
+        {
+            terms = this.termService.findByPrice(price);
+        }
+
+        else if(!(date==null))
+        {
+            terms = this.termService.findByDate(date);
+        }
+
+        else {
+            terms = this.termService.findAll();
+        }
+
+        List<TermDTO> termDTOS = new ArrayList<>();
+
+        for (Term term : terms) {
+
+            TrainingDTO trainingDTO = new TrainingDTO(term.getTraining().getId(), term.getTraining().getName()
+            , term.getTraining().getDesc(), term.getTraining().getTrainingType(), term.getTraining().getDuration());
+
+
+
+            TermDTO termDTO = new TermDTO(term.getId(), trainingDTO, term.getDate(), term.getPrice());
+
+            termDTOS.add(termDTO);
+        }
+
+
+        return new ResponseEntity<>(termDTOS, HttpStatus.OK);
+
     }
 
    /* @GetMapping("/terms")
