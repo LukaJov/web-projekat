@@ -6,6 +6,7 @@ import java.util.List;
 import com.example.demo.model.Term;
 import com.example.demo.repository.TermRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -13,40 +14,45 @@ public class TermService {
     @Autowired
     private TermRepository termRepository;
 
-    public List<Term> findAll()
+    public List<Term> findAll(Sort sort)
     {
         return this.termRepository.findAll();
     }
 
-    public List<Term> findByTrainingName(String name)
+    public List<Term> findByTrainingName(String name, Sort sort)
     {
         return this.termRepository.findByTrainingName(name);
     }
 
-    public List<Term> findByTrainingDesc(String desc)
+    public List<Term> findByTrainingDesc(String desc, Sort sort)
     {
         return this.termRepository.findByTrainingDesc(desc);
     }
     //findbytrainingtype probaj
 
-    public List<Term> findByDate(Date date)
+    public List<Term> findByTrainingTrainingType(String trainingType, Sort sort)
+    {
+        return this.termRepository.findByTrainingTrainingType(trainingType);
+    }
+
+    public List<Term> findByDate(Date date, Sort sort)
     {
         return this.termRepository.findByDate(date);
     }
 
-    public List<Term> findByPrice(Double price)
+    public List<Term> findByPrice(Double price, Sort sort)
     {
         return this.termRepository.findByPrice(price);
     }
 
-    public List<Term> findAllByOrderByPriceAsc(){return this.termRepository.findAllByOrderByPriceAsc();};
+    /*public List<Term> findAllByOrderByPriceAsc(){return this.termRepository.findAllByOrderByPriceAsc();};
 
     public List<Term> findAllByOrderByPriceDesc(){return this.termRepository.findAllByOrderByPriceDesc();};
 
     public List<Term> findAllByOrderByDateAsc(){return this.termRepository.findAllByOrderByDateAsc();};
 
     public List<Term> findAllByOrderByDateDesc(){return this.termRepository.findAllByOrderByDateDesc();};
-
+*/
 
     //pitaj za sortiranje
     //kako logovanje omoguciti

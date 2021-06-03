@@ -50,12 +50,25 @@
         {
             padding-top: 80px;
         }
-        .form-row
+
+        #trainer
+        {
+            padding-top : 0px;
+        }
+        /*.form-row
         {
             padding-top: 20px;
-        }
+        }*/
 
     </style>
+
+    <script src="js/jquery.min.js"></script>
+    <!-- 2. Ukljucivanje jQuery Validate biblioteke za validaciju polja forme (opciono).
+            O načinu upotrebe pogledati na: https://jqueryvalidation.org/ -->
+    <script src="js/jquery.validate.min.js"></script>
+    <!-- 3. Ukljucivanje naseg JS fajla -->
+    <script src="js/trainers.js"></script>
+
 </head>
 <body>
 
@@ -66,53 +79,37 @@
                 <img src="images/gym1.jpg" class="img-fluid" alt="">
             </div>
             <div class="col-lg-7 px-5 pb-30" id="glavni">
-                <h4>Register as a trainer</h4>
+                <h4>Add a fitness center</h4>
                 <form>
                     <div class="form-row">
                         <div class="col-lg-7">
-                            <input type="text" placeHolder="Username" class="form-control">
+                            <input type="text" placeHolder="Name" class="form-control" id="name" >
                         </div>
                     </div>
                     <div class="form-row">
                         <div class="col-lg-7">
-                            <input type="text" placeHolder="Name" class="form-control">
+                            <input type="text" placeHolder="Address" class="form-control" id="address" >
                         </div>
                     </div>
                     <div class="form-row">
                         <div class="col-lg-7">
-                            <input type="email" placeHolder="Surname" class="form-control">
+                            <input type="tel" placeHolder="Phone number" class="form-control" id="phoneNumber">
                         </div>
                     </div>
                     <div class="form-row">
                         <div class="col-lg-7">
-                            <input type="date" placeHolder="Birthday" class="form-control">
+                            <input type="email" placeHolder="Email Address" class="form-control" id="emailAddress">
                         </div>
                     </div>
                     <div class="form-row">
                         <div class="col-lg-7">
-                            <input type="tel" placeHolder="Phone number" class="form-control">
-                        </div>
-                    </div>
-                    <div class="form-row">
-                        <div class="col-lg-7">
-                            <input type="email" placeHolder="Email Address" class="form-control">
-                        </div>
-                    </div>
-                    <div class="form-row">
-                        <div class="col-lg-7">
-                            <input type="password" placeHolder="Password" class="form-control">
-                        </div>
-                    </div>
-                    <div class="form-row">
-                        <div class="col-lg-7">
-                            <button type="button" class="btn mt-3 mb-5">Register</button>
+                            <button type="click" class="btn mt-3 mb-5" id="fitnesscenter">Add new fitness center</button>
                         </div>
                     </div>
                 </form>
             </div>
         </div>
     </div>
-
 </div>
 
 <!-- Optional JavaScript; choose one of the two! -->

@@ -1,6 +1,8 @@
 package com.example.demo.model;
 
 import java.io.Serializable;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Getter;
 import lombok.Setter;
 import java.util.*;
@@ -17,6 +19,7 @@ public class Term implements Serializable
     private Long id;
 
     @Column
+    //@JsonFormat(shape= JsonFormat.Shape.STRING, pattern="dd-MM-yyyy")
     private Date date;
 
     @Column

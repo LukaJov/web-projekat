@@ -9,7 +9,6 @@ import java.util.Date;
 @Getter
 public class TrainerDTO {
 
-    private Long id;
     private String username;
     private String password;
     private String name;
@@ -19,15 +18,15 @@ public class TrainerDTO {
     private Date birthday;
     private String userType;
 
-    TrainerDTO()
+    public TrainerDTO()
     {
 
     }
-
-    TrainerDTO(Long id, String username, String password, String name, String surname,
+//ulazni dto
+    public TrainerDTO(String username, String password, String name, String surname,
                String phoneNumber, String emailAddress, Date birthday, String userType)
     {
-        this.id = id;
+
         this.username = username;
         this.password = password;
         this.name = name;
@@ -37,4 +36,19 @@ public class TrainerDTO {
         this.birthday = birthday;
         this.userType = userType;
     }
+
+    //izlazi dto
+
+    public TrainerDTO(String name, String surname,
+                      String phoneNumber, String emailAddress, Date birthday, String userType)
+    {
+
+        this.name = name;
+        this.surname = surname;
+        this.phoneNumber = phoneNumber;
+        this.emailAddress = emailAddress;
+        this.birthday = birthday;
+        this.userType = userType;
+    }
+
 }

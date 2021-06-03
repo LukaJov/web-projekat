@@ -52,6 +52,25 @@ public class User implements Serializable
     @OneToMany(mappedBy = "givenBy", fetch =FetchType.LAZY, cascade = CascadeType.ALL)
     private Set<Grade> grades = new HashSet<>();
 
+    public User(String username, String password, String name, String surname, String phoneNumber,
+                   String emailAddress, Date birthday)
+    {
+        this.username = username;
+        this.password = password;
+        this.name = name;
+        this.surname = surname;
+        this.phoneNumber = phoneNumber;
+        this.emailAddress = emailAddress;
+        this.birthday = birthday;
+        this.userType = "Member";
+        this.active = false;
+
+    }
+
+    public User()
+    {}
+
+
     @Override
     public String toString() {
         return "User{" +

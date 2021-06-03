@@ -9,7 +9,6 @@ import java.util.Date;
 @Getter
 public class UserDTO {
 
-    private Long id;
     private String username;
     private String password;
     private String name;
@@ -24,12 +23,23 @@ public class UserDTO {
 
     }
 
-    public UserDTO(Long id, String username, String password, String name, String surname,
+    public UserDTO(String username, String password, String name, String surname,
                String phoneNumber, String emailAddress, Date birthday, String userType)
     {
-        this.id = id;
         this.username = username;
         this.password = password;
+        this.name = name;
+        this.surname = surname;
+        this.phoneNumber = phoneNumber;
+        this.emailAddress = emailAddress;
+        this.birthday = birthday;
+        this.userType = userType;
+    }
+
+    public UserDTO(String name, String surname,
+                      String phoneNumber, String emailAddress, Date birthday, String userType)
+    {
+
         this.name = name;
         this.surname = surname;
         this.phoneNumber = phoneNumber;

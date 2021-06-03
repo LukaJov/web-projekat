@@ -44,6 +44,26 @@ public class Trainer implements Serializable
     @Column
     private Double avgGrade;
 
+    public Trainer(String username, String password, String name, String surname, String phoneNumber,
+    String emailAddress, Date birthday)
+    {
+        this.username = username;
+        this.password = password;
+        this.name = name;
+        this.surname = surname;
+        this.phoneNumber = phoneNumber;
+        this.emailAddress = emailAddress;
+        this.birthday = birthday;
+        this.userType = "Trainer";
+        this.active = false;
+        this.avgGrade = 0.0;
+    }
+
+    public Trainer()
+    {
+
+    }
+
     @ManyToOne(fetch =FetchType.EAGER, cascade = CascadeType.ALL)
     private FitnessCenter fitCenter;
 

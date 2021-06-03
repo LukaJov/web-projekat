@@ -13,7 +13,7 @@ import com.example.demo.service.FitnessCenterService;
 
 import java.util.List;
 
-
+@CrossOrigin
 @RestController
 @RequestMapping(value = "/api/fitnesscenter")
 public class FitnessCenterController {
