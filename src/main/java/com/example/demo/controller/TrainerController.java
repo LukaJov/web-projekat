@@ -68,8 +68,7 @@ public class TrainerController {
     }
 
     //odobravanje zahteva
-    @PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE,
-            produces = MediaType.APPLICATION_JSON_VALUE)
+    @PutMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<TrainerDTO> makeActive(@PathVariable Long id) throws Exception {
 
 
