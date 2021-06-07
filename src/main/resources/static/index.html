@@ -37,6 +37,8 @@
             color: white;
             border-radius: 4px;
             font-weight: bold;
+            margin-top: 5px;
+            margin-bottom: 5px;
 
         }
         .btn:hover
@@ -50,9 +52,14 @@
         {
             padding-top: 150px;
         }
-        .form-row
+        /*.form-row
         {
             padding-top: 20px;
+        }*/
+
+        .form-control{
+            margin-top: 7px;
+            margin-bottom: 7px;
         }
 
     </style>
@@ -80,11 +87,21 @@
                     </div>
                     <div class="form-row">
                         <div class="col-lg-7">
-                            <button type="button" class="btn mt-3 mb-5">Login</button>
+                            <button onclick="document.location='terms.html'" type="button" class="btn" id="member">Login as member</button>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="col-lg-7">
+                            <button onclick="document.location='terms.html'" type="button" class="btn" id = "trainer">Login as trainer</button>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="col-lg-7">
+                            <button onclick="document.location='confirmtrainer.html'">" type="button" class="btn" id="admin">Login as admin</button>
                         </div>
                     </div>
                     <a href="#">Forgot Password</a>
-                    <p>Don't have an account? <a href="#">Register here</a></p>
+                    <p>Don't have an account? <a href="register.html">Register here</a></p>
                 </form>
             </div>
         </div>

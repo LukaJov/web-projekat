@@ -63,7 +63,7 @@ public class User implements Serializable
         this.emailAddress = emailAddress;
         this.birthday = birthday;
         this.userType = "Member";
-        this.active = false;
+        this.active = true;
 
     }
 

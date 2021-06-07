@@ -1,43 +1,36 @@
-$(document).on("click", "#trainer", function (event) {
+$(document).on("click", ".btn", function (event) {
     event.preventDefault();                                         // sprečavamo automatsko slanje zahteva da bismo pokupili (i validirali) podatke iz forme
 
     // preuzimamo vrednosti unete u formi
-    let username = $("#username").val();
-    let password = $("#password").val();
     let name = $("#name").val();
-    let surname = $("#surname").val();
+    let address = $("#address").val();
     let phoneNumber = $("#phoneNumber").val();
     let emailAddress = $("#emailAddress").val();
-    let birthday = $("#birthday").val();
 
 
 
-    let newTrainer = {
-        username,
-        password,
+    let newFitnessCenter = {
         name,
-        surname,
+        address,
         phoneNumber,
-        emailAddress,
-        birthday
+        emailAddress
     }
 
 
     $.ajax({
         type: "POST",
-        url: "http://localhost:8080/api/trainers",
+        url: "http://localhost:8080/api/fitnesscenters",
         dataType: "json",
         contentType: "application/json",
-        data: JSON.stringify(newTrainer),
+        data: JSON.stringify(newFitnessCenter),
         success: function (response) {
             console.log(response);
 
-            alert("Trener je uspešno kreiran!");
-            window.location.href = "index.html";
+            alert("Fitnes centar je uspešno kreiran!");
+            window.location.href = "fitnesscenters.html";
         },
         error: function () {
-            alert("Greška prilikom dodavanja trenera!");
+            alert("Greška prilikom dodavanja fitnes centra!");
         }
     });
 });
-

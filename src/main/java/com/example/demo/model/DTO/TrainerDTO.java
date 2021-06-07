@@ -17,7 +17,7 @@ public class TrainerDTO {
     private String emailAddress;
     private Date birthday;
     private String userType;
-
+    private Long id;
     public TrainerDTO()
     {
 
@@ -38,11 +38,11 @@ public class TrainerDTO {
     }
 
     //izlazi dto
-
-    public TrainerDTO(String name, String surname,
+    //moras id da vracas!!!!!!
+    public TrainerDTO(Long id, String name, String surname,
                       String phoneNumber, String emailAddress, Date birthday, String userType)
     {
-
+        this.id = id;
         this.name = name;
         this.surname = surname;
         this.phoneNumber = phoneNumber;

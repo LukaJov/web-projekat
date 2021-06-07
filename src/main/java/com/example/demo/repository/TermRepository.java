@@ -2,6 +2,7 @@ package com.example.demo.repository;
 
 import com.example.demo.model.Term;
 import com.example.demo.model.Training;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -11,24 +12,18 @@ import java.util.List;
 @Repository
 public interface TermRepository extends JpaRepository<Term, Long> {
 
-    List<Term> findByTrainingName(String name);
+    List<Term> findByTrainingNameContaining(String name, Sort sort);
 
-    List<Term> findByTrainingDesc(String desc);
+    List<Term> findByTrainingDescContaining(String desc, Sort sort);
 
-    List<Term> findByTrainingTrainingType(String trainingType);
+    List<Term> findByTrainingTrainingTypeContaining(String trainingType, Sort sort);
 
-    List<Term> findByDate(Date date);
+    List<Term> findByDateIsBefore(Date date, Sort sort);
 
-    List<Term> findByPrice(Double price);
-
-    List<Term> findAllByOrderByPriceAsc();
-
-    List<Term> findAllByOrderByPriceDesc();
-
-    List<Term> findAllByOrderByDateAsc();
-
-    List<Term> findAllByOrderByDateDesc();
+    List<Term> findByPriceIsLessThanEqual(Double price, Sort sort);
 
 
-}
+
+
+};
 

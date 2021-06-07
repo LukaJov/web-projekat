@@ -21,38 +21,30 @@ public class TermService {
 
     public List<Term> findByTrainingName(String name, Sort sort)
     {
-        return this.termRepository.findByTrainingName(name);
+        return this.termRepository.findByTrainingNameContaining(name, sort);
     }
 
     public List<Term> findByTrainingDesc(String desc, Sort sort)
     {
-        return this.termRepository.findByTrainingDesc(desc);
+        return this.termRepository.findByTrainingDescContaining(desc, sort);
     }
     //findbytrainingtype probaj
 
     public List<Term> findByTrainingTrainingType(String trainingType, Sort sort)
     {
-        return this.termRepository.findByTrainingTrainingType(trainingType);
+        return this.termRepository.findByTrainingTrainingTypeContaining(trainingType, sort);
     }
 
     public List<Term> findByDate(Date date, Sort sort)
     {
-        return this.termRepository.findByDate(date);
+        return this.termRepository.findByDateIsBefore(date, sort);
     }
 
     public List<Term> findByPrice(Double price, Sort sort)
     {
-        return this.termRepository.findByPrice(price);
+        return this.termRepository.findByPriceIsLessThanEqual(price, sort);
     }
 
-    /*public List<Term> findAllByOrderByPriceAsc(){return this.termRepository.findAllByOrderByPriceAsc();};
-
-    public List<Term> findAllByOrderByPriceDesc(){return this.termRepository.findAllByOrderByPriceDesc();};
-
-    public List<Term> findAllByOrderByDateAsc(){return this.termRepository.findAllByOrderByDateAsc();};
-
-    public List<Term> findAllByOrderByDateDesc(){return this.termRepository.findAllByOrderByDateDesc();};
-*/
 
     //pitaj za sortiranje
     //kako logovanje omoguciti

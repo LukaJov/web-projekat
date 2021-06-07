@@ -6,6 +6,9 @@
 
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-wEmeIV1mKuiNpC+IOBjI7aAzPcEZeedi5yW5f2yOq55WWLwNGmvvx4Um1vskeMj0" crossorigin="anonymous">
+    <script src="js/jquery.min.js"></script>
+    <script src="js/jquery.validate.min.js"></script>
+    <script src="js/trainerrequests.js"></script>
 
     <title>Trainer Requests</title>
     <style>
@@ -24,40 +27,30 @@
         }
 
         .container{
-            width: 100vw;
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
-            grid-gap:20px;
-            padding: 20px;
+            background-color: beige;
+            border-radius: 18px;
         }
 
-        .container .box
-        {
-            background: #F5F5DC;
-            position: relative;
-            height: 400px;
-            box-shadow : 12px 12px 20px black;
-            overflow: hidden;
-            border-radius: 20px;
-            padding-left:12px;
-            padding-right: 7px;
-            padding-top:10px;
-
-        }
 
        table{
            /*padding-top:25px;*/
            font-size:21.5px;
            position: relative;
+           width: 100%;
+
+       }
+       td{
+           padding: 5px;
        }
 
-       .request
-       {
-        position: absolute;
-        bottom: 30px;
-        right: 50px;
+       th{
+           padding: 5px;
        }
-       .request .green{
+
+       h1{
+           text-align: center;
+       }
+      .green{
             height: 50px;
             width: 85px;
             background-color: #519151;
@@ -67,131 +60,26 @@
 
         }
 
-        .request .red{
-          
-            height: 50px;
-            width: 85px;
-            background-color: #f65454;
-            color: black;
-            border-radius: 7px;
-            font-weight: bold;
 
-        }
 
   
     </style>
 </head>
 <body>
     <div class="container">
-        <div class="box">
-            <table style="width:100%" >
-                <tr>
-                    <th>Username:</th>
-                    <th>Trainer1</th>
-                </tr>
-                <tr>
-                    <th>Password:</th>
-                    <th>Trainer1pass</th>
-                </tr>
-                <tr>
-                    <th>Name:</th>
-                    <th>Milos</th>
-                </tr>
-                <tr>
-                    <th>Surname:</th>
-                    <th>Aleksic</th>
-                </tr>
-                <tr>
-                    <th>Phone number:</th>
-                    <th>063456789</th>
-                </tr>
-                <tr>
-                    <th>Email address:</th>
-                    <th>aleksicmilos@gmail.com</th>
-                </tr>
-                <tr>
-                    <th>Birthday:</th>
-                    <th>03.03.2000.</th>
-                </tr>
-            </table>
-            <div class="request">
-                <button class="green">Accept</button>
-                <button class="red">Decline</button>
-            </div>
-        </div>
-        <div class="box">
-            <table style="width:100%" >
-                <tr>
-                    <th>Username:</th>
-                    <th>Trainer2</th>
-                </tr>
-                <tr>
-                    <th>Password:</th>
-                    <th>Trainer2pass</th>
-                </tr>
-                <tr>
-                    <th>Name:</th>
-                    <th>Jovan</th>
-                </tr>
-                <tr>
-                    <th>Surname:</th>
-                    <th>Rajcevic</th>
-                </tr>
-                <tr>
-                    <th>Phone number:</th>
-                    <th>062987654</th>
-                </tr>
-                <tr>
-                    <th>Email address:</th>
-                    <th>rajcevicjovan@gmail.com</th>
-                </tr>
-                <tr>
-                    <th>Birthday:</th>
-                    <th>28.03.1974.</th>
-                </tr>
-                </table>
-                <div class="request">
-                    <button class="green">Accept</button>
-                    <button class="red">Decline</button>
-                </div>
-        </div>
-        <div class="box">
-            <table style="width:100%">
-                <tr>
-                    <th>Username:</th>
-                    <th>Trainer3</th>
-                </tr>
-                <tr>
-                    <th>Password:</th>
-                    <th>Trainer3pass</th>
-                </tr>
-                <tr>
-                    <th>Name:</th>
-                    <th>Petar</th>
-                </tr>
-                <tr>
-                    <th>Surname:</th>
-                    <th>Petrovic</th>
-                </tr>
-                <tr>
-                    <th>Phone number:</th>
-                    <th>060754456</th>
-                </tr>
-                <tr>
-                    <th>Email address:</th>
-                    <th>petrovicpetar@gmail.com</th>
-                </tr>
-                <tr>
-                    <th>Birthday:</th>
-                    <th>5.5.1988.</th>
-                </tr>
-                </table>
-                <div class="request">
-                    <button class="green">Accept</button>
-                    <button class="red">Decline</button>
-                </div>
-        </div>
+        <h1>Trainer requests</h1>
+        <table id="trainers">
+            <tr>
+                <th>Name</th>
+                <th>Surame</th>
+                <th>Phonenumber</th>
+                <th>EmailAddress</th>
+                <th>Birthday</th>
+                <th></th>
+            </tr>
+        </table>
     </div>
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-p34f1UUtsS3wqzfto5wAAmdvj+osOnFyQFpp4Ua3gs/ZVWx6oOypYoCJhGGScy+8" crossorigin="anonymous"></script>
 
 </body>

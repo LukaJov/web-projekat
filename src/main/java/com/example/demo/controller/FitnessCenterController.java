@@ -1,7 +1,9 @@
 package com.example.demo.controller;
 
 import com.example.demo.model.DTO.FitnessCenterDTO;
+import com.example.demo.model.DTO.TrainerDTO;
 import com.example.demo.model.FitnessCenter;
+import com.example.demo.model.Trainer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -11,11 +13,12 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import com.example.demo.service.FitnessCenterService;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @CrossOrigin
 @RestController
-@RequestMapping(value = "/api/fitnesscenter")
+@RequestMapping(value = "/api/fitnesscenters")
 public class FitnessCenterController {
 
     @Autowired
@@ -36,6 +39,27 @@ public class FitnessCenterController {
                 newFitnessCenter.getAddress(), newFitnessCenter.getPhoneNumber(), newFitnessCenter.getEmailAddress());
 
         return new ResponseEntity<>(newFitnessCenterDTO, HttpStatus.CREATED);
+    }
+
+    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<List<FitnessCenterDTO>> getFitnessCenters()
+    {
+        List<FitnessCenter> fitnessCenters = new ArrayList<>();
+
+        fitnessCenters = this.fitnessCenterService.findAll();
+
+        List<FitnessCenterDTO> fitnessCenterDTOS = new ArrayList<>();
+
+        for (FitnessCenter fitnessCenter : fitnessCenters) {
+
+            FitnessCenterDTO fitnessCenterDTO = new FitnessCenterDTO(fitnessCenter.getId(), fitnessCenter.getName(),
+                    fitnessCenter.getAddress(), fitnessCenter.getPhoneNumber(), fitnessCenter.getEmailAddress()
+                    );
+            fitnessCenterDTOS.add(fitnessCenterDTO);
+
+        }
+        return new ResponseEntity<>(fitnessCenterDTOS, HttpStatus.OK);
+
     }
 
 }

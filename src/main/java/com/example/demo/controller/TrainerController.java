@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @CrossOrigin
 @RestController
@@ -36,25 +37,25 @@ public class TrainerController {
         Trainer newTrainer = this.trainerService.save(trainer);
 
 
-        TrainerDTO newTrainerDTO = new TrainerDTO(newTrainer.getName(), newTrainer.getSurname(),
+        TrainerDTO newTrainerDTO = new TrainerDTO(newTrainer.getId(),newTrainer.getName(), newTrainer.getSurname(),
         newTrainer.getPhoneNumber(), newTrainer.getEmailAddress(), newTrainer.getBirthday(),
         newTrainer.getUserType());
 
         return new ResponseEntity<>(newTrainerDTO, HttpStatus.CREATED);
     }
-
+//prikaz zahteva za trenera, izmeni posle
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<List<TrainerDTO>> getTrainerRequests(@RequestParam boolean active)
+    public ResponseEntity<List<TrainerDTO>> getTrainerRequests()
     {
         List<Trainer> trainers = new ArrayList<>();
 
-        trainers = this.trainerService.findByActive(active);
+        trainers = this.trainerService.findByActive(false);
 
         List<TrainerDTO> trainerDTOS = new ArrayList<>();
 
         for (Trainer trainer : trainers) {
 
-            TrainerDTO trainerDTO = new TrainerDTO(trainer.getName()
+            TrainerDTO trainerDTO = new TrainerDTO(trainer.getId(), trainer.getName()
                     , trainer.getSurname(), trainer.getPhoneNumber(),
                     trainer.getEmailAddress(), trainer.getBirthday(), trainer.getUserType());
 
@@ -64,5 +65,23 @@ public class TrainerController {
         }
         return new ResponseEntity<>(trainerDTOS, HttpStatus.OK);
 
+    }
+
+    //odobravanje zahteva
+    @PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE,
+            produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<TrainerDTO> makeActive(@PathVariable Long id) throws Exception {
+
+
+        Optional<Trainer> optTrainer = this.trainerService.findById(id);
+        Trainer trainer = optTrainer.get();
+        Trainer updatedTr = new Trainer();
+        updatedTr = this.trainerService.update(trainer);
+
+        TrainerDTO trainerDTO = new TrainerDTO(updatedTr.getId(), updatedTr.getName(), updatedTr.getSurname(), updatedTr.getPhoneNumber(),
+                updatedTr.getEmailAddress(), updatedTr.getBirthday(), updatedTr.getUserType());
+
+        // Vraćamo odgovor 200 OK, a kroz body odgovora šaljemo podatke o ažuriranom zaposlenom
+        return new ResponseEntity<>(trainerDTO, HttpStatus.OK);
     }
 }

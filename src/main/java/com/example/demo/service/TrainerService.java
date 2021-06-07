@@ -2,6 +2,7 @@ package com.example.demo.service;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 import com.example.demo.model.Trainer;
 import com.example.demo.repository.TrainerRepository;
@@ -22,5 +23,17 @@ public class TrainerService {
     {
         return this.trainerRepository.findByActive(active);
     }
+
+    public Optional<Trainer> findById(Long id){return this.trainerRepository.findById(id);}
+
+    public Trainer update(Trainer trainerToUpdate)
+    {
+        trainerToUpdate.setActive(true);
+
+        // Čuvanje u bazi
+        Trainer savedTr = this.trainerRepository.save(trainerToUpdate);
+        return savedTr;
+    }
+
 
 }
