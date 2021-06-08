@@ -25,60 +25,43 @@ public class TermController {
     private TermService termService;
     //dodaj pageable
 
-    private Sort.Direction getSortDirection(String direction) {
-        if (direction.equals("asc")) {
-            return Sort.Direction.ASC;
-        } else if (direction.equals("desc")) {
-            return Sort.Direction.DESC;
-        }
 
-        return Sort.Direction.ASC;
-    }
 
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<List<TermDTO>> getTerms(@RequestParam(required = false) String trainingName,  @RequestParam(required = false) String trainingDesc,
+    public ResponseEntity<List<TermDTO>> getTerms(/*@RequestParam Long id, @RequestParam String userType,*/ @RequestParam(required = false) String trainingName,  @RequestParam(required = false) String trainingDesc,
                            @RequestParam(required = false) String trainingType, @RequestParam(required = false) Double price,
-                           @RequestParam(required = false) Date date, @RequestParam(required = false, defaultValue ="id,asc") String[] sort)
+                           @RequestParam(required = false) Date date, @RequestParam(required = false, defaultValue ="price,asc") String sort)
     {
-       List<Order> orders = new ArrayList<Order>();
 
-       if (sort[0].contains(",")) {
-        // will sort more than 2 columns
-         for (String sortOrder : sort) {
-          // sortOrder="column, direction"
-           String[] _sort = sortOrder.split(",");
-           orders.add(new Order(getSortDirection(_sort[1]), _sort[0]));
-         }
-       } else {
-        // sort=[column, direction]
-         orders.add(new Order(getSortDirection(sort[1]), sort[0]));
-       }
+
+
+
 
         List<Term> terms = new ArrayList<>();
 
         if(!(trainingName==null))
         {
-            terms = this.termService.findByTrainingName(trainingName, Sort.by(orders));
+            terms = this.termService.findByTrainingName(trainingName, sort);
         }
         else if(!(trainingDesc==null))
         {
-           terms = this.termService.findByTrainingDesc(trainingDesc, Sort.by(orders));
+           terms = this.termService.findByTrainingDesc(trainingDesc, sort);
         }
         //else if(!(trainingType==null))
         else if(!(trainingType==null))
         {
-            terms = this.termService.findByTrainingTrainingType(trainingType, Sort.by(orders));
+            terms = this.termService.findByTrainingTrainingType(trainingType, sort);
         }
         else if(!(price==null))
         {
-            terms = this.termService.findByPrice(price, Sort.by(orders));
+            terms = this.termService.findByPrice(price, sort);
         }
         else if(!(date==null))
         {
-            terms = this.termService.findByDate(date, Sort.by(orders));
+            terms = this.termService.findByDate(date, sort);
         }
         else {
-            terms = this.termService.findAll(Sort.by(orders));
+            terms = this.termService.findAll(sort);
         }
 
         List<TermDTO> termDTOS = new ArrayList<>();

@@ -50,35 +50,5 @@ $(document).on('click', '.green', function () {
             console.log("ERROR:\n", response);
         }
     });
-
-
-   /* $.ajax({
-        type: "GET",
-        url: "http://localhost:8080/api/trainers",
-        dataType: "json",
-        success: function (response) {
-            console.log("SUCCESS:\n", response);
-
-            for (let trainer of response) {
-                let row = "<tr>";
-                row += "<td>" + trainer.name + "</td>";
-                row += "<td>" + trainer.surname + "</td>";
-                row += "<td>" + trainer.phoneNumber + "</td>";
-                row += "<td>" + trainer.emailAddress + "</td>";
-                row += "<td>" + trainer.birthday + "</td>";
-                // kreiramo button i definisemo custom data atribut id = id zaposlenog
-                let btn = "<button class='green' data-id=" + trainer.id + ">Accept</button>";
-                row += "<td>" + btn + "</td>";
-                row += "</tr>";
-
-                $('#trainers').append(row);
-            }
-        },
-        error: function (response) {
-            console.log("ERROR:\n", response);
-        }
-    });*/
-
-
 });
 

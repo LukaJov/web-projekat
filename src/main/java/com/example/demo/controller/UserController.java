@@ -35,7 +35,7 @@ public class UserController {
         User newUser = this.userService.save(user);
 
 
-        UserDTO newUserDTO = new UserDTO(newUser.getName(), newUser.getSurname(),
+        UserDTO newUserDTO = new UserDTO(newUser.getId(), newUser.getName(), newUser.getSurname(),
                 newUser.getPhoneNumber(), newUser.getEmailAddress(), newUser.getBirthday(),
                 newUser.getUserType());
 

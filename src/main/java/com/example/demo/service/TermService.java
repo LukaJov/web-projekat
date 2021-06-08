@@ -1,5 +1,6 @@
 package com.example.demo.service;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -9,48 +10,81 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+
+
 @Service
 public class TermService {
     @Autowired
     private TermRepository termRepository;
 
-    public List<Term> findAll(Sort sort)
+    private Sort.Order getSorting(String sort)
     {
-        return this.termRepository.findAll();
+        if(sort.equals("price,asc"))
+        {
+            List<Sort.Order> orders = new ArrayList<>();
+            Sort.Order order = new Sort.Order(Sort.Direction.ASC, "price");
+            orders.add(order);
+            return order;
+        }
+        else if(sort.equals("price,desc"))
+        {
+            List<Sort.Order> orders = new ArrayList<>();
+            Sort.Order order = new Sort.Order(Sort.Direction.DESC, "price");
+            orders.add(order);
+            return order;
+        }
+        else if(sort.equals("date,asc"))
+        {
+            List<Sort.Order> orders = new ArrayList<>();
+            Sort.Order order = new Sort.Order(Sort.Direction.ASC, "date");
+            orders.add(order);
+            return order;
+        }
+        else
+        {
+            List<Sort.Order> orders = new ArrayList<>();
+            Sort.Order order = new Sort.Order(Sort.Direction.DESC, "date");
+            orders.add(order);
+            return order;
+        }
+
     }
 
-    public List<Term> findByTrainingName(String name, Sort sort)
+    public List<Term> findAll(String sort)
     {
-        return this.termRepository.findByTrainingNameContaining(name, sort);
+        Sort.Order order = getSorting(sort);
+        return this.termRepository.findAll(Sort.by(order));
     }
 
-    public List<Term> findByTrainingDesc(String desc, Sort sort)
+    public List<Term> findByTrainingName(String name, String sort)
     {
-        return this.termRepository.findByTrainingDescContaining(desc, sort);
+        Sort.Order order = getSorting(sort);
+        return this.termRepository.findByTrainingNameContaining(name,Sort.by(order) );
+    }
+
+    public List<Term> findByTrainingDesc(String desc, String sort)
+    {
+        Sort.Order order = getSorting(sort);
+        return this.termRepository.findByTrainingDescContaining(desc,Sort.by(order) );
     }
     //findbytrainingtype probaj
 
-    public List<Term> findByTrainingTrainingType(String trainingType, Sort sort)
+    public List<Term> findByTrainingTrainingType(String trainingType, String sort)
     {
-        return this.termRepository.findByTrainingTrainingTypeContaining(trainingType, sort);
+        Sort.Order order = getSorting(sort);
+        return this.termRepository.findByTrainingTrainingTypeContaining(trainingType,Sort.by(order));
     }
 
-    public List<Term> findByDate(Date date, Sort sort)
+    public List<Term> findByDate(Date date, String sort)
     {
-        return this.termRepository.findByDateIsBefore(date, sort);
+        Sort.Order order = getSorting(sort);
+        return this.termRepository.findByDateIsBefore(date, Sort.by(order));
     }
 
-    public List<Term> findByPrice(Double price, Sort sort)
+    public List<Term> findByPrice(Double price, String sort)
     {
-        return this.termRepository.findByPriceIsLessThanEqual(price, sort);
+        Sort.Order order = getSorting(sort);
+        return this.termRepository.findByPriceIsLessThanEqual(price, Sort.by(order));
     }
-
-
-    //pitaj za sortiranje
-    //kako logovanje omoguciti
-    //dodaj zahtev, pregled zahteva i odobravanje
-    //nova html stranica za dodavanje fitnes centra
-    //prikazi sve fitnes centre
-    //registracija svih
 
 }

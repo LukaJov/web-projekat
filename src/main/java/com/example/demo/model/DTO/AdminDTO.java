@@ -7,7 +7,7 @@ import java.util.Date;
 
 @Setter
 @Getter
-public class UserDTO {
+public class AdminDTO {
 
     private String username;
     private String password;
@@ -19,14 +19,14 @@ public class UserDTO {
     private String userType;
     private Long id;
 
-    public UserDTO()
-    {
+    public AdminDTO() {
 
     }
 
-    public UserDTO(String username, String password, String name, String surname,
-               String phoneNumber, String emailAddress, Date birthday, String userType)
-    {
+    //ulazni dto
+    public AdminDTO(String username, String password, String name, String surname,
+                    String phoneNumber, String emailAddress, Date birthday, String userType) {
+
         this.username = username;
         this.password = password;
         this.name = name;
@@ -37,9 +37,10 @@ public class UserDTO {
         this.userType = userType;
     }
 
-    public UserDTO(Long id, String name, String surname,
-                      String phoneNumber, String emailAddress, Date birthday, String userType)
-    {
+    //izlazi dto
+    //moras id da vracas!!!!!!
+    public AdminDTO(Long id, String name, String surname,
+                    String phoneNumber, String emailAddress, Date birthday, String userType) {
         this.id = id;
         this.name = name;
         this.surname = surname;
@@ -48,4 +49,5 @@ public class UserDTO {
         this.birthday = birthday;
         this.userType = userType;
     }
-}
+
+};

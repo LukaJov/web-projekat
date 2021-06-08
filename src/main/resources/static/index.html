@@ -63,6 +63,11 @@
         }
 
     </style>
+    <script src="js/jquery.min.js"></script>
+    <script src="js/jquery.validate.min.js"></script>
+    <script src="js/login.js"></script>
+
+
 </head>
 <body>
 
@@ -77,27 +82,27 @@
                 <form>
                     <div class="form-row">
                         <div class="col-lg-7">
-                            <input type="email" placeHolder="Email-Address" class="form-control">
+                            <input type="text" placeHolder="Username" class="form-control" id = "username">
                         </div>
                     </div>
                     <div class="form-row">
                         <div class="col-lg-7">
-                            <input type="password" placeHolder="*******" class="form-control">
+                            <input type="password" placeHolder="*******" class="form-control" id = "password">
                         </div>
                     </div>
                     <div class="form-row">
                         <div class="col-lg-7">
-                            <button onclick="document.location='terms.html'" type="button" class="btn" id="member">Login as member</button>
+                            <button type="button" class="btn" id="member">Login as member</button>
                         </div>
                     </div>
                     <div class="form-row">
                         <div class="col-lg-7">
-                            <button onclick="document.location='terms.html'" type="button" class="btn" id = "trainer">Login as trainer</button>
+                            <button type="button" class="btn" id = "trainer">Login as trainer</button>
                         </div>
                     </div>
                     <div class="form-row">
                         <div class="col-lg-7">
-                            <button onclick="document.location='confirmtrainer.html'" type="button" class="btn" id="admin">Login as admin</button>
+                            <button type="button" class="btn" id="admin">Login as admin</button>
                         </div>
                     </div>
                     <a href="#">Forgot Password</a>
