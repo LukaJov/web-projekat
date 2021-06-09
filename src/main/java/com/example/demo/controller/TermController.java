@@ -47,7 +47,7 @@ public class TermController {
         {
            terms = this.termService.findByTrainingDesc(trainingDesc, sort);
         }
-        //else if(!(trainingType==null))
+
         else if(!(trainingType==null))
         {
             terms = this.termService.findByTrainingTrainingType(trainingType, sort);

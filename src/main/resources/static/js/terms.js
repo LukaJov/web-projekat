@@ -41,8 +41,8 @@ $(document).on("click", "button", function (event) {
     let sortDir = $("#sortDir").val();
 
 
-    let data = {name:$("#name").val(), desc:$("#desc").val(), trainingType: $("#trainingType").val(),
-        duration: $("#duration").val(), date: $("#date").val(), price: $("#price").val()
+    let data = {trainingName:$("#trainingName").val(), trainingDesc:$("#trainingDesc").val(), trainingType: $("#trainingType").val(),
+        date: $("#date").val(), price: $("#price").val()
     }
 
     //dodaj sort i query params u zahtev
