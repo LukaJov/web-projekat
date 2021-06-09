@@ -60,6 +60,7 @@ $(document).on('click', '#admin', function () {
         success: function (response) {
             console.log("SUCCESS:\n", response);
             alert("Uspesno ste se ulogovali!");//
+            window.location.href = "fitnesscenters.html";
 
         },
         error: function (response) {

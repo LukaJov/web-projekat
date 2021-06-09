@@ -6,7 +6,10 @@ VALUES ('Srdjan2', 'Srdjan222', 'Srdjan', 'Mihajlovic', '06233783', 'mihajlsrdj@
 INSERT INTO TRAINER(username, password, name, surname, phone_Number, email_Address, birthday, user_Type, active, fit_center_id)
 VALUES ('LukaJov', 'LukaJov123', 'Luka', 'Jovanovic', '06234443', 'lukajov@gmail.com', '2000-7-1', 'Trainer', true, 1);
 INSERT INTO TRAINER(username, password, name, surname, phone_Number, email_Address, birthday, user_Type, active, fit_center_id)
-VALUES ('Milan1234', 'Lanmi1234', 'Milan', 'Simic', '06453454', 'simicmilan@gmail.com', '2003-4-12', 'Trainer', true, 1);
+VALUES ('Milan1234', 'Lanmi1234', 'Milan', 'Simic', '06453454', 'simicmilan@gmail.com', '2003-4-12', 'Trainer', false, 1);
+INSERT INTO TRAINER(username, password, name, surname, phone_Number, email_Address, birthday, user_Type, active, fit_center_id)
+VALUES ('gorang', 'gorangoran', 'Goran', 'Goranovic', '064534544', 'rango@gmail.com', '2001-4-12', 'Trainer', false, 1);
+
 
 INSERT INTO USER (username, password, name, surname, phone_Number, email_Address, birthday, user_Type, active)
 VALUES ('MarkoR', 'MarkoRakic1234', 'Marko', 'Rakic', '06137837', 'rakicmarko@gmail.com', '1993-7-12', 'Member', true);

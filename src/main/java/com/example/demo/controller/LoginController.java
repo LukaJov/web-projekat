@@ -51,6 +51,11 @@ public class LoginController {
                 return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
             }
 
+            if(!(user.isActive()))
+            {
+                return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            }
+
             UserDTO userDTO = new UserDTO(user.getId(), user.getName(), user.getSurname(),
                     user.getPhoneNumber(), user.getEmailAddress(), user.getBirthday(),
                     user.getUserType());
@@ -72,6 +77,11 @@ public class LoginController {
                 return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
             }
 
+            if(!(trainer.isActive()))
+            {
+                return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            }
+
             UserDTO userDTO = new UserDTO(trainer.getId(), trainer.getName(), trainer.getSurname(),
                     trainer.getPhoneNumber(), trainer.getEmailAddress(), trainer.getBirthday(),
                     trainer.getUserType());
@@ -87,6 +97,11 @@ public class LoginController {
             }
 
             if(!(admin.getPassword().equals(password)))
+            {
+                return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            }
+
+            if(!(admin.isActive()))
             {
                 return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
             }

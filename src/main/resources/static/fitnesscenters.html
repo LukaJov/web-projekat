@@ -9,6 +9,7 @@
     <script src="js/jquery.min.js"></script>
     <script src="js/jquery.validate.min.js"></script>
     <script src="js/fitnesscenters.js"></script>
+    <script src="js/trainerrequests.js"></script>
 
     <title>Terms</title>
     <style>
@@ -69,10 +70,24 @@
             color: black;
         }
 
+        .topnav{
+            background-color: beige;
+            position: absolute;
+            top:0;
+            height:50px;
+            width:300px;
+            font-size: 15px;
+            border-radius: 5px;
+
+        }
 
     </style>
 </head>
 <body>
+<div class="topnav">
+    <a class="active" href="fitnesscenters.html">Fitness centers</a>
+    <a href="confirmtrainer.html", id="requests">Trainer requests</a>
+</div>
 <div class="container">
     <h1>Fitness centers</h1>
     <table id="fitnesscenters">
