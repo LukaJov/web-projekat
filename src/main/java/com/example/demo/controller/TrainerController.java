@@ -83,4 +83,12 @@ public class TrainerController {
         // Vraćamo odgovor 200 OK, a kroz body odgovora šaljemo podatke o ažuriranom zaposlenom
         return new ResponseEntity<>(trainerDTO, HttpStatus.OK);
     }
+
+    @DeleteMapping(value = "/{id}")
+    public ResponseEntity<Void> deleteTrainer(@PathVariable Long id) {
+
+        this.trainerService.delete(id);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+
 }

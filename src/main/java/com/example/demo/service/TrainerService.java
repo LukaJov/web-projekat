@@ -35,10 +35,11 @@ public class TrainerService {
     {
         trainerToUpdate.setActive(true);
 
-        // Čuvanje u bazi
         Trainer savedTr = this.trainerRepository.save(trainerToUpdate);
         return savedTr;
     }
+
+    public void delete(Long id){this.trainerRepository.deleteById(id);}
 
 
 }

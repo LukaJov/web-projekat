@@ -41,6 +41,8 @@ public class FitnessCenterController {
         return new ResponseEntity<>(newFitnessCenterDTO, HttpStatus.CREATED);
     }
 
+    //fali putmapping
+
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<FitnessCenterDTO>> getFitnessCenters()
     {
@@ -60,6 +62,13 @@ public class FitnessCenterController {
         }
         return new ResponseEntity<>(fitnessCenterDTOS, HttpStatus.OK);
 
+    }
+
+    @DeleteMapping(value = "/{id}")
+    public ResponseEntity<Void> deleteFitnessCenter(@PathVariable Long id) {
+
+        this.fitnessCenterService.delete(id);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
 }

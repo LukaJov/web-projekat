@@ -18,8 +18,11 @@ public class FitnessCenterService {
     public FitnessCenter save(FitnessCenter fitnessCenter) {
         return this.fitnessCenterRepository.save(fitnessCenter);
     }
+    public void delete(Long id){this.fitnessCenterRepository.deleteById(id);}
 
     public List<FitnessCenter> findAll() {
         return this.fitnessCenterRepository.findAll();
     }
+
+
 };
