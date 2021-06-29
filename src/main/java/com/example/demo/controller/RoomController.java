@@ -1,8 +1,10 @@
 package com.example.demo.controller;
 
 import com.example.demo.model.DTO.FitnessCenterDTO;
+import com.example.demo.model.DTO.RoomDTO;
 import com.example.demo.model.DTO.TrainerDTO;
 import com.example.demo.model.FitnessCenter;
+import com.example.demo.model.Room;
 import com.example.demo.model.Trainer;
 import com.example.demo.service.RoomService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +26,22 @@ public class RoomController {
 
     @Autowired
     private RoomService roomService;
+
+    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE,
+            produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<RoomDTO> createRoom(@RequestBody RoomDTO roomDTO) throws Exception {
+
+        Room room = new Room(roomDTO.getCapacity(), roomDTO.getLabel());
+
+
+        Room newRoom = roomService.save(room);
+        
+        RoomDTO newRoomDTO = new RoomDTO(newRoom.getId(), newRoom.getCapacity(),
+                newRoom.getLabel());
+
+        return new ResponseEntity<>(newRoomDTO, HttpStatus.CREATED);
+    }
+
 
     @DeleteMapping(value = "/{id}")
     public ResponseEntity<Void> deleteRoom(@PathVariable Long id) {
