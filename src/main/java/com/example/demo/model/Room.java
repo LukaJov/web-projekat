@@ -32,6 +32,15 @@ public class Room implements Serializable {
     @OneToMany(mappedBy = "room", fetch =FetchType.LAZY, cascade = CascadeType.ALL)
     private Set<Term> terms = new HashSet<>();
 
+    public Room(int capacity, String label) {
+        this.capacity = capacity;
+        this.label = label;
+    }
+
+    public Room()
+    {
+
+    }
     @Override
     public String toString() {
         return "Room{" +

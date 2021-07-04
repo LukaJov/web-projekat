@@ -87,4 +87,9 @@ public class TermService {
         return this.termRepository.findByPriceIsLessThanEqual(price, Sort.by(order));
     }
 
+    public List<Term> findByUserId(Long id)
+    {
+        return this.termRepository.findByUserId(id);
+    }
+
 }

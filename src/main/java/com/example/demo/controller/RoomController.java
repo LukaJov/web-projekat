@@ -35,7 +35,7 @@ public class RoomController {
 
 
         Room newRoom = roomService.save(room);
-        
+
         RoomDTO newRoomDTO = new RoomDTO(newRoom.getId(), newRoom.getCapacity(),
                 newRoom.getLabel());
 

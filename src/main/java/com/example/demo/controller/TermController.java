@@ -1,5 +1,6 @@
 package com.example.demo.controller;
 
+import org.hibernate.usertype.UserType;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.Sort.Order;
 import com.example.demo.model.DTO.TermDTO;
@@ -80,7 +81,29 @@ public class TermController {
 
     }
 
-   //pitaj da li prikaz clanova i trenera
+
+    @GetMapping(produces=MediaType.APPLICATION_JSON_VALUE, value = "/own")
+    public ResponseEntity<List<TermDTO>> getOwnTerms(@RequestParam Long id, @RequestParam UserType userType)
+    {
+        List<Term> terms = new ArrayList<>();
+
+        List<TermDTO> termDTOS = new ArrayList<>();
+
+        terms = this.termService.findByUserId(id);
+
+        for(Term: terms)
+        {
+            TrainingDTO trainingDTO = new TrainingDTO(term.getTraining().getName()
+                    , term.getTraining().getDesc(), term.getTraining().getTrainingType(), term.getTraining().getDuration());
+
+            TermDTO termDTO = new TermDTO(trainingDTO, term.getDate(), term.getPrice());
+
+            termDTOS.add(termDTO);
+        }
+
+        return new ResponseEntity<>(termDTOS, HttpStatus.OK);
+    }
+
 
 
 

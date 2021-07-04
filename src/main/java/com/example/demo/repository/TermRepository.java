@@ -22,6 +22,7 @@ public interface TermRepository extends JpaRepository<Term, Long> {
 
     List<Term> findByPriceIsLessThanEqual(Double price, Sort sort);
 
+    List<Term> findByUserId(Long id);
 
 
 
