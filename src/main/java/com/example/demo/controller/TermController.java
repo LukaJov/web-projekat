@@ -1,6 +1,7 @@
 package com.example.demo.controller;
 
 import com.example.demo.model.DTO.TrainerDTO;
+import com.example.demo.model.Grade;
 import com.example.demo.model.Trainer;
 import com.example.demo.model.User;
 import com.example.demo.service.UserService;
@@ -143,6 +144,97 @@ public class TermController {
         return new ResponseEntity<>(termDTOS, HttpStatus.OK);
     }
 
+    @GetMapping(produces=MediaType.APPLICATION_JSON_VALUE, value = "/donegraded")
+    public ResponseEntity<List<TermDTO>> getUngradedTerms(@RequestParam Long id, @RequestParam String userType)
+    {
+        List<Term> terms = new ArrayList<>();
+
+        List<TermDTO> termDTOS = new ArrayList<>();
+
+
+        terms = this.termService.findAll("price,asc");
+
+        Optional<User> optUser = this.userService.findById(id);
+        User user = optUser.get();
+
+
+        for(Term term: user.getDone())
+        {
+
+            Boolean ungraded = true;
+            for(Grade grade: user.getGrades())
+            {
+                Term trm = grade.getTerm();
+                if(trm.getId()== term.getId())
+                {
+                    ungraded = false;
+                }
+            }
+
+            if(ungraded)
+            {
+                TrainingDTO trainingDTO = new TrainingDTO(term.getTraining().getName()
+                        , term.getTraining().getDesc(), term.getTraining().getTrainingType(), term.getTraining().getDuration());
+
+                TermDTO termDTO = new TermDTO(trainingDTO, term.getDate(), term.getPrice());
+
+                termDTOS.add(termDTO);
+            }
+
+        }
+
+
+        return new ResponseEntity<>(termDTOS, HttpStatus.OK);
+    }
+
+    @GetMapping(produces=MediaType.APPLICATION_JSON_VALUE, value = "/doneungraded")
+    public ResponseEntity<List<TermDTO>> getGradedTerms(@RequestParam Long id, @RequestParam String userType)
+    {
+        List<Term> terms = new ArrayList<>();
+
+        List<TermDTO> termDTOS = new ArrayList<>();
+
+        /*terms = this.termService.findAll("price,asc");*/
+
+        Optional<User> optUser = this.userService.findById(id);
+        User user = optUser.get();
+
+
+        /*for(Term term: terms)
+        {
+            for(User user: term.getUserDone()) {
+                if (user.getId() == id)
+                for(Grade grade: term.getGrades()){
+                    {
+                        TrainingDTO trainingDTO = new TrainingDTO(term.getTraining().getName()
+                                , term.getTraining().getDesc(), term.getTraining().getTrainingType(), term.getTraining().getDuration());
+
+                        TermDTO termDTO = new TermDTO(trainingDTO, term.getDate(), term.getPrice());
+
+                        termDTOS.add(termDTO);
+                    }
+                }
+            }
+            }
+        }*/
+
+        for(Grade grade: user.getGrades())
+        {
+            if(grade!=null) {
+                Term term = grade.getTerm();
+
+                TrainingDTO trainingDTO = new TrainingDTO(term.getTraining().getName()
+                        , term.getTraining().getDesc(), term.getTraining().getTrainingType(), term.getTraining().getDuration());
+
+                TermDTO termDTO = new TermDTO(trainingDTO, term.getDate(), term.getPrice());
+
+                termDTOS.add(termDTO);
+            }
+        }
+
+        return new ResponseEntity<>(termDTOS, HttpStatus.OK);
+    }
+
     //prijava za trening
     @PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<TermDTO> signUpOrOut(@PathVariable Long id, @RequestParam Long userId, @RequestParam String userType, @RequestParam Boolean upOrOut) throws Exception {
@@ -187,7 +279,36 @@ public class TermController {
 
         return new ResponseEntity<>(termDTO, HttpStatus.OK);
     }
+// davanje ocena promeni sutra
+    @PutMapping(value = "/done/{id}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<TermDTO> giveGrade(@PathVariable Long id, @RequestParam Long userId, @RequestParam String userType, @RequestParam Double grade) throws Exception {
 
+        if(userType.equals("Member")) {
+            Optional<Term> optTerm = this.termService.findById(id);
+            Term term = optTerm.get();
+            Term updatedTerm = new Term();
+
+            Optional<User> optUser = this.userService.findById(id);
+            User user = optUser.get();
+
+            if(upOrOut) {
+                updatedTerm = this.termService.signup(term, user);
+            }
+            else{
+                updatedTerm = this.termService.signout(term, user);
+            }
+
+            TrainingDTO trainingDTO = new TrainingDTO(updatedTerm.getTraining().getName()
+                    , updatedTerm.getTraining().getDesc(), updatedTerm.getTraining().getTrainingType(), updatedTerm.getTraining().getDuration());
+
+            TermDTO termDTO = new TermDTO(trainingDTO, updatedTerm.getDate(), updatedTerm.getPrice());
+            return new ResponseEntity<>(termDTO, HttpStatus.OK);
+        }
+
+        else {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+    }
 
 
 
