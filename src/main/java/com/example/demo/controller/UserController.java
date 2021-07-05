@@ -2,6 +2,7 @@ package com.example.demo.controller;
 
 import com.example.demo.model.DTO.UserDTO;
 
+import com.example.demo.model.Trainer;
 import com.example.demo.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import com.example.demo.service.UserService;
 
 import java.util.List;
+import java.util.Optional;
 
 @CrossOrigin
 @RestController
@@ -40,6 +42,20 @@ public class UserController {
                 newUser.getUserType());
 
         return new ResponseEntity<>(newUserDTO, HttpStatus.CREATED);
+    }
+
+    @GetMapping(value= "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<UserDTO> getUser(@PathVariable Long id)
+    {
+        Optional<User> optUser = this.userService.findById(id);
+        User user = optUser.get();
+
+        UserDTO userDTO = new UserDTO(user.getId(), user.getName(), user.getSurname(),
+                user.getPhoneNumber(), user.getEmailAddress(), user.getBirthday(),
+                user.getUserType());
+
+
+        return new ResponseEntity<>(userDTO, HttpStatus.OK);
     }
 
 
