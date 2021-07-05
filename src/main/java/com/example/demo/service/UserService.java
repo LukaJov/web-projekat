@@ -2,6 +2,7 @@ package com.example.demo.service;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 import com.example.demo.model.User;
 import com.example.demo.repository.UserRepository;
@@ -22,6 +23,7 @@ public class UserService {
     {
         return this.userRepository.findByUsername(username);
     }
+    public Optional<User> findById(Long id){return this.userRepository.findById(id);}
 
 
 }

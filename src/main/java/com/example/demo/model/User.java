@@ -42,10 +42,10 @@ public class User implements Serializable
     @Column
     private boolean active;
 
-    @OneToMany
+    @ManyToMany(mappedBy = "userToDo")
     private Set<Term> toDo = new HashSet<>();
 
-    @OneToMany
+    @ManyToMany(mappedBy = "userDone")
     private Set<Term> done = new HashSet<>();
 
    //dodaj listu ocena

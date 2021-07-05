@@ -1,5 +1,9 @@
 package com.example.demo.controller;
 
+import com.example.demo.model.DTO.TrainerDTO;
+import com.example.demo.model.Trainer;
+import com.example.demo.model.User;
+import com.example.demo.service.UserService;
 import org.hibernate.usertype.UserType;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.Sort.Order;
@@ -16,6 +20,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Date;
+import java.util.Optional;
 
 @CrossOrigin
 @RestController
@@ -25,7 +30,8 @@ public class TermController {
     @Autowired
     private TermService termService;
     //dodaj pageable
-
+    @Autowired
+    private UserService userService;
 
 
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
@@ -33,11 +39,6 @@ public class TermController {
                            @RequestParam(required = false) String trainingType, @RequestParam(required = false) Double price,
                            @RequestParam(required = false) Date date, @RequestParam(required = false, defaultValue ="price,asc") String sort)
     {
-
-
-
-
-
         List<Term> terms = new ArrayList<>();
 
         if(!(trainingName==null))
@@ -82,29 +83,110 @@ public class TermController {
     }
 
 
-    @GetMapping(produces=MediaType.APPLICATION_JSON_VALUE, value = "/own")
-    public ResponseEntity<List<TermDTO>> getOwnTerms(@RequestParam Long id, @RequestParam UserType userType)
+    @GetMapping(produces=MediaType.APPLICATION_JSON_VALUE, value = "/todo")
+    public ResponseEntity<List<TermDTO>> getOwnTerms(@RequestParam Long id, @RequestParam String userType)
     {
         List<Term> terms = new ArrayList<>();
 
         List<TermDTO> termDTOS = new ArrayList<>();
 
-        terms = this.termService.findByUserId(id);
+        terms = this.termService.findAll("price,asc");
 
-        for(Term: terms)
+        /*Optional<User> optUser = this.userService.findById(id);
+        User user = optUser.get();*/
+
+
+       for(Term term: terms)
         {
-            TrainingDTO trainingDTO = new TrainingDTO(term.getTraining().getName()
-                    , term.getTraining().getDesc(), term.getTraining().getTrainingType(), term.getTraining().getDuration());
+            for(User user: term.getUserToDo()) {
+                if(user.getId()==id) {
+                    TrainingDTO trainingDTO = new TrainingDTO(term.getTraining().getName()
+                            , term.getTraining().getDesc(), term.getTraining().getTrainingType(), term.getTraining().getDuration());
 
-            TermDTO termDTO = new TermDTO(trainingDTO, term.getDate(), term.getPrice());
+                    TermDTO termDTO = new TermDTO(trainingDTO, term.getDate(), term.getPrice());
 
-            termDTOS.add(termDTO);
+                    termDTOS.add(termDTO);
+                }
+            }
         }
 
         return new ResponseEntity<>(termDTOS, HttpStatus.OK);
     }
 
+    @GetMapping(produces=MediaType.APPLICATION_JSON_VALUE, value = "/done")
+    public ResponseEntity<List<TermDTO>> getDoneTerms(@RequestParam Long id, @RequestParam String userType)
+    {
+        List<Term> terms = new ArrayList<>();
 
+        List<TermDTO> termDTOS = new ArrayList<>();
+
+        terms = this.termService.findAll("price,asc");
+
+        /*Optional<User> optUser = this.userService.findById(id);
+        User user = optUser.get();*/
+
+
+        for(Term term: terms)
+        {
+            for(User user: term.getUserDone()) {
+                if(user.getId()==id) {
+                    TrainingDTO trainingDTO = new TrainingDTO(term.getTraining().getName()
+                            , term.getTraining().getDesc(), term.getTraining().getTrainingType(), term.getTraining().getDuration());
+
+                    TermDTO termDTO = new TermDTO(trainingDTO, term.getDate(), term.getPrice());
+
+                    termDTOS.add(termDTO);
+                }
+            }
+        }
+
+        return new ResponseEntity<>(termDTOS, HttpStatus.OK);
+    }
+
+    //prijava za trening
+    @PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<TermDTO> signUpOrOut(@PathVariable Long id, @RequestParam Long userId, @RequestParam String userType, @RequestParam Boolean upOrOut) throws Exception {
+
+        if(userType.equals("Member")) {
+            Optional<Term> optTerm = this.termService.findById(id);
+            Term term = optTerm.get();
+            Term updatedTerm = new Term();
+
+            Optional<User> optUser = this.userService.findById(id);
+            User user = optUser.get();
+
+            if(upOrOut) {
+                updatedTerm = this.termService.signup(term, user);
+            }
+            else{
+                updatedTerm = this.termService.signout(term, user);
+            }
+
+            TrainingDTO trainingDTO = new TrainingDTO(updatedTerm.getTraining().getName()
+                    , updatedTerm.getTraining().getDesc(), updatedTerm.getTraining().getTrainingType(), updatedTerm.getTraining().getDuration());
+
+            TermDTO termDTO = new TermDTO(trainingDTO, updatedTerm.getDate(), updatedTerm.getPrice());
+            return new ResponseEntity<>(termDTO, HttpStatus.OK);
+        }
+
+        else {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @GetMapping(value="/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<TermDTO> getTerm(@PathVariable Long id)
+    {
+        Optional<Term> optTerm = this.termService.findById(id);
+        Term term = optTerm.get();
+
+        TrainingDTO trainingDTO = new TrainingDTO(term.getTraining().getName()
+                , term.getTraining().getDesc(), term.getTraining().getTrainingType(), term.getTraining().getDuration());
+
+        TermDTO termDTO = new TermDTO(trainingDTO, term.getDate(), term.getPrice());
+
+        return new ResponseEntity<>(termDTO, HttpStatus.OK);
+    }
 
 
 

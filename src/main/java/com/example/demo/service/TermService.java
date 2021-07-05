@@ -3,8 +3,11 @@ package com.example.demo.service;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 import com.example.demo.model.Term;
+import com.example.demo.model.Trainer;
+import com.example.demo.model.User;
 import com.example.demo.repository.TermRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
@@ -55,7 +58,10 @@ public class TermService {
         Sort.Order order = getSorting(sort);
         return this.termRepository.findAll(Sort.by(order));
     }
-
+    public Optional<Term> findById(Long id)
+    {
+        return this.termRepository.findById(id);
+    }
     public List<Term> findByTrainingName(String name, String sort)
     {
         Sort.Order order = getSorting(sort);
@@ -87,9 +93,25 @@ public class TermService {
         return this.termRepository.findByPriceIsLessThanEqual(price, Sort.by(order));
     }
 
-    public List<Term> findByUserId(Long id)
+    /*public List<Term> findByUserId(Long id)
     {
         return this.termRepository.findByUserId(id);
+    }*/
+
+    public Term signup(Term term, User user)
+    {
+        term.getUserToDo().add(user);
+        term.setNumberOfUsers(term.getNumberOfUsers()+1);
+        Term savedTerm = this.termRepository.save(term);
+        return savedTerm;
+    }
+
+    public Term signout(Term term, User user)
+    {
+        term.getUserToDo().remove(user);
+        term.setNumberOfUsers(term.getNumberOfUsers()-1);
+        Term savedTerm = this.termRepository.save(term);
+        return savedTerm;
     }
 
 }
