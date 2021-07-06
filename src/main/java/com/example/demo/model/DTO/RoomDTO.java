@@ -19,6 +19,11 @@ public class RoomDTO {
         this.label = label;
     }
 
+    public RoomDTO(int capacity, String label) {
+        this.capacity = capacity;
+        this.label = label;
+    }
+
     public RoomDTO()
     {
 

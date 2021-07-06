@@ -1,5 +1,6 @@
 package com.example.demo.controller;
 
+import com.example.demo.model.DTO.RoomDTO;
 import com.example.demo.model.DTO.TrainerDTO;
 import com.example.demo.model.Grade;
 import com.example.demo.model.Trainer;
@@ -34,6 +35,13 @@ public class TermController {
     @Autowired
     private UserService userService;
 
+    @PostMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<TermDTO> addTerm(@RequestBody TermDTO termDTO)
+    {
+        Term term = new Term(termDTO.);
+
+
+    }
 
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<TermDTO>> getTerms(/*@RequestParam Long id, @RequestParam String userType,*/ @RequestParam(required = false) String trainingName,  @RequestParam(required = false) String trainingDesc,
@@ -73,8 +81,8 @@ public class TermController {
 
             TrainingDTO trainingDTO = new TrainingDTO(term.getTraining().getName()
             , term.getTraining().getDesc(), term.getTraining().getTrainingType(), term.getTraining().getDuration());
-
-            TermDTO termDTO = new TermDTO(trainingDTO, term.getDate(), term.getPrice());
+            RoomDTO roomDTO = new RoomDTO(term.getRoom().getCapacity(), term.getRoom().getLabel());
+            TermDTO termDTO = new TermDTO(trainingDTO, term.getDate(), term.getPrice(), term.getNumberOfUsers(), roomDTO);
 
             termDTOS.add(termDTO);
         }
@@ -103,8 +111,8 @@ public class TermController {
                 if(user.getId()==id) {
                     TrainingDTO trainingDTO = new TrainingDTO(term.getTraining().getName()
                             , term.getTraining().getDesc(), term.getTraining().getTrainingType(), term.getTraining().getDuration());
-
-                    TermDTO termDTO = new TermDTO(trainingDTO, term.getDate(), term.getPrice());
+                    RoomDTO roomDTO = new RoomDTO(term.getRoom().getCapacity(), term.getRoom().getLabel());
+                    TermDTO termDTO = new TermDTO(trainingDTO, term.getDate(), term.getPrice(), term.getNumberOfUsers(), roomDTO);
 
                     termDTOS.add(termDTO);
                 }
@@ -134,7 +142,8 @@ public class TermController {
                     TrainingDTO trainingDTO = new TrainingDTO(term.getTraining().getName()
                             , term.getTraining().getDesc(), term.getTraining().getTrainingType(), term.getTraining().getDuration());
 
-                    TermDTO termDTO = new TermDTO(trainingDTO, term.getDate(), term.getPrice());
+                    RoomDTO roomDTO = new RoomDTO(term.getRoom().getCapacity(), term.getRoom().getLabel());
+                    TermDTO termDTO = new TermDTO(trainingDTO, term.getDate(), term.getPrice(),term.getNumberOfUsers(), roomDTO);
 
                     termDTOS.add(termDTO);
                 }
@@ -176,7 +185,9 @@ public class TermController {
                 TrainingDTO trainingDTO = new TrainingDTO(term.getTraining().getName()
                         , term.getTraining().getDesc(), term.getTraining().getTrainingType(), term.getTraining().getDuration());
 
-                TermDTO termDTO = new TermDTO(trainingDTO, term.getDate(), term.getPrice());
+                RoomDTO roomDTO = new RoomDTO(term.getRoom().getCapacity(), term.getRoom().getLabel());
+                TermDTO termDTO = new TermDTO(trainingDTO, term.getDate(), term.getPrice(), term.getNumberOfUsers(), roomDTO);
+
 
                 termDTOS.add(termDTO);
             }
@@ -226,7 +237,9 @@ public class TermController {
                 TrainingDTO trainingDTO = new TrainingDTO(term.getTraining().getName()
                         , term.getTraining().getDesc(), term.getTraining().getTrainingType(), term.getTraining().getDuration());
 
-                TermDTO termDTO = new TermDTO(trainingDTO, term.getDate(), term.getPrice());
+                RoomDTO roomDTO = new RoomDTO(term.getRoom().getCapacity(), term.getRoom().getLabel());
+                TermDTO termDTO = new TermDTO(trainingDTO, term.getDate(), term.getPrice(), term.getNumberOfUsers(), roomDTO);
+
 
                 termDTOS.add(termDTO);
             }
@@ -257,7 +270,9 @@ public class TermController {
             TrainingDTO trainingDTO = new TrainingDTO(updatedTerm.getTraining().getName()
                     , updatedTerm.getTraining().getDesc(), updatedTerm.getTraining().getTrainingType(), updatedTerm.getTraining().getDuration());
 
-            TermDTO termDTO = new TermDTO(trainingDTO, updatedTerm.getDate(), updatedTerm.getPrice());
+            RoomDTO roomDTO = new RoomDTO(term.getRoom().getCapacity(), term.getRoom().getLabel());
+            TermDTO termDTO = new TermDTO(trainingDTO, term.getDate(), term.getPrice(), term.getNumberOfUsers(), roomDTO);
+
             return new ResponseEntity<>(termDTO, HttpStatus.OK);
         }
 
@@ -275,7 +290,9 @@ public class TermController {
         TrainingDTO trainingDTO = new TrainingDTO(term.getTraining().getName()
                 , term.getTraining().getDesc(), term.getTraining().getTrainingType(), term.getTraining().getDuration());
 
-        TermDTO termDTO = new TermDTO(trainingDTO, term.getDate(), term.getPrice());
+        RoomDTO roomDTO = new RoomDTO(term.getRoom().getCapacity(), term.getRoom().getLabel());
+        TermDTO termDTO = new TermDTO(trainingDTO, term.getDate(), term.getPrice(), term.getNumberOfUsers(), roomDTO);
+
 
         return new ResponseEntity<>(termDTO, HttpStatus.OK);
     }
@@ -291,17 +308,13 @@ public class TermController {
             Optional<User> optUser = this.userService.findById(id);
             User user = optUser.get();
 
-            if(upOrOut) {
-                updatedTerm = this.termService.signup(term, user);
-            }
-            else{
-                updatedTerm = this.termService.signout(term, user);
-            }
 
             TrainingDTO trainingDTO = new TrainingDTO(updatedTerm.getTraining().getName()
                     , updatedTerm.getTraining().getDesc(), updatedTerm.getTraining().getTrainingType(), updatedTerm.getTraining().getDuration());
 
-            TermDTO termDTO = new TermDTO(trainingDTO, updatedTerm.getDate(), updatedTerm.getPrice());
+            RoomDTO roomDTO = new RoomDTO(term.getRoom().getCapacity(), term.getRoom().getLabel());
+            TermDTO termDTO = new TermDTO(trainingDTO, term.getDate(), term.getPrice(), term.getNumberOfUsers(), roomDTO);
+
             return new ResponseEntity<>(termDTO, HttpStatus.OK);
         }
 

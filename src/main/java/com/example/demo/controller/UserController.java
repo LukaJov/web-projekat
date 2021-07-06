@@ -54,7 +54,6 @@ public class UserController {
                 user.getPhoneNumber(), user.getEmailAddress(), user.getBirthday(),
                 user.getUserType());
 
-
         return new ResponseEntity<>(userDTO, HttpStatus.OK);
     }
 

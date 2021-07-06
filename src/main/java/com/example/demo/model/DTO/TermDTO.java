@@ -11,14 +11,18 @@ public class TermDTO {
     private TrainingDTO trainingDTO;
     private Date date;
     private Double price;
+    private int numberOfUsers;
+    private RoomDTO roomDTO;
+
 
     public TermDTO()
     {
 
     }
 
-    public TermDTO(TrainingDTO trainingDTO, Date date, Double price)
+    public TermDTO(TrainingDTO trainingDTO, Date date, Double price, int numberOfUsers,RoomDTO roomDTO)
     {
+        this.numberOfUsers = numberOfUsers;
         this.trainingDTO = trainingDTO;
         this.date = date;
         this.price = price;

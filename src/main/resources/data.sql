@@ -28,6 +28,6 @@ INSERT INTO SCHEDULE(room_id, term_id) VALUES (1,1);
 
 INSERT INTO GRADE(grd, given_by_id, term_id) VALUES(3.5, 1, 1);
 
-/*INSERT INTO USER_DONE(user_id, done_id) VALUES(1,1);
-INSERT INTO USER_TO_DO(user_id, to_do_id) VALUES (1,1);*/
-INSERT INTO USER_GRADES(user_id, grades_id) VALUES (1,1);
+INSERT INTO USER_DONE(term_id, user_id) VALUES(1,1);
+/*INSERT INTO USER_TO_DO(user_id, to_do_id) VALUES (1,1);
+INSERT INTO USER_GRADES(user_id, grades_id) VALUES (1,1);*/
