@@ -34,7 +34,18 @@ public class TermController {
     @Autowired
     private UserService userService;
 
+    /*@PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE,
+            produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<TrainerDTO> createTerm(@RequestBody TermDTO termDTO) throws Exception {
 
+        Term term = new Term()
+
+
+        Term newTerm = this.termService.save(term);
+
+
+        return new ResponseEntity<>(newTermDTO, HttpStatus.CREATED);
+    }*/
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<TermDTO>> getTerms(/*@RequestParam Long id, @RequestParam String userType,*/ @RequestParam(required = false) String trainingName,  @RequestParam(required = false) String trainingDesc,
                                                                                                             @RequestParam(required = false) String trainingType, @RequestParam(required = false) Double price,
@@ -279,7 +290,7 @@ public class TermController {
     }
     // davanje ocena promeni sutra
     @PutMapping(value = "/done/{id}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<TermDTO> giveGrade(@PathVariable Long id, @RequestParam Long userId, @RequestParam String userType, @RequestParam Double grade) throws Exception {
+    public ResponseEntity<TermDTO> giveGrade(@PathVariable Long id, @RequestParam Long userId, @RequestParam String userType, @RequestParam Grade grade) throws Exception {
 
         if(userType.equals("Member")) {
             Optional<Term> optTerm = this.termService.findById(id);
