@@ -32,9 +32,10 @@ public class Room implements Serializable {
     @OneToMany(mappedBy = "room", fetch =FetchType.LAZY, cascade = CascadeType.ALL)
     private Set<Term> terms = new HashSet<>();
 
-    public Room(int capacity, String label) {
+    public Room(int capacity, String label, FitnessCenter fitCenter) {
         this.capacity = capacity;
         this.label = label;
+        this.fitCenter = fitCenter;
     }
 
     public Room()

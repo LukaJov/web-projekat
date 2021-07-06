@@ -36,7 +36,17 @@ public class Term implements Serializable
 
     @ManyToOne(fetch=FetchType.EAGER, cascade = CascadeType.ALL)
     private Training training;
-
+    public Term(Date date, Double price, int numberOfUsers,Training training, FitnessCenter fitCenter, Room room)
+    {
+        this.date = date;
+        this.price = price;
+        this.numberOfUsers = numberOfUsers;
+        this.training = training;
+        this.fitCenter = fitCenter;
+        this.room = room;
+    }
+    public Term()
+    {}
     @ManyToMany
     @JoinTable(name = "to_do",
             joinColumns = @JoinColumn(name = "term_id", referencedColumnName = "id"),

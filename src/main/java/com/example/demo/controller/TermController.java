@@ -1,10 +1,8 @@
 package com.example.demo.controller;
 
+import com.example.demo.model.*;
 import com.example.demo.model.DTO.RoomDTO;
 import com.example.demo.model.DTO.TrainerDTO;
-import com.example.demo.model.Grade;
-import com.example.demo.model.Trainer;
-import com.example.demo.model.User;
 import com.example.demo.service.UserService;
 import org.hibernate.usertype.UserType;
 import org.springframework.data.domain.Sort;
@@ -12,7 +10,6 @@ import org.springframework.data.domain.Sort.Order;
 import com.example.demo.model.DTO.TermDTO;
 import com.example.demo.model.DTO.TrainingDTO;
 import com.example.demo.service.TermService;
-import com.example.demo.model.Term;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -38,7 +35,10 @@ public class TermController {
     @PostMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<TermDTO> addTerm(@RequestBody TermDTO termDTO)
     {
-        Term term = new Term(termDTO.);
+        Training training = new Training(termDTO.getTrainingDTO().getName(), termDTO.getTrainingDTO().getDesc(),
+                termDTO.getTrainingDTO().getTrainingType(), termDTO.getTrainingDTO().getDuration());
+        Room room = new Room(termDTO.getRoomDTO().getCapacity(), termDTO.getRoomDTO().getLabel());
+        Term term = new Term(termDTO.getDate(), termDTO.getPrice(), termDTO.getNumberOfUsers(), room, training);
 
 
     }
@@ -112,7 +112,7 @@ public class TermController {
                     TrainingDTO trainingDTO = new TrainingDTO(term.getTraining().getName()
                             , term.getTraining().getDesc(), term.getTraining().getTrainingType(), term.getTraining().getDuration());
                     RoomDTO roomDTO = new RoomDTO(term.getRoom().getCapacity(), term.getRoom().getLabel());
-                    TermDTO termDTO = new TermDTO(trainingDTO, term.getDate(), term.getPrice(), term.getNumberOfUsers(), roomDTO);
+                    TermDTO termDTO = new TermDTO(trainingDTO, term.getDate(), term.getPrice(), term.getNumberOfUsers());
 
                     termDTOS.add(termDTO);
                 }
