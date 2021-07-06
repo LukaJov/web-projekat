@@ -1,6 +1,7 @@
 package com.example.demo.service;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 import com.example.demo.model.FitnessCenter;
 import com.example.demo.model.Term;
@@ -19,7 +20,10 @@ public class FitnessCenterService {
         return this.fitnessCenterRepository.save(fitnessCenter);
     }
     public void delete(Long id){this.fitnessCenterRepository.deleteById(id);}
-
+    public Optional<FitnessCenter> findById(Long id)
+    {
+        return this.fitnessCenterRepository.findById(id);
+    }
     public List<FitnessCenter> findAll() {
         return this.fitnessCenterRepository.findAll();
     }

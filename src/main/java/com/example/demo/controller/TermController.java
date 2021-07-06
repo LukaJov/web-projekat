@@ -4,6 +4,7 @@ import com.example.demo.model.DTO.TrainerDTO;
 import com.example.demo.model.Grade;
 import com.example.demo.model.Trainer;
 import com.example.demo.model.User;
+import com.example.demo.service.GradeService;
 import com.example.demo.service.UserService;
 import org.hibernate.usertype.UserType;
 import org.springframework.data.domain.Sort;
@@ -33,7 +34,8 @@ public class TermController {
     //dodaj pageable
     @Autowired
     private UserService userService;
-
+    @Autowired
+    private GradeService gradeService;
     /*@PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<TrainerDTO> createTerm(@RequestBody TermDTO termDTO) throws Exception {
@@ -290,22 +292,18 @@ public class TermController {
     }
     // davanje ocena promeni sutra
     @PutMapping(value = "/done/{id}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<TermDTO> giveGrade(@PathVariable Long id, @RequestParam Long userId, @RequestParam String userType, @RequestParam Grade grade) throws Exception {
+    public ResponseEntity<Grade> giveGrade(@PathVariable Long id, @RequestParam Long userId, @RequestParam String userType, @RequestParam Grade grade) throws Exception {
 
         if(userType.equals("Member")) {
             Optional<Term> optTerm = this.termService.findById(id);
             Term term = optTerm.get();
-            Term updatedTerm = new Term();
 
             Optional<User> optUser = this.userService.findById(id);
             User user = optUser.get();
 
+            Grade newGrade = this.gradeService.saveGrade(grade, user, term);
 
-            TrainingDTO trainingDTO = new TrainingDTO(updatedTerm.getTraining().getName()
-                    , updatedTerm.getTraining().getDesc(), updatedTerm.getTraining().getTrainingType(), updatedTerm.getTraining().getDuration());
-
-            TermDTO termDTO = new TermDTO(trainingDTO, updatedTerm.getDate(), updatedTerm.getPrice());
-            return new ResponseEntity<>(termDTO, HttpStatus.OK);
+            return new ResponseEntity<>(newGrade, HttpStatus.OK);
         }
 
         else {

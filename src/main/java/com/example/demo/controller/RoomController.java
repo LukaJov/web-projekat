@@ -18,6 +18,7 @@ import com.example.demo.service.FitnessCenterService;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @CrossOrigin
 @RestController
@@ -26,20 +27,20 @@ public class RoomController {
 
     @Autowired
     private RoomService roomService;
+    @Autowired
+    private FitnessCenterService fitnessCenterService;
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<RoomDTO> createRoom(@RequestBody RoomDTO roomDTO) throws Exception {
+    public ResponseEntity<Room> createRoom(@RequestBody Room room, @RequestParam Long centerId) throws Exception {
 
-        Room room = new Room(roomDTO.getCapacity(), roomDTO.getLabel());
+        Optional<FitnessCenter> optCenter = this.fitnessCenterService.findById(centerId);
+        FitnessCenter fitCenter = optCenter.get();
+
+        Room newRoom = roomService.save(room, fitCenter);
 
 
-        Room newRoom = roomService.save(room);
-
-        RoomDTO newRoomDTO = new RoomDTO(newRoom.getId(), newRoom.getCapacity(),
-                newRoom.getLabel());
-
-        return new ResponseEntity<>(newRoomDTO, HttpStatus.CREATED);
+        return new ResponseEntity<>(room, HttpStatus.CREATED);
     }
 
 
