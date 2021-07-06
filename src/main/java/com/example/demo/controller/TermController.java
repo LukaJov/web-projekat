@@ -157,7 +157,7 @@ public class TermController {
         return new ResponseEntity<>(termDTOS, HttpStatus.OK);
     }
 
-    @GetMapping(produces=MediaType.APPLICATION_JSON_VALUE, value = "/donegraded")
+    @GetMapping(produces=MediaType.APPLICATION_JSON_VALUE, value = "/doneungraded")
     public ResponseEntity<List<TermDTO>> getUngradedTerms(@RequestParam Long id, @RequestParam String userType)
     {
         List<Term> terms = new ArrayList<>();
@@ -200,7 +200,7 @@ public class TermController {
         return new ResponseEntity<>(termDTOS, HttpStatus.OK);
     }
 
-    @GetMapping(produces=MediaType.APPLICATION_JSON_VALUE, value = "/doneungraded")
+    @GetMapping(produces=MediaType.APPLICATION_JSON_VALUE, value = "/donegraded")
     public ResponseEntity<List<TermDTO>> getGradedTerms(@RequestParam Long id, @RequestParam String userType)
     {
         List<Term> terms = new ArrayList<>();
@@ -291,7 +291,7 @@ public class TermController {
         return new ResponseEntity<>(termDTO, HttpStatus.OK);
     }
     // davanje ocena promeni sutra
-    @PutMapping(value = "/done/{id}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    @PutMapping(value = "/grades", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Grade> giveGrade(@PathVariable Long id, @RequestParam Long userId, @RequestParam String userType, @RequestParam Grade grade) throws Exception {
 
         if(userType.equals("Member")) {

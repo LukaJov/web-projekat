@@ -71,14 +71,43 @@
 
         }
 
+
+        ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            background-color: #333;
+            position: fixed;
+            top: 0;
+            width: 100%;
+        }
+
+        li {
+            float: left;
+        }
+
+        li a {
+            display: block;
+            color: white;
+            text-align: center;
+            padding: 14px 16px;
+            text-decoration: none;
+        }
+
+        li a:hover {
+            background-color: beige;
+        }
   
     </style>
 </head>
 <body>
-<div class="topnav">
-    <a class="active" href="fitnesscenters.html">Fitness centers</a>
-    <a href="confirmtrainer.html", id="requests">Trainer requests</a>
-</div>
+
+    <ul>
+    <li><a href="fitnesscenters.html">Fitness Centers</a></li>
+    <li class="active"><a href="confirmtrainer.html">Trainer requests</a></li>
+    </ul>
+
     <div class="container">
         <h1>Trainer requests</h1>
         <table id="trainers">
