@@ -1,6 +1,7 @@
 package com.example.demo.controller;
 
 import com.example.demo.model.DTO.TrainerDTO;
+import com.example.demo.model.DTO.TypeDTO;
 import com.example.demo.model.Grade;
 import com.example.demo.model.Trainer;
 import com.example.demo.model.User;
@@ -98,7 +99,7 @@ public class TermController {
 
 
     @GetMapping(produces=MediaType.APPLICATION_JSON_VALUE, value = "/todo")
-    public ResponseEntity<List<TermDTO>> getOwnTerms(@RequestParam Long id, @RequestParam String userType)
+    public ResponseEntity<List<TermDTO>> getOwnTerms(@RequestBody TypeDTO typeDTO)
     {
         List<Term> terms = new ArrayList<>();
 
@@ -113,7 +114,7 @@ public class TermController {
         for(Term term: terms)
         {
             for(User user: term.getUserToDo()) {
-                if(user.getId()==id) {
+                if(user.getId()== typeDTO.getId()) {
                     TrainingDTO trainingDTO = new TrainingDTO(term.getTraining().getName()
                             , term.getTraining().getDesc(), term.getTraining().getTrainingType(), term.getTraining().getDuration());
 
@@ -128,7 +129,7 @@ public class TermController {
     }
 
     @GetMapping(produces=MediaType.APPLICATION_JSON_VALUE, value = "/done")
-    public ResponseEntity<List<TermDTO>> getDoneTerms(@RequestParam Long id, @RequestParam String userType)
+    public ResponseEntity<List<TermDTO>> getDoneTerms(@RequestBody TypeDTO typeDTO)
     {
         List<Term> terms = new ArrayList<>();
 
@@ -143,7 +144,7 @@ public class TermController {
         for(Term term: terms)
         {
             for(User user: term.getUserDone()) {
-                if(user.getId()==id) {
+                if(user.getId()== typeDTO.getId()) {
                     TrainingDTO trainingDTO = new TrainingDTO(term.getTraining().getName()
                             , term.getTraining().getDesc(), term.getTraining().getTrainingType(), term.getTraining().getDuration());
 
@@ -158,7 +159,7 @@ public class TermController {
     }
 
     @GetMapping(produces=MediaType.APPLICATION_JSON_VALUE, value = "/doneungraded")
-    public ResponseEntity<List<TermDTO>> getUngradedTerms(@RequestParam Long id, @RequestParam String userType)
+    public ResponseEntity<List<TermDTO>> getUngradedTerms(@RequestBody TypeDTO typeDTO)
     {
         List<Term> terms = new ArrayList<>();
 
@@ -167,7 +168,7 @@ public class TermController {
 
         terms = this.termService.findAll("price,asc");
 
-        Optional<User> optUser = this.userService.findById(id);
+        Optional<User> optUser = this.userService.findById(typeDTO.getId());
         User user = optUser.get();
 
 
@@ -201,7 +202,7 @@ public class TermController {
     }
 
     @GetMapping(produces=MediaType.APPLICATION_JSON_VALUE, value = "/donegraded")
-    public ResponseEntity<List<TermDTO>> getGradedTerms(@RequestParam Long id, @RequestParam String userType)
+    public ResponseEntity<List<TermDTO>> getGradedTerms(@RequestBody TypeDTO typeDTO)
     {
         List<Term> terms = new ArrayList<>();
 
@@ -209,7 +210,7 @@ public class TermController {
 
         /*terms = this.termService.findAll("price,asc");*/
 
-        Optional<User> optUser = this.userService.findById(id);
+        Optional<User> optUser = this.userService.findById(typeDTO.getId());
         User user = optUser.get();
 
 
@@ -248,14 +249,14 @@ public class TermController {
 
     //prijava za trening
     @PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<TermDTO> signUpOrOut(@PathVariable Long id, @RequestParam Long userId, @RequestParam String userType, @RequestParam Boolean upOrOut) throws Exception {
+    public ResponseEntity<TermDTO> signUpOrOut(@RequestBody TypeDTO typeDTO, @PathVariable Long id,@RequestParam Boolean upOrOut) throws Exception {
 
-        if(userType.equals("Member")) {
+        if(typeDTO.getUserType().equals("Member")) {
             Optional<Term> optTerm = this.termService.findById(id);
             Term term = optTerm.get();
             Term updatedTerm = new Term();
 
-            Optional<User> optUser = this.userService.findById(id);
+            Optional<User> optUser = this.userService.findById(typeDTO.getId());
             User user = optUser.get();
 
             if(upOrOut) {

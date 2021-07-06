@@ -53,12 +53,41 @@
         {
             width: 100%;
         }
+        ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            background-color: #333;
+            position: fixed;
+            top: 0;
+            width: 100%;
+        }
 
+        li {
+            float: left;
+        }
+
+        li a {
+            display: block;
+            color: white;
+            text-align: center;
+            padding: 14px 16px;
+            text-decoration: none;
+        }
+
+        li a:hover {
+            background-color: beige;
+        }
 
 
     </style>
 </head>
 <body>
+<ul>
+    <li><a href="terms.html">Terms</a></li>
+    <li class="active"><a href="done.html">Done terms</a></li>
+</ul>
 <div class="container">
     <h1>Done terms</h1>
     <form class="form-inline">

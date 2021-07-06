@@ -12,7 +12,7 @@ $(document).on("click", "button", function (event) {
 
     $.ajax({
         type: "GET",
-        url: "http://localhost:8080/api/terms/" + grd,
+        url: "http://localhost:8080/api/terms/done",
         dataType: "json",
         success: function (response) {
             console.log("SUCCESS:\n" + queryString, response);
