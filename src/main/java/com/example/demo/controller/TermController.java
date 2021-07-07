@@ -98,7 +98,7 @@ public class TermController {
     }
 
 
-    @GetMapping(produces=MediaType.APPLICATION_JSON_VALUE, value = "/todo")
+    @GetMapping(consumes =MediaType.APPLICATION_JSON_VALUE, produces=MediaType.APPLICATION_JSON_VALUE, value = "/todo")
     public ResponseEntity<List<TermDTO>> getOwnTerms(@RequestBody TypeDTO typeDTO)
     {
         List<Term> terms = new ArrayList<>();
@@ -128,7 +128,7 @@ public class TermController {
         return new ResponseEntity<>(termDTOS, HttpStatus.OK);
     }
 
-    @GetMapping(produces=MediaType.APPLICATION_JSON_VALUE, value = "/done")
+    @PostMapping(consumes=MediaType.APPLICATION_JSON_VALUE, produces=MediaType.APPLICATION_JSON_VALUE, value = "/done")
     public ResponseEntity<List<TermDTO>> getDoneTerms(@RequestBody TypeDTO typeDTO)
     {
         List<Term> terms = new ArrayList<>();
@@ -158,7 +158,7 @@ public class TermController {
         return new ResponseEntity<>(termDTOS, HttpStatus.OK);
     }
 
-    @GetMapping(produces=MediaType.APPLICATION_JSON_VALUE, value = "/doneungraded")
+    @GetMapping (consumes =MediaType.APPLICATION_JSON_VALUE,produces=MediaType.APPLICATION_JSON_VALUE, value = "/doneungraded")
     public ResponseEntity<List<TermDTO>> getUngradedTerms(@RequestBody TypeDTO typeDTO)
     {
         List<Term> terms = new ArrayList<>();
@@ -201,7 +201,7 @@ public class TermController {
         return new ResponseEntity<>(termDTOS, HttpStatus.OK);
     }
 
-    @GetMapping(produces=MediaType.APPLICATION_JSON_VALUE, value = "/donegraded")
+    @GetMapping(consumes =MediaType.APPLICATION_JSON_VALUE,produces=MediaType.APPLICATION_JSON_VALUE, value = "/donegraded")
     public ResponseEntity<List<TermDTO>> getGradedTerms(@RequestBody TypeDTO typeDTO)
     {
         List<Term> terms = new ArrayList<>();

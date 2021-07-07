@@ -8,7 +8,7 @@ import java.util.Date;
 public class TypeDTO
 {
     private Long id;
-    private String userType;
+    private Long userType;
 
     public TypeDTO(){}
 }

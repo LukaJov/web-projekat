@@ -13,6 +13,8 @@ $(document).on('click', '#member', function () {
             console.log("SUCCESS:\n", response);
             alert("Uspesno ste se ulogovali!");// prikazujemo poruku uspeha korisniku
             window.location.href = "terms.html";
+            window.localStorage.setItem('role', '1');
+            window.localStorage.setItem('id', response.id);
 
         },
         error: function (response) {
@@ -37,6 +39,8 @@ $(document).on('click', '#trainer', function () {
             console.log("SUCCESS:\n", response);
             alert("Uspesno ste se ulogovali!");//
             window.location.href = "terms.html";
+            window.localStorage.setItem('role', '2');
+            window.localStorage.setItem('id', response.id);
 
         },
         error: function (response) {
@@ -61,6 +65,8 @@ $(document).on('click', '#admin', function () {
             console.log("SUCCESS:\n", response);
             alert("Uspesno ste se ulogovali!");//
             window.location.href = "fitnesscenters.html";
+            window.localStorage.setItem('role', '3');
+            window.localStorage.setItem('id', response.id);
 
         },
         error: function (response) {

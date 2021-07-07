@@ -24,10 +24,11 @@ INSERT INTO ROOM(capacity,label) VALUES (25, 'Sala2');
 INSERT INTO TERM(date, price, number_of_users,fit_center_id, training_id, trainer_id ) VALUES('2021-7-6', 2300, 4, 1, 2, 1);
 INSERT INTO TERM(date, price, number_of_users,fit_center_id, training_id, trainer_id ) VALUES('2021-7-12', 1700, 7, 1, 1, 2);
 
-INSERT INTO SCHEDULE(room_id, term_id) VALUES (1,1);
+INSERT INTO DONE(term_id, user_id) VALUES(1,1);
+/*INSERT INTO TERMS(room_id, term_id) VALUES (1,1);*/
 
 INSERT INTO GRADE(grd, given_by_id, term_id) VALUES(3.5, 1, 1);
 
-INSERT INTO USER_DONE(term_id, user_id) VALUES(1,1);
-/*INSERT INTO USER_TO_DO(user_id, to_do_id) VALUES (1,1);
-INSERT INTO USER_GRADES(user_id, grades_id) VALUES (1,1);*/
+
+INSERT INTO TO_DO(term_id, user_id) VALUES (1,1);
+/*INSERT INTO USER_GRADES(user_id, grades_id) VALUES (1,1);*/
