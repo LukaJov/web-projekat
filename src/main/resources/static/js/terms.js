@@ -74,7 +74,9 @@ $(document).on("click", "#search", function (event) {
                 row += "<td>" + term.date + "</td>";
                 row += "<td>" + term.price + "</td>";
                 let btn = "<button class='green' data-id=" + term.id + ">Sign up</button>";
-                row += "<td>" + btn + "</td>";
+                if(window.localStorage.getItem('role')==1) {
+                    row += "<td>" + btn + "</td>";
+                }
                 row += "</tr>";
 
                 $('#terms').append(row);
