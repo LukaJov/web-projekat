@@ -30,7 +30,7 @@ $(document).on("click", "#trainer", function (event) {
 
     $.ajax({
         type: "POST",
-        url: "http://localhost:8080/api/trainers?role=" + userType,
+        url: "http://localhost:8080/api/1/trainers?role=" + userType,
         dataType: "json",
         contentType: "application/json",
         data: JSON.stringify(newTrainer),

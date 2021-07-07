@@ -1,7 +1,8 @@
-$(document).ready(function () {    // Čeka se trenutak kada je DOM(Document Object Model) učitan da bi JS mogao sa njim da manipuliše.
+$(document).ready(function () {
+    var fitCenterId = window.localStorage.getItem('fitCenterId');
     $.ajax({
         type: "GET",
-        url: "http://localhost:8080/api/trainers/active",
+        url: "http://localhost:8080/api/"+ fitCenterId + "/trainers/active",
         dataType: "json",
         success: function (response) {
             console.log("SUCCESS:\n", response);
@@ -25,3 +26,22 @@ $(document).ready(function () {    // Čeka se trenutak kada je DOM(Document Obj
         }
     });
 });
+
+$(document).on("click", "#red", function (event) {
+    var fitCenterId = window.localStorage.getItem('fitCenterId');
+    var id = this.dataset.id;
+    $.ajax({
+        type: "DELETE",
+        url: "http://localhost:8080/api/"+ fitCenterId + "/trainers/active/" + id,
+        dataType: "json",
+        success: function (response) {
+            console.log("SUCCESS:\n", response);
+
+            $('[data-id="' + id + '"]').parent().parent().remove();
+            },
+
+        error: function(response) {
+            console.log("ERROR:\n", response);
+        }
+    });
+})

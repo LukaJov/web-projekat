@@ -2,7 +2,9 @@ package com.example.demo.controller;
 
 import com.example.demo.model.DTO.TermDTO;
 import com.example.demo.model.DTO.TrainingDTO;
+import com.example.demo.model.FitnessCenter;
 import com.example.demo.model.Term;
+import com.example.demo.service.FitnessCenterService;
 import com.example.demo.service.TrainerService;
 import com.example.demo.model.Trainer;
 import com.example.demo.model.DTO.TrainerDTO;
@@ -18,12 +20,14 @@ import java.util.Optional;
 
 @CrossOrigin
 @RestController
-@RequestMapping(value = "/api/trainers")
+@RequestMapping(value = "/api/{centerId}/trainers")
 public class TrainerController {
 
     @Autowired
     private TrainerService trainerService;
 
+    @Autowired
+    private FitnessCenterService fitnessCenterService;
     //dodaj dto bez sifre!!!
    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE)
@@ -112,9 +116,15 @@ public class TrainerController {
         return new ResponseEntity<>(trainerDTO, HttpStatus.OK);
     }
 
-    @DeleteMapping(value = "/{id}")
-    public ResponseEntity<Void> deleteTrainer(@PathVariable Long id) {
+    @DeleteMapping(value = "/active/{id}")
+    public ResponseEntity<Void> deleteTrainer(@PathVariable Long id, @PathVariable Long centerId) {
 
+        Optional<FitnessCenter> optFitnessCenter = this.fitnessCenterService.findById(centerId);
+        FitnessCenter fitCenter = optFitnessCenter.get();
+        Optional<Trainer> optTrainer = this.trainerService.findById(id);
+        Trainer trainer = optTrainer.get();
+        fitCenter.getTrainers().remove(trainer);
+        this.fitnessCenterService.save(fitCenter);
         this.trainerService.delete(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }

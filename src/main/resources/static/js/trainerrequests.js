@@ -1,7 +1,8 @@
-$(document).ready(function () {    // Čeka se trenutak kada je DOM(Document Object Model) učitan da bi JS mogao sa njim da manipuliše.
+$(document).ready(function () {
+    var fitCenterId = window.localStorage.getItem('fitCenterId');// Čeka se trenutak kada je DOM(Document Object Model) učitan da bi JS mogao sa njim da manipuliše.
     $.ajax({
         type: "GET",
-        url: "http://localhost:8080/api/trainers",
+        url: "http://localhost:8080/api/" + fitCenterId+ "/trainers",
         dataType: "json",
         success: function (response) {
             console.log("SUCCESS:\n", response);
