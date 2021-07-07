@@ -62,23 +62,20 @@ public class RoomController {
     }
 
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<List<FitnessCenterDTO>> getFitnessCenters()
+    public ResponseEntity<List<RoomDTO>> getRooms(@PathVariable Long centerId)
     {
-        List<FitnessCenter> fitnessCenters = new ArrayList<>();
+        //List<Room> rooms = new ArrayList<>();
 
-        fitnessCenters = this.fitnessCenterService.findAll();
+        Optional<FitnessCenter> optFitCenter = this.fitnessCenterService.findById(centerId);
+        FitnessCenter fitCenter = optFitCenter.get();
 
-        List<FitnessCenterDTO> fitnessCenterDTOS = new ArrayList<>();
+        List<RoomDTO> roomDTOS = new ArrayList<>();
 
-        for (FitnessCenter fitnessCenter : fitnessCenters) {
-
-            FitnessCenterDTO fitnessCenterDTO = new FitnessCenterDTO(fitnessCenter.getId(), fitnessCenter.getName(),
-                    fitnessCenter.getAddress(), fitnessCenter.getPhoneNumber(), fitnessCenter.getEmailAddress()
-            );
-            fitnessCenterDTOS.add(fitnessCenterDTO);
-
+        for (Room room: fitCenter.getRooms()) {
+            RoomDTO roomDTO = new RoomDTO(room.getId(), room.getCapacity(), room.getLabel());
+            roomDTOS.add(roomDTO);
         }
-        return new ResponseEntity<>(fitnessCenterDTOS, HttpStatus.OK);
+        return new ResponseEntity<>(roomDTOS, HttpStatus.OK);
 
     }
 

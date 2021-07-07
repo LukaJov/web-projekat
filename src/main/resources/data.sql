@@ -18,8 +18,8 @@ INSERT INTO TRAINING(name, desc, training_type, duration) VALUES('ExtraCardio', 
 , 'Cardio', 2700);
 INSERT INTO TRAINING(name, desc, training_type, duration) VALUES('Build your body', 'Hypertrophy training', 'Bodybuilding', 1400);
 
-INSERT INTO ROOM(capacity,label) VALUES (15, 'Sala1');
-INSERT INTO ROOM(capacity,label) VALUES (25, 'Sala2');
+INSERT INTO ROOM(capacity,label, fit_center_id) VALUES (15, 'Sala1',1);
+INSERT INTO ROOM(capacity,label, fit_center_id) VALUES (25, 'Sala2',1);
 
 INSERT INTO TERM(date, price, number_of_users,fit_center_id, training_id, trainer_id ) VALUES('2021-7-6', 2300, 4, 1, 2, 1);
 INSERT INTO TERM(date, price, number_of_users,fit_center_id, training_id, trainer_id ) VALUES('2021-7-12', 1700, 7, 1, 1, 2);
