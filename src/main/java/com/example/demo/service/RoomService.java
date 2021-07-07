@@ -27,9 +27,15 @@ public class RoomService {
         this.fitnessCenterRepository.save(fitCenter);
         return this.roomRepository.save(room);
     }
-    public void delete(Long id){this.roomRepository.deleteById(id);}
-
-
-
-
+    public void delete(Long id, FitnessCenter fitCenter)
+    {
+        for(Room room:fitCenter.getRooms())
+        {
+            if(room.getId()==id)
+            {
+                fitCenter.getRooms().remove(room);
+            }
+        }
+        this.fitnessCenterRepository.save(fitCenter);
+        this.roomRepository.deleteById(id);}
 }

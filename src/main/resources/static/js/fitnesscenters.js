@@ -13,7 +13,15 @@ $(document).ready(function () {    // Čeka se trenutak kada je DOM(Document Obj
                 row += "<td>" + fitnesscenter.address + "</td>";
                 row += "<td>" + fitnesscenter.phoneNumber + "</td>";
                 row += "<td>" + fitnesscenter.emailAddress + "</td>";
+                let btn = "<button class='more' data-id=" + fitnesscenter.id + ">See more</button>";
+                row += "<td>" + btn + "</td>";
+                btn = "<button class='delete' data-id=" + fitnesscenter.id + ">Delete</button>";
+                row += "<td>" + btn + "</td>";
                 row += "</tr>";
+                btn = "<button class='change' data-id=" + fitnesscenter.id + ">Change</button>";
+                row += "<td>" + btn + "</td>";
+                row += "</tr>";
+
 
                 $('#fitnesscenters').append(row);
             }

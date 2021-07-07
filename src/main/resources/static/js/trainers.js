@@ -21,11 +21,16 @@ $(document).on("click", "#trainer", function (event) {
         emailAddress,
         birthday
     }
-    
+
+    let userType = window.localStorage.getItem('role');
+    if(userType ===null || userType===undefined)
+    {
+        userType = 0;
+    }
 
     $.ajax({
         type: "POST",
-        url: "http://localhost:8080/api/trainers?role=" + role,
+        url: "http://localhost:8080/api/trainers?role=" + userType,
         dataType: "json",
         contentType: "application/json",
         data: JSON.stringify(newTrainer),

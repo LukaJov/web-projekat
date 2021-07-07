@@ -22,7 +22,7 @@ import java.util.Optional;
 
 @CrossOrigin
 @RestController
-@RequestMapping(value = "/api/fitnesscenters/rooms")
+@RequestMapping(value = "/api/fitnesscenters/{centerId}/rooms")
 public class RoomController {
 
     @Autowired
@@ -32,8 +32,12 @@ public class RoomController {
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Room> createRoom(@RequestBody Room room, @RequestParam Long centerId) throws Exception {
+    public ResponseEntity<Room> createRoom(@PathVariable Long centerId, @RequestBody Room room, @RequestParam Long userType) throws Exception {
 
+        if(userType!=3)
+        {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
         Optional<FitnessCenter> optCenter = this.fitnessCenterService.findById(centerId);
         FitnessCenter fitCenter = optCenter.get();
 
@@ -45,10 +49,37 @@ public class RoomController {
 
 
     @DeleteMapping(value = "/{id}")
-    public ResponseEntity<Void> deleteRoom(@PathVariable Long id) {
+    public ResponseEntity<Void> deleteRoom(@PathVariable Long centerId, @PathVariable Long id, @RequestParam Long userType) {
+        if(userType!=3)
+        {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+        Optional<FitnessCenter> optCenter = this.fitnessCenterService.findById(centerId);
+        FitnessCenter fitCenter = optCenter.get();
 
-        this.roomService.delete(id);
+        this.roomService.delete(id, fitCenter);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+
+    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<List<FitnessCenterDTO>> getFitnessCenters()
+    {
+        List<FitnessCenter> fitnessCenters = new ArrayList<>();
+
+        fitnessCenters = this.fitnessCenterService.findAll();
+
+        List<FitnessCenterDTO> fitnessCenterDTOS = new ArrayList<>();
+
+        for (FitnessCenter fitnessCenter : fitnessCenters) {
+
+            FitnessCenterDTO fitnessCenterDTO = new FitnessCenterDTO(fitnessCenter.getId(), fitnessCenter.getName(),
+                    fitnessCenter.getAddress(), fitnessCenter.getPhoneNumber(), fitnessCenter.getEmailAddress()
+            );
+            fitnessCenterDTOS.add(fitnessCenterDTO);
+
+        }
+        return new ResponseEntity<>(fitnessCenterDTOS, HttpStatus.OK);
+
     }
 
 
