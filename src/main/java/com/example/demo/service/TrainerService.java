@@ -23,7 +23,10 @@ public class TrainerService {
     {
         return this.trainerRepository.save(trainer);
     }
-
+    public Trainer saveAsAdmin(Trainer trainer){
+        trainer.setActive(true);
+        return this.trainerRepository.save(trainer);
+    }
     public List<Trainer> findByActive(boolean active)
     {
         return this.trainerRepository.findByActive(active);

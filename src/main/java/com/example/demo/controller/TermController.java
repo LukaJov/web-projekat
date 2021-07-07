@@ -88,7 +88,7 @@ public class TermController {
             TrainingDTO trainingDTO = new TrainingDTO(term.getTraining().getName()
                     , term.getTraining().getDesc(), term.getTraining().getTrainingType(), term.getTraining().getDuration());
 
-            TermDTO termDTO = new TermDTO(trainingDTO, term.getDate(), term.getPrice());
+            TermDTO termDTO = new TermDTO(term.getId(), trainingDTO, term.getDate(), term.getPrice());
 
             termDTOS.add(termDTO);
         }
@@ -98,7 +98,7 @@ public class TermController {
     }
 
 
-    @GetMapping(consumes =MediaType.APPLICATION_JSON_VALUE, produces=MediaType.APPLICATION_JSON_VALUE, value = "/todo")
+    @PostMapping(consumes =MediaType.APPLICATION_JSON_VALUE, produces=MediaType.APPLICATION_JSON_VALUE, value = "/todo")
     public ResponseEntity<List<TermDTO>> getOwnTerms(@RequestBody TypeDTO typeDTO)
     {
         List<Term> terms = new ArrayList<>();
@@ -118,7 +118,7 @@ public class TermController {
                     TrainingDTO trainingDTO = new TrainingDTO(term.getTraining().getName()
                             , term.getTraining().getDesc(), term.getTraining().getTrainingType(), term.getTraining().getDuration());
 
-                    TermDTO termDTO = new TermDTO(trainingDTO, term.getDate(), term.getPrice());
+                    TermDTO termDTO = new TermDTO(term.getId(), trainingDTO, term.getDate(), term.getPrice());
 
                     termDTOS.add(termDTO);
                 }
@@ -148,7 +148,7 @@ public class TermController {
                     TrainingDTO trainingDTO = new TrainingDTO(term.getTraining().getName()
                             , term.getTraining().getDesc(), term.getTraining().getTrainingType(), term.getTraining().getDuration());
 
-                    TermDTO termDTO = new TermDTO(trainingDTO, term.getDate(), term.getPrice());
+                    TermDTO termDTO = new TermDTO(term.getId(), trainingDTO, term.getDate(), term.getPrice());
 
                     termDTOS.add(termDTO);
                 }
@@ -158,7 +158,7 @@ public class TermController {
         return new ResponseEntity<>(termDTOS, HttpStatus.OK);
     }
 
-    @GetMapping (consumes =MediaType.APPLICATION_JSON_VALUE,produces=MediaType.APPLICATION_JSON_VALUE, value = "/doneungraded")
+    @PostMapping (consumes =MediaType.APPLICATION_JSON_VALUE,produces=MediaType.APPLICATION_JSON_VALUE, value = "/doneungraded")
     public ResponseEntity<List<TermDTO>> getUngradedTerms(@RequestBody TypeDTO typeDTO)
     {
         List<Term> terms = new ArrayList<>();
@@ -167,8 +167,8 @@ public class TermController {
 
 
         terms = this.termService.findAll("price,asc");
-
-        Optional<User> optUser = this.userService.findById(typeDTO.getId());
+        long idd = typeDTO.getId();
+        Optional<User> optUser = this.userService.findById(idd);
         User user = optUser.get();
 
 
@@ -190,7 +190,7 @@ public class TermController {
                 TrainingDTO trainingDTO = new TrainingDTO(term.getTraining().getName()
                         , term.getTraining().getDesc(), term.getTraining().getTrainingType(), term.getTraining().getDuration());
 
-                TermDTO termDTO = new TermDTO(trainingDTO, term.getDate(), term.getPrice());
+                TermDTO termDTO = new TermDTO(term.getId(), trainingDTO, term.getDate(), term.getPrice());
 
                 termDTOS.add(termDTO);
             }
@@ -201,7 +201,7 @@ public class TermController {
         return new ResponseEntity<>(termDTOS, HttpStatus.OK);
     }
 
-    @GetMapping(consumes =MediaType.APPLICATION_JSON_VALUE,produces=MediaType.APPLICATION_JSON_VALUE, value = "/donegraded")
+    @PostMapping(consumes =MediaType.APPLICATION_JSON_VALUE,produces=MediaType.APPLICATION_JSON_VALUE, value = "/donegraded")
     public ResponseEntity<List<TermDTO>> getGradedTerms(@RequestBody TypeDTO typeDTO)
     {
         List<Term> terms = new ArrayList<>();
@@ -238,7 +238,7 @@ public class TermController {
                 TrainingDTO trainingDTO = new TrainingDTO(term.getTraining().getName()
                         , term.getTraining().getDesc(), term.getTraining().getTrainingType(), term.getTraining().getDuration());
 
-                TermDTO termDTO = new TermDTO(trainingDTO, term.getDate(), term.getPrice());
+                TermDTO termDTO = new TermDTO(term.getId(), trainingDTO, term.getDate(), term.getPrice());
 
                 termDTOS.add(termDTO);
             }
@@ -249,8 +249,17 @@ public class TermController {
 
     //prijava za trening
     @PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<TermDTO> signUpOrOut(@RequestBody TypeDTO typeDTO, @PathVariable Long id,@RequestParam Boolean upOrOut) throws Exception {
+    public ResponseEntity<TermDTO> signUpOrOut(@RequestBody TypeDTO typeDTO, @PathVariable Long id,@RequestParam String upOrOut) throws Exception {
 
+        boolean upout;
+
+        if(upOrOut.equals("true"))
+        {
+            upout = true;
+        }
+        else {
+            upout = false;
+        }
         if(typeDTO.getUserType().equals("Member")) {
             Optional<Term> optTerm = this.termService.findById(id);
             Term term = optTerm.get();
@@ -259,7 +268,7 @@ public class TermController {
             Optional<User> optUser = this.userService.findById(typeDTO.getId());
             User user = optUser.get();
 
-            if(upOrOut) {
+            if(upout) {
                 updatedTerm = this.termService.signup(term, user);
             }
             else{
@@ -269,7 +278,7 @@ public class TermController {
             TrainingDTO trainingDTO = new TrainingDTO(updatedTerm.getTraining().getName()
                     , updatedTerm.getTraining().getDesc(), updatedTerm.getTraining().getTrainingType(), updatedTerm.getTraining().getDuration());
 
-            TermDTO termDTO = new TermDTO(trainingDTO, updatedTerm.getDate(), updatedTerm.getPrice());
+            TermDTO termDTO = new TermDTO(term.getId(), trainingDTO, updatedTerm.getDate(), updatedTerm.getPrice());
             return new ResponseEntity<>(termDTO, HttpStatus.OK);
         }
 
@@ -287,7 +296,7 @@ public class TermController {
         TrainingDTO trainingDTO = new TrainingDTO(term.getTraining().getName()
                 , term.getTraining().getDesc(), term.getTraining().getTrainingType(), term.getTraining().getDuration());
 
-        TermDTO termDTO = new TermDTO(trainingDTO, term.getDate(), term.getPrice());
+        TermDTO termDTO = new TermDTO(term.getId(), trainingDTO, term.getDate(), term.getPrice());
 
         return new ResponseEntity<>(termDTO, HttpStatus.OK);
     }

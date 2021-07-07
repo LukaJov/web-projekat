@@ -21,11 +21,11 @@ $(document).on("click", "#trainer", function (event) {
         emailAddress,
         birthday
     }
-
+    
 
     $.ajax({
         type: "POST",
-        url: "http://localhost:8080/api/trainers",
+        url: "http://localhost:8080/api/trainers?role=" + role,
         dataType: "json",
         contentType: "application/json",
         data: JSON.stringify(newTrainer),

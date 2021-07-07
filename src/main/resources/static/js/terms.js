@@ -26,7 +26,7 @@
     });
 });*/
 
-$(document).on("click", "button", function (event) {
+$(document).on("click", "#search", function (event) {
     event.preventDefault();
 
     $("#terms").find("tr:gt(0)").remove();
@@ -73,6 +73,8 @@ $(document).on("click", "button", function (event) {
                 row += "<td>" + term.trainingDTO.duration + "</td>";
                 row += "<td>" + term.date + "</td>";
                 row += "<td>" + term.price + "</td>";
+                let btn = "<button class='green' data-id=" + term.id + ">Sign up</button>";
+                row += "<td>" + btn + "</td>";
                 row += "</tr>";
 
                 $('#terms').append(row);

@@ -27,15 +27,20 @@ public class TrainerController {
     //dodaj dto bez sifre!!!
    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<TrainerDTO> createTrainer(@RequestBody TrainerDTO trainerDTO) throws Exception {
+    public ResponseEntity<TrainerDTO> createTrainer(@RequestBody TrainerDTO trainerDTO, @RequestParam Long role) throws Exception {
 
         Trainer trainer = new Trainer(trainerDTO.getUsername(), trainerDTO.getPassword(),
         trainerDTO.getName(), trainerDTO.getSurname(), trainerDTO.getPhoneNumber(), trainerDTO.getEmailAddress(),
         trainerDTO.getBirthday());
 
-
-        Trainer newTrainer = this.trainerService.save(trainer);
-
+        Trainer newTrainer = new Trainer();
+        if(role==3)
+        {
+            newTrainer = this.trainerService.saveAsAdmin(trainer);
+        }
+        else {
+            newTrainer = this.trainerService.save(trainer);
+        }
 
         TrainerDTO newTrainerDTO = new TrainerDTO(newTrainer.getId(),newTrainer.getName(), newTrainer.getSurname(),
         newTrainer.getPhoneNumber(), newTrainer.getEmailAddress(), newTrainer.getBirthday(),
