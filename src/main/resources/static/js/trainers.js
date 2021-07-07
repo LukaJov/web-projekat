@@ -38,7 +38,13 @@ $(document).on("click", "#trainer", function (event) {
             console.log(response);
 
             alert("Trener je uspešno kreiran!");
-            window.location.href = "index.html";
+
+            if(userType!=3) {
+                window.location.href = "index.html";
+            }
+            else {
+                window.location.href = "rooms.html";
+            }
         },
         error: function () {
             alert("Greška prilikom dodavanja trenera!");

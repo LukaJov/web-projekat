@@ -1,5 +1,4 @@
 $(document).ready(function () {    // Čeka se trenutak kada je DOM(Document Object Model) učitan da bi JS mogao sa njim da manipuliše.
-
     $.ajax({
         type: "GET",
         url: "http://localhost:8080/api/trainers",
@@ -28,7 +27,7 @@ $(document).ready(function () {    // Čeka se trenutak kada je DOM(Document Obj
     });
 });
 
-$(document).on('click', '#requests',function () {    // Čeka se trenutak kada je DOM(Document Object Model) učitan da bi JS mogao sa njim da manipuliše.
+/*$(document).on('click', '#requests',function () {    // Čeka se trenutak kada je DOM(Document Object Model) učitan da bi JS mogao sa njim da manipuliše.
 
     $.ajax({
         type: "GET",
@@ -56,7 +55,7 @@ $(document).on('click', '#requests',function () {    // Čeka se trenutak kada j
             console.log("ERROR:\n", response);
         }
     });
-});
+});*/
 
 
 $(document).on('click', '.green', function () {

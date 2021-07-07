@@ -72,6 +72,29 @@ public class TrainerController {
 
     }
 
+    @GetMapping(value = "/active",produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<List<TrainerDTO>> getTrainers()
+    {
+        List<Trainer> trainers = new ArrayList<>();
+
+        trainers = this.trainerService.findByActive(true);
+
+        List<TrainerDTO> trainerDTOS = new ArrayList<>();
+
+        for (Trainer trainer : trainers) {
+
+            TrainerDTO trainerDTO = new TrainerDTO(trainer.getId(), trainer.getName()
+                    , trainer.getSurname(), trainer.getPhoneNumber(),
+                    trainer.getEmailAddress(), trainer.getBirthday(), trainer.getUserType());
+
+
+            trainerDTOS.add(trainerDTO);
+
+        }
+        return new ResponseEntity<>(trainerDTOS, HttpStatus.OK);
+
+    }
+
     //odobravanje zahteva
     @PutMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<TrainerDTO> makeActive(@PathVariable Long id) throws Exception {

@@ -8,10 +8,9 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-wEmeIV1mKuiNpC+IOBjI7aAzPcEZeedi5yW5f2yOq55WWLwNGmvvx4Um1vskeMj0" crossorigin="anonymous">
     <script src="js/jquery.min.js"></script>
     <script src="js/jquery.validate.min.js"></script>
-    <script src="js/terms.js"></script>
-    <script src="js/signupout.js"></script>
+    <script src="js/activetrainers.js"></script>
 
-    <title>Terms</title>
+    <title>Trainer Requests</title>
     <style>
         *{
             margin:0;
@@ -30,14 +29,15 @@
         .container{
             background-color: beige;
             border-radius: 18px;
-            width: 2000px;
         }
+
 
         table{
             /*padding-top:25px;*/
             font-size:21.5px;
             position: relative;
             width: 100%;
+
         }
         td{
             padding: 5px;
@@ -50,10 +50,27 @@
         h1{
             text-align: center;
         }
-        .form-inline
-        {
-            width: 100%;
+        .green{
+            height: 50px;
+            width: 85px;
+            background-color: #519151;
+            color: black;
+            border-radius: 7px;
+            font-weight: bold;
+
         }
+
+        .topnav{
+            background-color: beige;
+            position: absolute;
+            top:0;
+            height:50px;
+            width:300px;
+            font-size: 15px;
+            border-radius: 5px;
+
+        }
+
 
         ul {
             list-style-type: none;
@@ -81,54 +98,29 @@
         li a:hover {
             background-color: beige;
         }
-        .green{
-            height: 50px;
-            width: 85px;
-            background-color: #519151;
-            color: black;
-            border-radius: 7px;
-            font-weight: bold;
-
-        }
 
     </style>
 </head>
 <body>
+
 <ul>
     <li><a href="rooms.html">Rooms</a></li>
     <li><a href="confirmtrainer.html">Trainer requests</a></li>
-    <li class="active"><a href="adminterms.html">Terms</a></li>
+    <li><a href="adminterms.html">Terms</a></li>
     <li><a href="registertrainer.html">Register a trainer</a></li>
-    <li><a href="trainers.html">Trainers</a></li>
+    <li class="active"><a href="trainers.html">Trainers</a></li>
 </ul>
 
 <div class="container">
-    <h1>Terms</h1>
-    <form class="form-inline">
-        <input type="text" id="trainingName" placeholder="Name">
-        <input type="text" id="trainingDesc" placeholder="Description">
-        <input type="text" id="trainingType" placeholder="Training type">
-        <input type="date" id="date" placeholder="Date">
-        <input type="number" id="price" placeholder="Price">
-        <label>Sort by:</label>
-        <select name="Sort by:" id="sortBy">
-            <option value="date">Date</option>
-            <option value="price">Price</option>
-        </select>
-        <select name="Sort direction:" id="sortDir">
-            <option value="asc">Ascending</option>
-            <option value="desc">Descending</option>
-        </select>
-        <button id ="search" type="submit">Search</button>
-    </form>
-    <table id="terms">
+    <h1>Trainer requests</h1>
+    <table id="trainers">
         <tr>
             <th>Name</th>
-            <th>Description</th>
-            <th>Training type</th>
-            <th>Duration</th>
-            <th>Date</th>
-            <th>Price</th>
+            <th>Surame</th>
+            <th>Phonenumber</th>
+            <th>EmailAddress</th>
+            <th>Birthday</th>
+            <th></th>
         </tr>
     </table>
 </div>
