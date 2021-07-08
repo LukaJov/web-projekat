@@ -45,8 +45,12 @@ public class UserController {
     }
 
     @GetMapping(value= "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<UserDTO> getUser(@PathVariable Long id)
+    public ResponseEntity<UserDTO> getUser(@PathVariable Long id, @RequestParam Long userType)
     {
+        if(userType!=1)
+        {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
         Optional<User> optUser = this.userService.findById(id);
         User user = optUser.get();
 
