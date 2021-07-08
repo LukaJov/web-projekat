@@ -65,3 +65,25 @@ $(document).ready(function () {    // Čeka se trenutak kada je DOM(Document Obj
     });
 });
 
+$(document).on('click', '.delete', function () {
+
+
+    let userType =  window.localStorage.getItem('role');
+    let centerId = this.dataset.id;
+
+
+    $.ajax({
+        type: "DELETE",
+        url: "http://localhost:8080/api/fitnesscenters/" + centerId +"?userType=" + userType,
+        dataType: "json",
+        success: function (response) {
+            console.log("SUCCESS:\n", response);
+            $('[data-id="' + centerId + '"]').parent().parent().remove();
+
+        },
+        error: function (response) {
+            console.log("ERROR:\n", response);
+        }
+    });
+});
+

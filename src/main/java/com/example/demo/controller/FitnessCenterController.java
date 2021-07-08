@@ -65,8 +65,12 @@ public class FitnessCenterController {
     }
 
     @DeleteMapping(value = "/{id}")
-    public ResponseEntity<Void> deleteFitnessCenter(@PathVariable Long id) {
+    public ResponseEntity<Void> deleteFitnessCenter(@PathVariable Long id, @RequestParam Long userType) {
 
+        if(userType!=3)
+        {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
         this.fitnessCenterService.delete(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
