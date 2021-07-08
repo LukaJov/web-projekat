@@ -15,7 +15,7 @@ public class Grade implements Serializable{
     @Column
     private Double grd;
 
-    @ManyToOne(fetch =FetchType.EAGER/*,cascade = CascadeType.ALL*/)
+    @ManyToOne(fetch =FetchType.EAGER)
     private Term term;
 
     @Override
@@ -28,6 +28,6 @@ public class Grade implements Serializable{
                 '}';
     }
 
-    @ManyToOne(fetch =FetchType.EAGER/*,cascade = CascadeType.ALL*/)
+    @ManyToOne(fetch =FetchType.EAGER,cascade = CascadeType.ALL)
     private User givenBy;
 }

@@ -64,7 +64,7 @@ public class Trainer implements Serializable
 
     }
 
-    @ManyToOne(fetch =FetchType.EAGER, cascade = CascadeType.ALL)
+    @ManyToOne(fetch =FetchType.EAGER)
     private FitnessCenter fitCenter;
 
     @OneToMany(mappedBy = "trainer", fetch=FetchType.LAZY, cascade=CascadeType.ALL)

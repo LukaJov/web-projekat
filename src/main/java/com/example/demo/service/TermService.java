@@ -118,9 +118,9 @@ public class TermService {
         term.setFitCenter(fitnessCenter);
         term.setRoom(room);
         term.setTrainer(trainer);
-        fitnessCenter.getTerms().add(term);
+        /*fitnessCenter.getTerms().add(term);
         room.getTerms().add(term);
-        trainer.getTerms().add(term);
+        trainer.getTerms().add(term);*/
         this.fitnessCenterRepository.save(fitnessCenter);
         this.roomRepository.save(room);
         this.trainerRepository.save(trainer);

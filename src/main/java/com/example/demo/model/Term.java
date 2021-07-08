@@ -28,13 +28,13 @@ public class Term implements Serializable
     @Column
     private int numberOfUsers;
 
-    @ManyToOne(fetch=FetchType.EAGER, cascade = CascadeType.ALL)
+    @ManyToOne(fetch=FetchType.EAGER)
     private FitnessCenter fitCenter;
 
-    @ManyToOne(fetch=FetchType.EAGER, cascade = CascadeType.ALL)
+    @ManyToOne(fetch=FetchType.EAGER)
     private Room room;
 
-    @ManyToOne(fetch=FetchType.EAGER, cascade = CascadeType.ALL)
+    @ManyToOne(fetch=FetchType.EAGER)
     private Training training;
     public Term(Date date, Double price, int numberOfUsers,Training training, FitnessCenter fitCenter, Room room)
     {
@@ -62,7 +62,7 @@ public class Term implements Serializable
     @OneToMany(mappedBy = "term", fetch =FetchType.LAZY, cascade = CascadeType.ALL)
     private Set<Grade> grades = new HashSet<>();
 
-    @ManyToOne(fetch=FetchType.EAGER, cascade = CascadeType.ALL)
+    @ManyToOne(fetch=FetchType.EAGER)
     private Trainer trainer;
 
     @Override

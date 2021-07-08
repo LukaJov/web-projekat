@@ -1,7 +1,9 @@
 package com.example.demo.service;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
+import com.example.demo.model.DTO.RoomDTO;
 import com.example.demo.model.FitnessCenter;
 import com.example.demo.model.Room;
 import com.example.demo.model.Term;
@@ -20,22 +22,34 @@ public class RoomService {
     @Autowired
     private FitnessCenterRepository fitnessCenterRepository;
 
-    public Room save(Room room, FitnessCenter fitCenter)
-    {
+    public Room save(Room room, FitnessCenter fitCenter) {
         room.setFitCenter(fitCenter);
-        fitCenter.getRooms().add(room);
         this.fitnessCenterRepository.save(fitCenter);
         return this.roomRepository.save(room);
     }
-    public void delete(Long id, FitnessCenter fitCenter)
+
+    public void delete(Long id, FitnessCenter fitCenter) {
+
+        this.roomRepository.deleteById(id);
+    }
+
+    public List<Room> findByFitCenter(Long id) {
+        return this.roomRepository.findByFitCenterId(id);
+    }
+
+    public Room update(RoomDTO roomDTO, Long id) {
+        Optional<Room> optToUpdate = this.roomRepository.findById(id);
+        Room toUpdate = optToUpdate.get();
+
+        toUpdate.setCapacity(roomDTO.getCapacity());
+        toUpdate.setLabel(roomDTO.getLabel());
+
+        return this.roomRepository.save(toUpdate);
+
+    }
+
+    public Optional<Room> findById(Long id)
     {
-        for(Room room:fitCenter.getRooms())
-        {
-            if(room.getId()==id)
-            {
-                fitCenter.getRooms().remove(room);
-            }
-        }
-        this.fitnessCenterRepository.save(fitCenter);
-        this.roomRepository.deleteById(id);}
+        return this.roomRepository.findById(id);
+    }
 }

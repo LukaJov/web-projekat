@@ -1,4 +1,4 @@
-$(document).on("click", ".btn", function (event) {
+$(document).on("click", ".add", function (event) {
     event.preventDefault();                                         // sprečavamo automatsko slanje zahteva da bismo pokupili (i validirali) podatke iz forme
 
     // preuzimamo vrednosti unete u formi

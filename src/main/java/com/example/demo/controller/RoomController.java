@@ -49,6 +49,25 @@ public class RoomController {
         return new ResponseEntity<>(newRoomDTO, HttpStatus.CREATED);
     }
 
+    @PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE,
+            produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<RoomDTO> changeRoom(@PathVariable Long id, @PathVariable Long centerId, @RequestBody RoomDTO roomDTO, @RequestParam Long userType) throws Exception {
+
+        if(userType!=3)
+        {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+
+
+        Room newRoom = this.roomService.update(roomDTO, id);
+
+
+        RoomDTO newRoomDTO = new RoomDTO(newRoom.getId(), newRoom.getCapacity(), newRoom.getLabel());
+
+        return new ResponseEntity<>(newRoomDTO, HttpStatus.CREATED);
+    }
+
+
 
     @DeleteMapping(value = "/{id}")
     public ResponseEntity<Void> deleteRoom(@PathVariable Long centerId, @PathVariable Long id, @RequestParam Long userType) {
@@ -60,20 +79,19 @@ public class RoomController {
         FitnessCenter fitCenter = optCenter.get();
 
         this.roomService.delete(id, fitCenter);
+
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<RoomDTO>> getRooms(@PathVariable Long centerId)
     {
-        //List<Room> rooms = new ArrayList<>();
-
-        Optional<FitnessCenter> optFitCenter = this.fitnessCenterService.findById(centerId);
-        FitnessCenter fitCenter = optFitCenter.get();
+        List<Room> rooms = new ArrayList<>();
+        rooms = this.roomService.findByFitCenter(centerId);
 
         List<RoomDTO> roomDTOS = new ArrayList<>();
 
-        for (Room room: fitCenter.getRooms()) {
+        for (Room room: rooms) {
             RoomDTO roomDTO = new RoomDTO(room.getId(), room.getCapacity(), room.getLabel());
             roomDTOS.add(roomDTO);
         }
@@ -81,5 +99,14 @@ public class RoomController {
 
     }
 
+    @GetMapping(value="/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<RoomDTO> getRoom(@PathVariable Long  id)
+    {
+        Optional<Room> optRoom = this.roomService.findById(id);
+        Room room = optRoom.get();
+        RoomDTO roomDTO = new RoomDTO(room.getId(), room.getCapacity(), room.getLabel());
+
+        return new ResponseEntity<>(roomDTO, HttpStatus.OK);
+    }
 
 }

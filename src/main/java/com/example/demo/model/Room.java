@@ -21,7 +21,7 @@ public class Room implements Serializable {
     private String label;
 
 
-    @ManyToOne(fetch =FetchType.EAGER, cascade = CascadeType.ALL)
+    @ManyToOne(fetch =FetchType.EAGER)
     private FitnessCenter fitCenter;
 
     //@ManyToMany

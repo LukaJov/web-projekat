@@ -28,3 +28,48 @@ $(document).ready(function () {
         }
     });
 })
+
+$(document).on('click', '.delete', function () {
+
+    let centerId = window.localStorage.getItem('fitCenterId');
+    let userType =  window.localStorage.getItem('role');
+    let roomId = this.dataset.id;
+
+
+    $.ajax({
+        type: "DELETE",
+        url: "http://localhost:8080/api/fitnesscenters/" + centerId + "/rooms/"+ roomId +"?userType=" + userType,
+        dataType: "json",
+        success: function (response) {
+            console.log("SUCCESS:\n", response);
+            $('[data-id="' + roomId + '"]').parent().parent().remove();
+
+        },
+        error: function (response) {
+            console.log("ERROR:\n", response);
+        }
+    });
+});
+
+$(document).on('click', '.change', function () {
+
+    let centerId = window.localStorage.getItem('fitCenterId');
+    //let userType =  window.localStorage.getItem('role');
+    let roomId = this.dataset.id;
+
+    window.localStorage.setItem('roomId', roomId);
+
+    $.ajax({
+        type: "GET",
+        url: "http://localhost:8080/api/fitnesscenters/" + centerId + "/rooms/"+ roomId,
+        dataType: "json",
+        success: function (response) {
+            console.log("SUCCESS:\n", response);
+            window.location.href ="changeroom.html";
+
+        },
+        error: function (response) {
+            console.log("ERROR:\n", response);
+        }
+    });
+});
