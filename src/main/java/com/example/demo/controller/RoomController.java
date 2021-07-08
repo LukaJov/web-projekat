@@ -32,7 +32,7 @@ public class RoomController {
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Room> createRoom(@PathVariable Long centerId, @RequestBody Room room, @RequestParam Long userType) throws Exception {
+    public ResponseEntity<RoomDTO> createRoom(@PathVariable Long centerId, @RequestBody RoomDTO roomDTO, @RequestParam Long userType) throws Exception {
 
         if(userType!=3)
         {
@@ -41,10 +41,12 @@ public class RoomController {
         Optional<FitnessCenter> optCenter = this.fitnessCenterService.findById(centerId);
         FitnessCenter fitCenter = optCenter.get();
 
+        Room room = new Room(roomDTO.getCapacity(), roomDTO.getLabel());
         Room newRoom = roomService.save(room, fitCenter);
 
+        RoomDTO newRoomDTO = new RoomDTO(newRoom.getId(), newRoom.getCapacity(), newRoom.getLabel());
 
-        return new ResponseEntity<>(room, HttpStatus.CREATED);
+        return new ResponseEntity<>(newRoomDTO, HttpStatus.CREATED);
     }
 
 

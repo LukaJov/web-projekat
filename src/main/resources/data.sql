@@ -13,6 +13,8 @@ VALUES ('gorang', 'gorangoran', 'Goran', 'Goranovic', '064534544', 'rango@gmail.
 
 INSERT INTO USER (username, password, name, surname, phone_Number, email_Address, birthday, user_Type, active)
 VALUES ('MarkoR', 'MarkoRakic1234', 'Marko', 'Rakic', '06137837', 'rakicmarko@gmail.com', '1993-7-12', 'Member', true);
+INSERT INTO USER (username, password, name, surname, phone_Number, email_Address, birthday, user_Type, active)
+VALUES ('Sasa', 'Sasa1234', 'Sasa', 'Sakic', '068768737', 'sasasale@gmail.com', '1993-7-11', 'Member', true);
 
 INSERT INTO TRAINING(name, desc, training_type, duration) VALUES('ExtraCardio', 'Cardiovascular training for beginners'
 , 'Cardio', 2700);
@@ -21,8 +23,9 @@ INSERT INTO TRAINING(name, desc, training_type, duration) VALUES('Build your bod
 INSERT INTO ROOM(capacity,label, fit_center_id) VALUES (15, 'Sala1',1);
 INSERT INTO ROOM(capacity,label, fit_center_id) VALUES (25, 'Sala2',1);
 
-INSERT INTO TERM(date, price, number_of_users,fit_center_id, training_id, trainer_id ) VALUES('2021-7-6', 2300, 4, 1, 2, 1);
-INSERT INTO TERM(date, price, number_of_users,fit_center_id, training_id, trainer_id ) VALUES('2021-7-12', 1700, 7, 1, 1, 2);
+INSERT INTO TERM(date, price, number_of_users,fit_center_id, room_id, training_id, trainer_id ) VALUES('2021-7-6', 2300, 4, 1, 1, 2, 1);
+INSERT INTO TERM(date, price, number_of_users,fit_center_id, room_id, training_id, trainer_id ) VALUES('2021-7-30', 1700, 7, 1, 1, 1, 2);
+INSERT INTO TERM(date, price, number_of_users,fit_center_id, room_id, training_id, trainer_id ) VALUES('2021-8-3', 2000, 9, 1, 2, 1, 2);
 
 INSERT INTO DONE(term_id, user_id) VALUES(1,1);
 /*INSERT INTO TERMS(room_id, term_id) VALUES (1,1);*/
