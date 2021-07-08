@@ -246,7 +246,7 @@ public class TermController {
 
     //prijava za trening
     @PutMapping(value = "/{id}",produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<TermDTO> signUpOrOut(/*@RequestBody TypeDTO typeDTO,*/ @PathVariable Long id,@RequestParam String upOrOut, @RequestParam Long userId, @RequestParam Long userType) throws Exception {
+    public ResponseEntity<TermDTO> signUpOrOut(/*@RequestBody TypeDTO typeDTO,*/ @PathVariable Long id, @RequestParam String upOrOut, @RequestParam Long userId, @RequestParam Long userType) throws Exception {
 
         boolean upout;
 
@@ -306,7 +306,7 @@ public class TermController {
 
         return new ResponseEntity<>(termDTO, HttpStatus.OK);
     }
-    // davanje ocena promeni sutra
+
     @PutMapping(value = "/grades/{id}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<GradeDTO> giveGrade(@PathVariable Long id, @RequestParam Long userId, @RequestParam Long userType, @RequestBody GradeDTO gradeDTO) throws Exception {
 
