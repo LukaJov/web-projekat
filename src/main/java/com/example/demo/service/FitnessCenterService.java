@@ -3,6 +3,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
+import com.example.demo.model.DTO.FitnessCenterDTO;
 import com.example.demo.model.FitnessCenter;
 import com.example.demo.model.Term;
 import com.example.demo.repository.FitnessCenterRepository;
@@ -16,6 +17,17 @@ public class FitnessCenterService {
     @Autowired
     private FitnessCenterRepository fitnessCenterRepository;
 
+    public FitnessCenter update(FitnessCenterDTO fitnessCenterDTO, Long id)
+    {
+        Optional<FitnessCenter> optFitCenter = this.fitnessCenterRepository.findById(id);
+        FitnessCenter fitCenter = optFitCenter.get();
+        fitCenter.setName(fitnessCenterDTO.getName());
+        fitCenter.setAddress(fitnessCenterDTO.getAddress());
+        fitCenter.setPhoneNumber(fitnessCenterDTO.getPhoneNumber());
+        fitCenter.setEmailAddress(fitnessCenterDTO.getEmailAddress());
+
+        return this.fitnessCenterRepository.save(fitCenter);
+    }
     public FitnessCenter save(FitnessCenter fitnessCenter) {
         return this.fitnessCenterRepository.save(fitnessCenter);
     }

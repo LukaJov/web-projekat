@@ -87,3 +87,27 @@ $(document).on('click', '.delete', function () {
     });
 });
 
+$(document).on('click', '.change', function () {
+
+
+   // let userType =  window.localStorage.getItem('role');
+    let centerId = this.dataset.id;
+
+    window.localStorage.setItem('fitCenterId', centerId);
+
+    $.ajax({
+        type: "GET",
+        url: "http://localhost:8080/api/fitnesscenters/" + centerId,
+        dataType: "json",
+        success: function (response) {
+            console.log("SUCCESS:\n", response);
+            window.location.href ="changefitnesscenter.html";
+
+        },
+        error: function (response) {
+            console.log("ERROR:\n", response);
+        }
+    });
+});
+
+

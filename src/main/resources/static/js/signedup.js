@@ -25,7 +25,10 @@ var typedto = {
                 row += "<td>" + term.trainingDTO.duration + "</td>";
                 row += "<td>" + term.date + "</td>";
                 row += "<td>" + term.price + "</td>";
-                /*row += "<td>" + gradee + "</td>";*/
+
+                let btn = "<button class='red' data-id=" + term.id + ">Sign out</button>";
+                row += "<td>" + btn + "</td>";
+
                 row += "</tr>";
 
                 $('#terms').append(row);

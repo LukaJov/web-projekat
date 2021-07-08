@@ -11,4 +11,8 @@ public class TypeDTO
     private Long userType;
 
     public TypeDTO(){}
+    public TypeDTO(Long id, Long userType){
+        this.id = id;
+        this.userType = userType;
+    }
 }

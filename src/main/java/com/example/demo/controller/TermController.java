@@ -248,8 +248,8 @@ public class TermController {
     }
 
     //prijava za trening
-    @PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<TermDTO> signUpOrOut(@RequestBody TypeDTO typeDTO, @PathVariable Long id,@RequestParam String upOrOut) throws Exception {
+    @PutMapping(value = "/{id}",produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<TermDTO> signUpOrOut(/*@RequestBody TypeDTO typeDTO,*/ @PathVariable Long id,@RequestParam String upOrOut, @RequestParam Long userId, @RequestParam Long userType) throws Exception {
 
         boolean upout;
 
@@ -260,12 +260,12 @@ public class TermController {
         else {
             upout = false;
         }
-        if(typeDTO.getUserType().equals("Member")) {
+        if(userType==1) {
             Optional<Term> optTerm = this.termService.findById(id);
             Term term = optTerm.get();
             Term updatedTerm = new Term();
 
-            Optional<User> optUser = this.userService.findById(typeDTO.getId());
+            Optional<User> optUser = this.userService.findById(/*typeDTO.getId()*/userId);
             User user = optUser.get();
 
             if(upout) {

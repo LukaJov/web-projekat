@@ -28,10 +28,11 @@ INSERT INTO TERM(date, price, number_of_users,fit_center_id, room_id, training_i
 INSERT INTO TERM(date, price, number_of_users,fit_center_id, room_id, training_id, trainer_id ) VALUES('2021-8-3', 2000, 9, 1, 2, 1, 2);
 
 INSERT INTO DONE(term_id, user_id) VALUES(1,1);
+INSERT INTO DONE(term_id, user_id) VALUES(3, 1);
 /*INSERT INTO TERMS(room_id, term_id) VALUES (1,1);*/
 
 INSERT INTO GRADE(grd, given_by_id, term_id) VALUES(3.5, 1, 1);
 
 
-INSERT INTO TO_DO(term_id, user_id) VALUES (1,1);
+INSERT INTO TO_DO(term_id, user_id) VALUES (2,1);
 /*INSERT INTO USER_GRADES(user_id, grades_id) VALUES (1,1);*/

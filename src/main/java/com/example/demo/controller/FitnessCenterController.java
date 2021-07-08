@@ -1,8 +1,10 @@
 package com.example.demo.controller;
 
 import com.example.demo.model.DTO.FitnessCenterDTO;
+import com.example.demo.model.DTO.RoomDTO;
 import com.example.demo.model.DTO.TrainerDTO;
 import com.example.demo.model.FitnessCenter;
+import com.example.demo.model.Room;
 import com.example.demo.model.Trainer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -15,6 +17,7 @@ import com.example.demo.service.FitnessCenterService;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @CrossOrigin
 @RestController
@@ -41,7 +44,25 @@ public class FitnessCenterController {
         return new ResponseEntity<>(newFitnessCenterDTO, HttpStatus.CREATED);
     }
 
+
     //fali putmapping
+    @PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE,
+            produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<FitnessCenterDTO> changeFitnessCenter( @PathVariable Long id, @RequestBody FitnessCenterDTO fitnessCenterDTO, @RequestParam Long userType)
+    {
+        if(userType!=3)
+        {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+
+        FitnessCenter newFitnessCenter = this.fitnessCenterService.update(fitnessCenterDTO, id);
+
+        FitnessCenterDTO newFitnessCenterDTO = new FitnessCenterDTO(newFitnessCenter.getId(), newFitnessCenter.getName(),
+                newFitnessCenter.getAddress(), newFitnessCenter.getPhoneNumber(), newFitnessCenter.getEmailAddress());
+
+        return new ResponseEntity<>(newFitnessCenterDTO, HttpStatus.OK);
+
+    }
 
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<FitnessCenterDTO>> getFitnessCenters()
@@ -74,5 +95,22 @@ public class FitnessCenterController {
         this.fitnessCenterService.delete(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
+
+    @GetMapping(value="/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<FitnessCenterDTO> getFitnessCenter(@PathVariable Long  id)
+    {
+        Optional<FitnessCenter> optFitCenter = this.fitnessCenterService.findById(id);
+        FitnessCenter fitCenter = optFitCenter.get();
+        FitnessCenterDTO fitCenterDTO = new FitnessCenterDTO(fitCenter.getId(), fitCenter.getName(), fitCenter.getAddress(), fitCenter.getPhoneNumber(), fitCenter.getEmailAddress());
+
+        /* this.id = id;
+        this.name = name;
+        this.address = address;
+        this.phoneNumber = phoneNumber;
+        this.emailAddress = emailAddress;*/
+
+        return new ResponseEntity<>(fitCenterDTO, HttpStatus.OK);
+    }
+
 
 }
