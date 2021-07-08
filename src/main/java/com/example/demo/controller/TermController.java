@@ -1,7 +1,6 @@
 package com.example.demo.controller;
 
-import com.example.demo.model.DTO.TrainerDTO;
-import com.example.demo.model.DTO.TypeDTO;
+import com.example.demo.model.DTO.*;
 import com.example.demo.model.Grade;
 import com.example.demo.model.Trainer;
 import com.example.demo.model.User;
@@ -10,8 +9,6 @@ import com.example.demo.service.UserService;
 import org.hibernate.usertype.UserType;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.Sort.Order;
-import com.example.demo.model.DTO.TermDTO;
-import com.example.demo.model.DTO.TrainingDTO;
 import com.example.demo.service.TermService;
 import com.example.demo.model.Term;
 import org.springframework.http.HttpStatus;
@@ -234,11 +231,11 @@ public class TermController {
         {
             if(grade!=null) {
                 Term term = grade.getTerm();
-
+                Double grd = grade.getGrd();
                 TrainingDTO trainingDTO = new TrainingDTO(term.getTraining().getName()
                         , term.getTraining().getDesc(), term.getTraining().getTrainingType(), term.getTraining().getDuration());
 
-                TermDTO termDTO = new TermDTO(term.getId(), trainingDTO, term.getDate(), term.getPrice());
+                TermDTO termDTO = new TermDTO(term.getId(), trainingDTO, term.getDate(), term.getPrice(), grd);
 
                 termDTOS.add(termDTO);
             }
@@ -269,6 +266,10 @@ public class TermController {
             User user = optUser.get();
 
             if(upout) {
+                if(term.getRoom().getCapacity()<=term.getNumberOfUsers())
+                {
+                    return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+                }
                 updatedTerm = this.termService.signup(term, user);
             }
             else{
@@ -288,8 +289,13 @@ public class TermController {
     }
 
     @GetMapping(value="/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<TermDTO> getTerm(@PathVariable Long id)
+    public ResponseEntity<TermDTO> getTerm(@PathVariable Long id, @RequestParam Long userType)
     {
+        if(userType!=1)
+        {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+
         Optional<Term> optTerm = this.termService.findById(id);
         Term term = optTerm.get();
 
@@ -301,19 +307,20 @@ public class TermController {
         return new ResponseEntity<>(termDTO, HttpStatus.OK);
     }
     // davanje ocena promeni sutra
-    @PutMapping(value = "/grades", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Grade> giveGrade(@PathVariable Long id, @RequestParam Long userId, @RequestParam String userType, @RequestParam Grade grade) throws Exception {
+    @PutMapping(value = "/grades/{id}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<GradeDTO> giveGrade(@PathVariable Long id, @RequestParam Long userId, @RequestParam Long userType, @RequestBody GradeDTO gradeDTO) throws Exception {
 
-        if(userType.equals("Member")) {
+        if(userType==1) {
             Optional<Term> optTerm = this.termService.findById(id);
             Term term = optTerm.get();
 
-            Optional<User> optUser = this.userService.findById(id);
+            Optional<User> optUser = this.userService.findById(userId);
             User user = optUser.get();
 
-            Grade newGrade = this.gradeService.saveGrade(grade, user, term);
+            Grade newGrade = this.gradeService.saveGrade(gradeDTO, user, term);
 
-            return new ResponseEntity<>(newGrade, HttpStatus.OK);
+            GradeDTO newGradeDTO = new GradeDTO(newGrade.getId(), newGrade.getGrd());
+            return new ResponseEntity<>(newGradeDTO, HttpStatus.OK);
         }
 
         else {

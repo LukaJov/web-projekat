@@ -39,8 +39,14 @@ $(document).on("click", "button", function (event) {
                     row += "<td>" + term.trainingDTO.duration + "</td>";
                     row += "<td>" + term.date + "</td>";
                     row += "<td>" + term.price + "</td>";
-                    /*row += "<td>" + gradee + "</td>";*/
-                    row += "</tr>";
+                    if(grd=="doneungraded")
+                    {
+                        let btn = "<button class='givegrade' data-id=" + term.id + ">Give grade</button>";
+                        row += "<td>" + btn + "</td>";
+                    }
+                    if(grd=="donegraded") {
+                        row += "<td>" + term.grade + "</td>";
+                    }
 
                     $('#terms').append(row);
                 }
@@ -49,7 +55,15 @@ $(document).on("click", "button", function (event) {
                 console.log("ERROR:\n", response);
             }
         });
+});
 
+$(document).on('click', '.givegrade', function () {
 
+    let userType = window.localStorage.getItem('role');
+    let userId =  window.localStorage.getItem('id');
+    let termId = this.dataset.id;
 
+    window.localStorage.setItem('termId', termId);
+
+    window.location.href ="givegrade.html";
 });

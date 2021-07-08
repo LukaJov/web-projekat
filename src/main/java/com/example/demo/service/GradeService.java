@@ -3,6 +3,7 @@ package com.example.demo.service;
 import java.util.Date;
 import java.util.List;
 
+import com.example.demo.model.DTO.GradeDTO;
 import com.example.demo.model.Grade;
 import com.example.demo.model.Term;
 import com.example.demo.model.User;
@@ -23,12 +24,14 @@ public class GradeService {
     @Autowired
     private UserRepository userRepository;
 
-    public Grade saveGrade(Grade grade, User user, Term term)
+    public Grade saveGrade(GradeDTO gradeDTO, User user, Term term)
     {
+        Grade grade = new Grade();
+        grade.setGrd(gradeDTO.getGrade());
         grade.setGivenBy(user);
         grade.setTerm(term);
-        user.getGrades().add(grade);
-        term.getGrades().add(grade);
+        //user.getGrades().add(grade);
+        //term.getGrades().add(grade);
         this.termRepository.save(term);
         this.userRepository.save(user);
 
