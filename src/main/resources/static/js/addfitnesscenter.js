@@ -34,3 +34,10 @@ $(document).on("click", ".btn", function (event) {
         }
     });
 });
+$(document).ready(function () {
+    var userType = window.localStorage.getItem('role');
+    if (userType != 3) {
+        alert("Nedozvoljen pristup")
+        window.location.href = "index.html";
+    }
+})

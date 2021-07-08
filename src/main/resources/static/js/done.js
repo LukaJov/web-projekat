@@ -67,3 +67,11 @@ $(document).on('click', '.givegrade', function () {
 
     window.location.href ="givegrade.html";
 });
+
+$(document).ready(function () {
+    var userType = window.localStorage.getItem('role');
+    if (userType!= 1) {
+        alert("Nedozvoljen pristup")
+        window.location.href = "index.html";
+    }
+})

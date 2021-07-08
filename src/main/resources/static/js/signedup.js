@@ -2,6 +2,11 @@ $(document).ready(function () {
     let id = window.localStorage.getItem('id');
 let userType = window.localStorage.getItem('role');
 
+        if (userType!= 1) {
+            alert("Nedozvoljen pristup")
+            window.location.href = "index.html";
+        }
+
 var typedto = {
     id,
     userType

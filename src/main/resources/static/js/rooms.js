@@ -2,6 +2,13 @@
 $(document).ready(function () {
      var fitCenterId = window.localStorage.getItem('fitCenterId');
 
+        var userType = window.localStorage.getItem('role');
+        if (userType!= 3) {
+            alert("Nedozvoljen pristup")
+            window.location.href = "index.html";
+        }
+
+
     $.ajax({
         type: "GET",
         url: "/api/fitnesscenters/" + fitCenterId + "/rooms",

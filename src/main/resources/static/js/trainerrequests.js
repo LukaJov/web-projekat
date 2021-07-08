@@ -1,5 +1,12 @@
 $(document).ready(function () {
-    var fitCenterId = window.localStorage.getItem('fitCenterId');// Čeka se trenutak kada je DOM(Document Object Model) učitan da bi JS mogao sa njim da manipuliše.
+    var fitCenterId = window.localStorage.getItem('fitCenterId');
+
+        var userType = window.localStorage.getItem('role');
+        if (userType != 3) {
+            alert("Nedozvoljen pristup")
+            window.location.href = "index.html";
+        }
+
     $.ajax({
         type: "GET",
         url: "http://localhost:8080/api/" + fitCenterId+ "/trainers",

@@ -34,7 +34,13 @@ $(document).on('click', '.more', function () {
 
 
 
-$(document).ready(function () {    // Čeka se trenutak kada je DOM(Document Object Model) učitan da bi JS mogao sa njim da manipuliše.
+$(document).ready(function () {
+
+    var userType = window.localStorage.getItem('role');
+    if (userType != 3) {
+            alert("Nedozvoljen pristup")
+            window.location.href = "index.html";}
+
     $.ajax({
         type: "GET",
         url: "http://localhost:8080/api/fitnesscenters",
