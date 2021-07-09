@@ -1,16 +1,11 @@
 package com.example.demo.controller;
 
+import com.example.demo.model.*;
 import com.example.demo.model.DTO.*;
-import com.example.demo.model.Grade;
-import com.example.demo.model.Trainer;
-import com.example.demo.model.User;
-import com.example.demo.service.GradeService;
-import com.example.demo.service.UserService;
+import com.example.demo.service.*;
 import org.hibernate.usertype.UserType;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.Sort.Order;
-import com.example.demo.service.TermService;
-import com.example.demo.model.Term;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -32,6 +27,16 @@ public class TermController {
     private UserService userService;
     @Autowired
     private GradeService gradeService;
+    @Autowired
+    private RoomService roomService;
+    @Autowired
+    private TrainerService trainerService;
+
+    @Autowired
+    private TrainingService trainingService;
+
+    @Autowired
+    private FitnessCenterService fitnessCenterService;
     /*@PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<TrainerDTO> createTerm(@RequestBody TermDTO termDTO) throws Exception {
@@ -44,6 +49,38 @@ public class TermController {
 
         return new ResponseEntity<>(newTermDTO, HttpStatus.CREATED);
     }*/
+
+
+    @GetMapping(value = "/my/{trainerId}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<List<TermDTO>> getSchedule(@PathVariable Long trainerId, @RequestParam Long userType)
+    {
+        if(userType!=2)
+        {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+        List<Term> terms = new ArrayList<>();
+        List<TermDTO> termDTOS = new ArrayList<>();
+
+        terms = this.termService.findByTrainerId(trainerId);
+        for(Term term: terms)
+        {
+
+
+                    TrainingDTO trainingDTO = new TrainingDTO(term.getTraining().getName()
+                            , term.getTraining().getDesc(), term.getTraining().getTrainingType(), term.getTraining().getDuration());
+
+                    TermDTO termDTO = new TermDTO(term.getId(), trainingDTO, term.getDate(), term.getPrice());
+
+                    termDTOS.add(termDTO);
+
+        }
+
+
+        return new ResponseEntity<>(termDTOS, HttpStatus.OK);
+
+    }
+
+
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<TermDTO>> getTerms(@PathVariable Long centerId, @RequestParam(required = false) Long id, @RequestParam(required = false) Long userType, @RequestParam(required = false) String trainingName,  @RequestParam(required = false) String trainingDesc,
                                                                                                             @RequestParam(required = false) String trainingType, @RequestParam(required = false) Double price,
@@ -492,6 +529,21 @@ public class TermController {
         }
     }
 
+     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<TermDTO> addTerm(@RequestBody TermDTO termDTO, @PathVariable Long centerId, @RequestParam Long roomId, @RequestParam Long trainingId, @RequestParam Long id, @RequestParam Long userType)
+     {
+         FitnessCenter fitCenter = this.fitnessCenterService.findById(centerId).get();
+         Room room = this.roomService.findById(roomId).get();
+         Training training = this.trainingService.findById(trainingId).get();
+         Trainer trainer = this.trainerService.findById(id).get();
 
+         Term term = this.termService.save(termDTO,fitCenter, room, trainer, training);
+
+         TrainingDTO trainingDTO = new TrainingDTO(term.getTraining().getName()
+                 , term.getTraining().getDesc(), term.getTraining().getTrainingType(), term.getTraining().getDuration());
+
+         TermDTO newTermDTO = new TermDTO(term.getId(), trainingDTO, term.getDate(), term.getPrice());
+         return new ResponseEntity<>(newTermDTO, HttpStatus.OK);
+     }
 
 }

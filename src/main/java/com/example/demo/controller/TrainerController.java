@@ -103,6 +103,8 @@ public class TrainerController {
 
     }
 
+
+
     //odobravanje zahteva
     @PutMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<TrainerDTO> makeActive(@PathVariable Long id) throws Exception {

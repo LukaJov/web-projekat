@@ -23,7 +23,7 @@ public interface TermRepository extends JpaRepository<Term, Long> {
     List<Term> findByDateIsBefore(Date date, Sort sort);
 
     List<Term> findByPriceIsLessThanEqual(Double price, Sort sort);
-
+    List<Term> findByTrainerId(Long id);
     //List<Term> findByUserId(Long id);
 
 

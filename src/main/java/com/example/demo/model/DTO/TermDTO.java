@@ -27,6 +27,12 @@ public class TermDTO {
         this.price = price;
     }
 
+    public TermDTO(Date date, Double price)
+    {
+        this.date = date;
+        this.price = price;
+    }
+
     public TermDTO(Long id, TrainingDTO trainingDTO, Date date, Double price, Double grade)
     {
         this.id = id;

@@ -112,5 +112,26 @@ public class FitnessCenterController {
         return new ResponseEntity<>(fitCenterDTO, HttpStatus.OK);
     }
 
+    @GetMapping(value="/my", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<FitnessCenterDTO> getMyFitnessCenter(@RequestParam Long trainerId)
+    {
+        List<FitnessCenter> fitnessCenters = new ArrayList<>();
+        fitnessCenters = this.fitnessCenterService.findAll();
+        for(FitnessCenter fitCenter: fitnessCenters) {
+            for(Trainer trainer: fitCenter.getTrainers())
+            {
+                if(trainer.getId()==trainerId){
+                FitnessCenterDTO fitCenterDTO = new FitnessCenterDTO(fitCenter.getId(), fitCenter.getName(), fitCenter.getAddress(), fitCenter.getPhoneNumber(), fitCenter.getEmailAddress());
+                return new ResponseEntity<>(fitCenterDTO, HttpStatus.OK);
+                }
+            }
+
+        }
+        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+
+
+    }
+
+
 
 }

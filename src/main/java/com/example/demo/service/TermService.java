@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Optional;
 
 import com.example.demo.model.*;
+import com.example.demo.model.DTO.TermDTO;
 import com.example.demo.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
@@ -59,7 +60,10 @@ public class TermService {
         Sort.Order order = getSorting(sort);
         return this.termRepository.findAll(Sort.by(order));
     }
-
+    public List<Term> findByTrainerId(Long id)
+    {
+        return this.termRepository.findByTrainerId(id);
+    }
     public Optional<Term> findById(Long id) {
         return this.termRepository.findById(id);
     }
@@ -113,11 +117,17 @@ public class TermService {
         return savedTerm;
     }
 
-    public Term save(Term term, FitnessCenter fitnessCenter, Room room, Trainer trainer)
+    public Term save(TermDTO termDTO, FitnessCenter fitnessCenter, Room room, Trainer trainer, Training training)
     {
+        Term term = new Term();
+
+        term.setNumberOfUsers(0);
+        term.setDate(termDTO.getDate());
+        term.setPrice(termDTO.getPrice());
         term.setFitCenter(fitnessCenter);
         term.setRoom(room);
         term.setTrainer(trainer);
+        term.setTraining(training);
         /*fitnessCenter.getTerms().add(term);
         room.getTerms().add(term);
         trainer.getTerms().add(term);*/
