@@ -27,10 +27,15 @@ $(document).on("click", "#trainer", function (event) {
     {
         userType = 0;
     }
+    let fitCenterId = window.localStorage.getItem('fitCenterId');
+    if(fitCenterId===null)
+    {
+        fitCenterId = 1;
+    }
 
     $.ajax({
         type: "POST",
-        url: "http://localhost:8080/api/1/trainers?role=" + userType,
+        url: "http://localhost:8080/api/" + fitCenterId + "/trainers?role=" + userType ,
         dataType: "json",
         contentType: "application/json",
         data: JSON.stringify(newTrainer),

@@ -3,12 +3,12 @@ INSERT INTO FITNESS_CENTER(name, address, phone_number, email_address) VALUES('X
 INSERT INTO ADMIN(username, password, name, surname, phone_Number, email_Address, birthday, user_Type, active)
 VALUES ('Srdjan2', 'Srdjan222', 'Srdjan', 'Mihajlovic', '06233783', 'mihajlsrdj@gmail.com', '1973-1-28', 'Admin', true);
 
-INSERT INTO TRAINER(username, password, name, surname, phone_Number, email_Address, birthday, user_Type, active, fit_center_id)
-VALUES ('LukaJov', 'LukaJov123', 'Luka', 'Jovanovic', '06234443', 'lukajov@gmail.com', '2000-7-1', 'Trainer', true, 1);
-INSERT INTO TRAINER(username, password, name, surname, phone_Number, email_Address, birthday, user_Type, active, fit_center_id)
-VALUES ('Milan1234', 'Lanmi1234', 'Milan', 'Simic', '06453454', 'simicmilan@gmail.com', '2003-4-12', 'Trainer', false, 1);
-INSERT INTO TRAINER(username, password, name, surname, phone_Number, email_Address, birthday, user_Type, active, fit_center_id)
-VALUES ('gorang', 'gorangoran', 'Goran', 'Goranovic', '064534544', 'rango@gmail.com', '2001-4-12', 'Trainer', false, 1);
+INSERT INTO TRAINER(username, password, name, surname, phone_Number, email_Address, birthday, user_Type, active, avg_Grade, fit_center_id)
+VALUES ('LukaJov', 'LukaJov123', 'Luka', 'Jovanovic', '06234443', 'lukajov@gmail.com', '2000-7-1', 'Trainer', true, 0.0, 1);
+INSERT INTO TRAINER(username, password, name, surname, phone_Number, email_Address, birthday, user_Type, active,avg_Grade, fit_center_id)
+VALUES ('Milan1234', 'Lanmi1234', 'Milan', 'Simic', '06453454', 'simicmilan@gmail.com', '2003-4-12', 'Trainer', false, 0.0, 1);
+INSERT INTO TRAINER(username, password, name, surname, phone_Number, email_Address, birthday, user_Type, active,avg_Grade, fit_center_id)
+VALUES ('gorang', 'gorangoran', 'Goran', 'Goranovic', '064534544', 'rango@gmail.com', '2001-4-12', 'Trainer', false, 0.0, 1);
 
 
 INSERT INTO USER (username, password, name, surname, phone_Number, email_Address, birthday, user_Type, active)

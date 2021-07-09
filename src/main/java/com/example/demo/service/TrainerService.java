@@ -27,9 +27,9 @@ public class TrainerService {
         trainer.setActive(true);
         return this.trainerRepository.save(trainer);
     }
-    public List<Trainer> findByActive(boolean active)
+    public List<Trainer> findByActive(boolean active, Long id)
     {
-        return this.trainerRepository.findByActive(active);
+        return this.trainerRepository.findByActiveAndFitCenterId(active, id);
     }
 
     public Optional<Trainer> findById(Long id){return this.trainerRepository.findById(id);}

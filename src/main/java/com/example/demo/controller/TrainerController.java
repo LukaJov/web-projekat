@@ -31,11 +31,15 @@ public class TrainerController {
     //dodaj dto bez sifre!!!
    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<TrainerDTO> createTrainer(@RequestBody TrainerDTO trainerDTO, @RequestParam Long role) throws Exception {
+    public ResponseEntity<TrainerDTO> createTrainer(@PathVariable Long centerId, @RequestBody TrainerDTO trainerDTO, @RequestParam Long role) throws Exception {
 
         Trainer trainer = new Trainer(trainerDTO.getUsername(), trainerDTO.getPassword(),
         trainerDTO.getName(), trainerDTO.getSurname(), trainerDTO.getPhoneNumber(), trainerDTO.getEmailAddress(),
         trainerDTO.getBirthday());
+
+        FitnessCenter fitCenter = this.fitnessCenterService.findById(centerId).get();
+        trainer.setFitCenter(fitCenter);
+        this.fitnessCenterService.save(fitCenter);
 
         Trainer newTrainer = new Trainer();
         if(role==3)
@@ -54,11 +58,11 @@ public class TrainerController {
     }
 //prikaz zahteva za trenera, izmeni posle
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<List<TrainerDTO>> getTrainerRequests()
+    public ResponseEntity<List<TrainerDTO>> getTrainerRequests(@PathVariable Long centerId)
     {
         List<Trainer> trainers = new ArrayList<>();
 
-        trainers = this.trainerService.findByActive(false);
+        trainers = this.trainerService.findByActive(false, centerId);
 
         List<TrainerDTO> trainerDTOS = new ArrayList<>();
 
@@ -77,11 +81,11 @@ public class TrainerController {
     }
 
     @GetMapping(value = "/active",produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<List<TrainerDTO>> getTrainers()
+    public ResponseEntity<List<TrainerDTO>> getTrainers(@PathVariable Long centerId)
     {
         List<Trainer> trainers = new ArrayList<>();
 
-        trainers = this.trainerService.findByActive(true);
+        trainers = this.trainerService.findByActive(true, centerId);
 
         List<TrainerDTO> trainerDTOS = new ArrayList<>();
 
