@@ -22,6 +22,8 @@ $(document).ready(function () {
                 row += "<td>" + term.trainingDTO.duration + "</td>";
                 row += "<td>" + term.date + "</td>";
                 row += "<td>" + term.price + "</td>";
+                let btn = "<button class='delete' data-id=" + term.id + ">Delete</button>";
+                row += "<td>" + btn + "</td>";
                 row += "</tr>";
 
                 $('#terms').append(row);
@@ -48,4 +50,31 @@ $(document).on('click', '#add', function () {
 
 
 });
+
+$(document).on('click', '.delete', function () {
+
+    let centerId = window.localStorage.getItem('fitCenterId');
+    let userType =  window.localStorage.getItem('role');
+    if(userType!=2)
+    {
+        alert("Nedozvoljen pristup!");
+        window.location.href = "index.html";
+    }
+    let termId = this.dataset.id;
+
+    $.ajax({
+        type: "DELETE",
+        url: "http://localhost:8080/api/" + centerId + "/terms/" + termId +"?userType=" + userType,
+        dataType: "json",
+        success: function (response) {
+            console.log("SUCCESS:\n", response);
+            $('[data-id="' + centerId + '"]').parent().parent().remove();
+
+        },
+        error: function (response) {
+            console.log("ERROR:\n", response);
+        }
+    });
+});
+
 

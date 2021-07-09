@@ -138,4 +138,9 @@ public class TermService {
         return this.termRepository.save(term);
     }
 
+    public void delete(Long id)
+    {
+         this.termRepository.deleteById(id);
+    }
+
 }

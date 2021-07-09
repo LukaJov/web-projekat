@@ -532,6 +532,11 @@ public class TermController {
      @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<TermDTO> addTerm(@RequestBody TermDTO termDTO, @PathVariable Long centerId, @RequestParam Long roomId, @RequestParam Long trainingId, @RequestParam Long id, @RequestParam Long userType)
      {
+         if(userType!=2)
+         {
+             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+         }
+
          FitnessCenter fitCenter = this.fitnessCenterService.findById(centerId).get();
          Room room = this.roomService.findById(roomId).get();
          Training training = this.trainingService.findById(trainingId).get();
@@ -545,5 +550,17 @@ public class TermController {
          TermDTO newTermDTO = new TermDTO(term.getId(), trainingDTO, term.getDate(), term.getPrice());
          return new ResponseEntity<>(newTermDTO, HttpStatus.OK);
      }
+
+     @DeleteMapping(value = "/{id}")
+     public ResponseEntity<Void> deleteTerm(@PathVariable Long id, @RequestParam Long userType)
+     {
+         if(userType!=2)
+         {
+             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+         }
+         this.termService.delete(id);
+         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+     }
+
 
 }
