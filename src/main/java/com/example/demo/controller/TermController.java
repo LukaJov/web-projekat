@@ -11,6 +11,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.Sort.Order;
 import com.example.demo.service.TermService;
 import com.example.demo.model.Term;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -46,7 +47,7 @@ public class TermController {
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<TermDTO>> getTerms(@RequestParam(required = false) Long id, @RequestParam(required = false) Long userType, @RequestParam(required = false) String trainingName,  @RequestParam(required = false) String trainingDesc,
                                                                                                             @RequestParam(required = false) String trainingType, @RequestParam(required = false) Double price,
-                                                                                                            @RequestParam(required = false) Date date, @RequestParam(required = false, defaultValue ="price,asc") String sort)
+                                                                                                            @RequestParam(required = false) @DateTimeFormat(pattern="yyyy-MM-dd") Date date, @RequestParam(required = false, defaultValue ="price,asc") String sort)
     {
         List<Term> terms = new ArrayList<>();
 
@@ -121,6 +122,118 @@ public class TermController {
 
             termDTOS.add(termDTO);
         }}
+
+
+
+        return new ResponseEntity<>(termDTOS, HttpStatus.OK);
+
+    }
+
+    @GetMapping(value="/multi", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<List<TermDTO>> getTermsMulti(@RequestParam(required = false) Long id, @RequestParam(required = false) Long userType, @RequestParam(required = false) String trainingName, @RequestParam(required = false) String trainingDesc,
+                                                       @RequestParam(required = false) String trainingType, @RequestParam(required = false) Double price,
+                                                       @RequestParam(required = false) @DateTimeFormat(pattern="yyyy-MM-dd") Date date, @RequestParam(required = false, defaultValue ="price,asc") String sort)
+    {
+        List<Term> terms = new ArrayList<>();
+        List<Term> trName = new ArrayList<>();
+        List<Term> trDesc = new ArrayList<>();
+        List<Term> trType = new ArrayList<>();
+        List<Term> trPrice = new ArrayList<>();
+        List<Term> trDate = new ArrayList<>();
+
+        terms = this.termService.findAll(sort);
+
+        if(!(trainingName==null))
+        {
+            trName = this.termService.findByTrainingName(trainingName, sort);
+        }
+        else {
+            trName = this.termService.findAll(sort);
+        }
+        terms.retainAll(trName);
+
+        if(!(trainingDesc==null))
+        {
+            trDesc = this.termService.findByTrainingDesc(trainingDesc, sort);
+        }
+        else {
+            trDesc = this.termService.findAll(sort);
+        }
+        terms.retainAll(trDesc);
+
+        if(!(trainingType==null))
+        {
+            trType = this.termService.findByTrainingTrainingType(trainingType, sort);
+        }
+        else{
+            trType = this.termService.findAll(sort);
+        }
+        terms.retainAll(trType);
+        if(!(price==null))
+        {
+            trPrice = this.termService.findByPrice(price, sort);
+        }
+        else
+        {
+            trPrice = this.termService.findAll(sort);
+        }
+        terms.retainAll(trPrice);
+        if(!(date==null))
+        {
+            trDate = this.termService.findByDate(date, sort);
+        }
+        else {
+            trDate = this.termService.findAll(sort);
+        }
+        terms.retainAll(trDate);
+
+
+        List<TermDTO> termDTOS = new ArrayList<>();
+
+        if(userType!=null && id !=null)
+        {
+            if(userType==1) {
+
+                for(Term term: terms)
+                {
+                    for(User user: term.getUserDone()) {
+                        if(user.getId()==  id) {
+                            term.setId((long)0);
+                        }
+                    }
+                }
+                for(Term term: terms)
+                {
+                    for(User user: term.getUserToDo()) {
+                        if(user.getId()== id) {
+                            term.setId((long)0);
+                        }
+                    }
+                }
+                for (Term term : terms) {
+                    if(term.getId()!=0) {
+                        TrainingDTO trainingDTO = new TrainingDTO(term.getTraining().getName()
+                                , term.getTraining().getDesc(), term.getTraining().getTrainingType(), term.getTraining().getDuration());
+
+                        TermDTO termDTO = new TermDTO(term.getId(), trainingDTO, term.getDate(), term.getPrice());
+
+                        termDTOS.add(termDTO);
+                    }
+                }
+
+            }
+
+        }
+        else {
+            for (Term term : terms) {
+
+                TrainingDTO trainingDTO = new TrainingDTO(term.getTraining().getName()
+                        , term.getTraining().getDesc(), term.getTraining().getTrainingType(), term.getTraining().getDuration());
+
+                TermDTO termDTO = new TermDTO(term.getId(), trainingDTO, term.getDate(), term.getPrice());
+
+                termDTOS.add(termDTO);
+            }}
 
 
 
