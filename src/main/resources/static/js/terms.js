@@ -57,6 +57,13 @@ $(document).on("click", "#search", function (event) {
     let queryString = encodeQueryData(data);
     queryString += '&sort=' + sortBy + ',' + sortDir;
 
+    let userType = window.localStorage.getItem('role');
+    let id = window.localStorage.getItem('id');
+    if(userType==1)
+    {
+        queryString += '&id=' + id + '&userType=' + userType;
+    }
+
 
     $.ajax({
         type: "GET",
@@ -73,7 +80,7 @@ $(document).on("click", "#search", function (event) {
                 row += "<td>" + term.trainingDTO.duration + "</td>";
                 row += "<td>" + term.date + "</td>";
                 row += "<td>" + term.price + "</td>";
-                let btn = "<button class='green' data-id=" + term.id + ">Sign up</button>";
+                let btn = "<button class='more' data-id=" + term.id + ">See more</button>";
                 if(window.localStorage.getItem('role')==1) {
                     row += "<td>" + btn + "</td>";
                 }

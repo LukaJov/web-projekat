@@ -17,10 +17,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Date;
-import java.util.Optional;
+import java.util.*;
 
 @CrossOrigin
 @RestController
@@ -47,7 +44,7 @@ public class TermController {
         return new ResponseEntity<>(newTermDTO, HttpStatus.CREATED);
     }*/
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<List<TermDTO>> getTerms(/*@RequestParam Long id, @RequestParam String userType,*/ @RequestParam(required = false) String trainingName,  @RequestParam(required = false) String trainingDesc,
+    public ResponseEntity<List<TermDTO>> getTerms(@RequestParam(required = false) Long id, @RequestParam(required = false) Long userType, @RequestParam(required = false) String trainingName,  @RequestParam(required = false) String trainingDesc,
                                                                                                             @RequestParam(required = false) String trainingType, @RequestParam(required = false) Double price,
                                                                                                             @RequestParam(required = false) Date date, @RequestParam(required = false, defaultValue ="price,asc") String sort)
     {
@@ -80,6 +77,41 @@ public class TermController {
 
         List<TermDTO> termDTOS = new ArrayList<>();
 
+        if(userType!=null && id !=null)
+        {
+        if(userType==1) {
+
+            for(Term term: terms)
+            {
+                for(User user: term.getUserDone()) {
+                    if(user.getId()==  id) {
+                       term.setId((long)0);
+                    }
+                }
+            }
+            for(Term term: terms)
+            {
+                for(User user: term.getUserToDo()) {
+                    if(user.getId()== id) {
+                        term.setId((long)0);
+                    }
+                }
+            }
+            for (Term term : terms) {
+                if(term.getId()!=0) {
+                    TrainingDTO trainingDTO = new TrainingDTO(term.getTraining().getName()
+                            , term.getTraining().getDesc(), term.getTraining().getTrainingType(), term.getTraining().getDuration());
+
+                    TermDTO termDTO = new TermDTO(term.getId(), trainingDTO, term.getDate(), term.getPrice());
+
+                    termDTOS.add(termDTO);
+                }
+            }
+
+        }
+
+        }
+        else {
         for (Term term : terms) {
 
             TrainingDTO trainingDTO = new TrainingDTO(term.getTraining().getName()
@@ -88,7 +120,9 @@ public class TermController {
             TermDTO termDTO = new TermDTO(term.getId(), trainingDTO, term.getDate(), term.getPrice());
 
             termDTOS.add(termDTO);
-        }
+        }}
+
+
 
         return new ResponseEntity<>(termDTOS, HttpStatus.OK);
 
@@ -298,11 +332,14 @@ public class TermController {
 
         Optional<Term> optTerm = this.termService.findById(id);
         Term term = optTerm.get();
+        int numUsers = term.getNumberOfUsers();
+        int capacity = term.getRoom().getCapacity();
+        int noOfSpots = capacity-numUsers;
 
         TrainingDTO trainingDTO = new TrainingDTO(term.getTraining().getName()
                 , term.getTraining().getDesc(), term.getTraining().getTrainingType(), term.getTraining().getDuration());
 
-        TermDTO termDTO = new TermDTO(term.getId(), trainingDTO, term.getDate(), term.getPrice());
+        TermDTO termDTO = new TermDTO(term.getId(), trainingDTO, term.getDate(), term.getPrice(), noOfSpots);
 
         return new ResponseEntity<>(termDTO, HttpStatus.OK);
     }

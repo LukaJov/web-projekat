@@ -18,8 +18,8 @@ $(document).on('click', '.green', function () {
         data: JSON.stringify(typeDTO),*/
         success: function (response) {
             console.log("SUCCESS:\n", response);
-            $('[data-id="' + termId + '"]').parent().parent().remove();
-
+            //$('[data-id="' + termId + '"]').parent().parent().remove();
+            window.location.href = "terms.html";
         },
         error: function (response) {
             console.log("ERROR:\n", response);

@@ -12,6 +12,7 @@ public class TermDTO {
     private Date date;
     private Double price;
     private Double grade;
+    private int emptySpots;
 
     public TermDTO()
     {
@@ -33,5 +34,13 @@ public class TermDTO {
         this.date = date;
         this.price = price;
         this.grade = grade;
+    }
+    public TermDTO(Long id, TrainingDTO trainingDTO, Date date, Double price, int emptySpots)
+    {
+        this.id = id;
+        this.trainingDTO = trainingDTO;
+        this.date = date;
+        this.price = price;
+        this.emptySpots = emptySpots;
     }
 }
