@@ -44,6 +44,9 @@ public class Trainer implements Serializable
     @Column
     private Double avgGrade;
 
+    @Column
+    private int numOfGrades;
+
     public Trainer(String username, String password, String name, String surname, String phoneNumber,
     String emailAddress, Date birthday)
     {
@@ -57,6 +60,7 @@ public class Trainer implements Serializable
         this.userType = "Trainer";
         this.active = false;
         this.avgGrade = 0.0;
+        this.numOfGrades = 0;
     }
 
     public Trainer()

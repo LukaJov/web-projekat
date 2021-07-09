@@ -1,7 +1,11 @@
 $(document).ready(function () {
     let id = window.localStorage.getItem('id');
 let userType = window.localStorage.getItem('role');
-
+    let centerId = window.localStorage.getItem('fitCenterId');
+    if(centerId==null)
+    {
+        centerId = 1;
+    }
         if (userType!= 1) {
             alert("Nedozvoljen pristup")
             window.location.href = "index.html";
@@ -14,7 +18,7 @@ var typedto = {
 
     $.ajax({
         type: "POST",
-        url: "http://localhost:8080/api/terms/todo",
+        url: "http://localhost:8080/api/"+ centerId + "/terms/todo",
         dataType: "json",
         contentType: "application/json",
         data: JSON.stringify(typedto),

@@ -38,7 +38,7 @@ $(document).on('click', '#trainer', function () {
         success: function (response) {
             console.log("SUCCESS:\n", response);
             alert("Uspesno ste se ulogovali!");//
-            window.location.href = "terms.html";
+            window.location.href = "trainerterms.html";
             window.localStorage.setItem('role', '2');
             window.localStorage.setItem('id', response.id);
 

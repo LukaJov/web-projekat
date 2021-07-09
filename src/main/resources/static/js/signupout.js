@@ -7,12 +7,16 @@ $(document).on('click', '.green', function () {
     console.log(termId);
     let id = window.localStorage.getItem('id');
     let userType = window.localStorage.getItem('role');
-
+    let centerId = window.localStorage.getItem('fitCenterId');
+    if(centerId==null)
+    {
+        centerId = 1;
+    }
 
     // ajax poziv za dobavljanje traženog zaposlenog sa backend-a i prikaz na stranici
     $.ajax({
         type: "PUT",
-        url: "http://localhost:8080/api/terms/" + termId + "?upOrOut=true&userId=" + id + "&userType=" + userType,
+        url: "http://localhost:8080/api/"+ centerId+ "terms/" + termId + "?upOrOut=true&userId=" + id + "&userType=" + userType,
         dataType: "json",
         /*contentType: "application/json",
         data: JSON.stringify(typeDTO),*/
@@ -36,12 +40,16 @@ $(document).on('click', '.red', function () {
     console.log(termId);
     let id = window.localStorage.getItem('id');
     let userType = window.localStorage.getItem('role');
-
+    let centerId = window.localStorage.getItem('fitCenterId');
+    if(centerId==null)
+    {
+        centerId = 1;
+    }
 
     // ajax poziv za dobavljanje traženog zaposlenog sa backend-a i prikaz na stranici
     $.ajax({
         type: "PUT",
-        url: "http://localhost:8080/api/terms/" + termId + "?upOrOut=false&userId=" + id + "&userType=" + userType,
+        url: "http://localhost:8080/api/"+ centerId + "/terms/" + termId + "?upOrOut=false&userId=" + id + "&userType=" + userType,
         dataType: "json",
         /*contentType: "application/json",
         data: JSON.stringify(typeDTO),*/

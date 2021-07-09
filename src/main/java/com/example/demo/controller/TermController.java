@@ -22,7 +22,7 @@ import java.util.*;
 
 @CrossOrigin
 @RestController
-@RequestMapping(value = "/api/terms")
+@RequestMapping(value = "/api/{centerId}/terms")
 public class TermController {
 
     @Autowired
@@ -45,7 +45,7 @@ public class TermController {
         return new ResponseEntity<>(newTermDTO, HttpStatus.CREATED);
     }*/
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<List<TermDTO>> getTerms(@RequestParam(required = false) Long id, @RequestParam(required = false) Long userType, @RequestParam(required = false) String trainingName,  @RequestParam(required = false) String trainingDesc,
+    public ResponseEntity<List<TermDTO>> getTerms(@PathVariable Long centerId, @RequestParam(required = false) Long id, @RequestParam(required = false) Long userType, @RequestParam(required = false) String trainingName,  @RequestParam(required = false) String trainingDesc,
                                                                                                             @RequestParam(required = false) String trainingType, @RequestParam(required = false) Double price,
                                                                                                             @RequestParam(required = false) @DateTimeFormat(pattern="yyyy-MM-dd") Date date, @RequestParam(required = false, defaultValue ="price,asc") String sort)
     {
@@ -100,12 +100,15 @@ public class TermController {
             }
             for (Term term : terms) {
                 if(term.getId()!=0) {
-                    TrainingDTO trainingDTO = new TrainingDTO(term.getTraining().getName()
-                            , term.getTraining().getDesc(), term.getTraining().getTrainingType(), term.getTraining().getDuration());
+                    if(term.getFitCenter().getId()==centerId)
+                    {
+                        TrainingDTO trainingDTO = new TrainingDTO(term.getTraining().getName()
+                                , term.getTraining().getDesc(), term.getTraining().getTrainingType(), term.getTraining().getDuration());
 
-                    TermDTO termDTO = new TermDTO(term.getId(), trainingDTO, term.getDate(), term.getPrice());
+                        TermDTO termDTO = new TermDTO(term.getId(), trainingDTO, term.getDate(), term.getPrice());
 
-                    termDTOS.add(termDTO);
+                        termDTOS.add(termDTO);
+                    }
                 }
             }
 
@@ -114,13 +117,14 @@ public class TermController {
         }
         else {
         for (Term term : terms) {
+            if(term.getFitCenter().getId()==centerId) {
+                TrainingDTO trainingDTO = new TrainingDTO(term.getTraining().getName()
+                        , term.getTraining().getDesc(), term.getTraining().getTrainingType(), term.getTraining().getDuration());
 
-            TrainingDTO trainingDTO = new TrainingDTO(term.getTraining().getName()
-                    , term.getTraining().getDesc(), term.getTraining().getTrainingType(), term.getTraining().getDuration());
+                TermDTO termDTO = new TermDTO(term.getId(), trainingDTO, term.getDate(), term.getPrice());
 
-            TermDTO termDTO = new TermDTO(term.getId(), trainingDTO, term.getDate(), term.getPrice());
-
-            termDTOS.add(termDTO);
+                termDTOS.add(termDTO);
+            }
         }}
 
 
@@ -130,7 +134,7 @@ public class TermController {
     }
 
     @GetMapping(value="/multi", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<List<TermDTO>> getTermsMulti(@RequestParam(required = false) Long id, @RequestParam(required = false) Long userType, @RequestParam(required = false) String trainingName, @RequestParam(required = false) String trainingDesc,
+    public ResponseEntity<List<TermDTO>> getTermsMulti(@PathVariable Long centerId, @RequestParam(required = false) Long id, @RequestParam(required = false) Long userType, @RequestParam(required = false) String trainingName, @RequestParam(required = false) String trainingDesc,
                                                        @RequestParam(required = false) String trainingType, @RequestParam(required = false) Double price,
                                                        @RequestParam(required = false) @DateTimeFormat(pattern="yyyy-MM-dd") Date date, @RequestParam(required = false, defaultValue ="price,asc") String sort)
     {
@@ -212,12 +216,15 @@ public class TermController {
                 }
                 for (Term term : terms) {
                     if(term.getId()!=0) {
-                        TrainingDTO trainingDTO = new TrainingDTO(term.getTraining().getName()
-                                , term.getTraining().getDesc(), term.getTraining().getTrainingType(), term.getTraining().getDuration());
+                        if(term.getFitCenter().getId()==centerId)
+                        {
+                            TrainingDTO trainingDTO = new TrainingDTO(term.getTraining().getName()
+                                    , term.getTraining().getDesc(), term.getTraining().getTrainingType(), term.getTraining().getDuration());
 
-                        TermDTO termDTO = new TermDTO(term.getId(), trainingDTO, term.getDate(), term.getPrice());
+                            TermDTO termDTO = new TermDTO(term.getId(), trainingDTO, term.getDate(), term.getPrice());
 
-                        termDTOS.add(termDTO);
+                            termDTOS.add(termDTO);
+                        }
                     }
                 }
 
@@ -226,13 +233,14 @@ public class TermController {
         }
         else {
             for (Term term : terms) {
+                if(term.getFitCenter().getId()==centerId) {
+                    TrainingDTO trainingDTO = new TrainingDTO(term.getTraining().getName()
+                            , term.getTraining().getDesc(), term.getTraining().getTrainingType(), term.getTraining().getDuration());
 
-                TrainingDTO trainingDTO = new TrainingDTO(term.getTraining().getName()
-                        , term.getTraining().getDesc(), term.getTraining().getTrainingType(), term.getTraining().getDuration());
+                    TermDTO termDTO = new TermDTO(term.getId(), trainingDTO, term.getDate(), term.getPrice());
 
-                TermDTO termDTO = new TermDTO(term.getId(), trainingDTO, term.getDate(), term.getPrice());
-
-                termDTOS.add(termDTO);
+                    termDTOS.add(termDTO);
+                }
             }}
 
 
@@ -460,13 +468,19 @@ public class TermController {
     @PutMapping(value = "/grades/{id}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<GradeDTO> giveGrade(@PathVariable Long id, @RequestParam Long userId, @RequestParam Long userType, @RequestBody GradeDTO gradeDTO) throws Exception {
 
+        if(gradeDTO.getGrade()< 0.0 || gradeDTO.getGrade()>5.0)
+        {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+
         if(userType==1) {
             Optional<Term> optTerm = this.termService.findById(id);
             Term term = optTerm.get();
 
             Optional<User> optUser = this.userService.findById(userId);
             User user = optUser.get();
-
+            Trainer trainer = term.getTrainer();
+            trainer.setAvgGrade(((trainer.getAvgGrade()* trainer.getNumOfGrades())+ gradeDTO.getGrade())/ (trainer.getNumOfGrades()+1));
             Grade newGrade = this.gradeService.saveGrade(gradeDTO, user, term);
 
             GradeDTO newGradeDTO = new GradeDTO(newGrade.getId(), newGrade.getGrd());

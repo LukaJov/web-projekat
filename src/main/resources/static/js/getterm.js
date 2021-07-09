@@ -2,7 +2,11 @@ $(document).ready(function () {
 
     let userType = window.localStorage.getItem('role');
     let termId = window.localStorage.getItem('termId');
-
+    let centerId = window.localStorage.getItem('fitCenterId');
+    if(centerId==null)
+    {
+        centerId = 1;
+    }
     if(userType!=1)
     {
         alert("Nedozvoljen pristup!");
@@ -11,7 +15,7 @@ $(document).ready(function () {
     let id = window.localStorage.getItem('id');
     $.ajax({
         type: "GET",
-        url: "http://localhost:8080/api/terms/" + termId + "?userType=" + userType,
+        url: "http://localhost:8080/api/" + centerId + "/terms/" + termId + "?userType=" + userType,
         dataType: "json",
         success: function (response) {
             console.log("SUCCESS:\n", response);

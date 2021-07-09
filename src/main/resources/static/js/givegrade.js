@@ -6,14 +6,18 @@ $(document).on('click', '.give', function () {
     let grade = $("#grade").val();
     let userId = window.localStorage.getItem('id');
     let userType = window.localStorage.getItem('role');
-
+    let centerId = window.localStorage.getItem('fitCenterId');
+    if(centerId==null)
+    {
+        centerId = 1;
+    }
     let gradeDTO = {
         grade
     }
 
     $.ajax({
         type: "PUT",
-        url: "http://localhost:8080/api/terms/grades/" + id + "?userType=" + userType + "&userId=" + userId,
+        url: "http://localhost:8080/api/"+centerId + "/terms/grades/" + id + "?userType=" + userType + "&userId=" + userId,
         dataType: "json",
         contentType: "application/json",
         data: JSON.stringify(gradeDTO),
@@ -24,6 +28,7 @@ $(document).on('click', '.give', function () {
         },
         error: function (response) {
             console.log("ERROR:\n", response);
+            alert("Unesite ocenu izmedju 0 i 5");
         }
     });
 });

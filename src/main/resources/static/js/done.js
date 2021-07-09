@@ -8,7 +8,11 @@ $(document).on("click", "button", function (event) {
 
     let id = window.localStorage.getItem('id');
     let userType = window.localStorage.getItem('role');
-
+    let centerId = window.localStorage.getItem('fitCenterId');
+    if(centerId==null)
+    {
+        centerId = 1;
+    }
     var typedto = {
         id,
         userType
@@ -16,7 +20,7 @@ $(document).on("click", "button", function (event) {
 
     $.ajax({
             type: "POST",
-            url: "http://localhost:8080/api/terms/" + grd,
+            url: "http://localhost:8080/api/" + centerId +"/terms/" + grd,
             dataType: "json",
             contentType: "application/json",
             data: JSON.stringify(typedto),

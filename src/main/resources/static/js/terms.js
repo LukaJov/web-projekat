@@ -64,10 +64,15 @@ $(document).on("click", "#search", function (event) {
         queryString += '&id=' + id + '&userType=' + userType;
     }
 
+    let centerId = window.localStorage.getItem('fitCenterId');
+    if(centerId==null)
+    {
+        centerId = 1;
+    }
 
     $.ajax({
         type: "GET",
-        url: "http://localhost:8080/api/terms" + "?" + queryString,
+        url: "http://localhost:8080/api/"+ centerId + "/terms" + "?" + queryString,
         dataType: "json",
         success: function (response) {
             console.log("SUCCESS:\n" + queryString, response);
@@ -132,11 +137,15 @@ $(document).on("click", "#multi", function (event) {
     {
         queryString += '&id=' + id + '&userType=' + userType;
     }
-
+    let centerId = window.localStorage.getItem('fitCenterId');
+    if(centerId==null)
+    {
+        centerId = 1;
+    }
 
     $.ajax({
         type: "GET",
-        url: "http://localhost:8080/api/terms/multi" + "?" + queryString,
+        url: "http://localhost:8080/api/" + centerId + "/terms/multi" + "?" + queryString,
         dataType: "json",
         success: function (response) {
             console.log("SUCCESS:\n" + queryString, response);
