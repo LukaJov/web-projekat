@@ -16,7 +16,7 @@ $(document).on('click', '.green', function () {
     // ajax poziv za dobavljanje traženog zaposlenog sa backend-a i prikaz na stranici
     $.ajax({
         type: "PUT",
-        url: "http://localhost:8080/api/"+ centerId+ "terms/" + termId + "?upOrOut=true&userId=" + id + "&userType=" + userType,
+        url: "http://localhost:8080/api/"+ centerId+ "/terms/" + termId + "?upOrOut=true&userId=" + id + "&userType=" + userType,
         dataType: "json",
         /*contentType: "application/json",
         data: JSON.stringify(typeDTO),*/
